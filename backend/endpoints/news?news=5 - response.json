@@ -1,0 +1,42 @@
+[
+  {
+    "id": 29,
+    "operation_date": "2024-10-21T19:00:00.000Z",
+    "title": "Зима на пороге",
+    "data": "Новое поступление зимней обуви - удобные, мягкие угги\r\n\r\n<a href=\"/catalog/\" style=\"color:blue\">Перейти в каталог</a>",
+    "image_path": "news_images/2024_10_22.jpg",
+    "changed_date": "2024-10-21T19:00:00.000Z"
+  },
+  {
+    "id": 28,
+    "operation_date": "2024-07-31T19:00:00.000Z",
+    "title": "Осенняя и школьная обувь уже здесь",
+    "data": "Ботинки, кроссовки, туфли для межсезонья и школы\r\n\r\n<a href=\"/catalog/\" style=\"color:blue\">Перейти в каталог</a>",
+    "image_path": "news_images/2024_08_01/picture.jpg",
+    "changed_date": "2024-07-31T19:00:00.000Z"
+  },
+  {
+    "id": 27,
+    "operation_date": "2024-07-08T19:00:00.000Z",
+    "title": "Новое поступление летней и школьной обуви",
+    "data": "Сандалии, туфли - 21-36 размеров. Приходите!\r\n\r\n<a href=\"/catalog/\" style=\"color:blue\">Перейти в каталог</a>",
+    "image_path": "news_images/2024_07_09/picture.jpg",
+    "changed_date": "2024-07-08T19:00:00.000Z"
+  },
+  {
+    "id": 26,
+    "operation_date": "2024-04-12T19:00:00.000Z",
+    "title": "Летняя коллекция уже здесь",
+    "data": "Макасины, кроссовки, сандалии\r\n\r\n<a href=\"/catalog/\" style=\"color:blue\">Перейти в каталог</a>",
+    "image_path": "news_images/2024-04-13.jpg",
+    "changed_date": "2024-04-12T19:00:00.000Z"
+  },
+  {
+    "id": 25,
+    "operation_date": "2024-03-25T19:00:00.000Z",
+    "title": "Налетай, торопись - покупай живопись",
+    "data": "Новые 5 моделей для весны - осени\r\n\r\n<a href=\"/catalog/\" style=\"color:blue\">Перейти в каталог</a>",
+    "image_path": "news_images/2024-03-26.jpg",
+    "changed_date": "2024-03-25T19:00:00.000Z"
+  }
+]

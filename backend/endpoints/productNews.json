@@ -1,0 +1,514 @@
+[
+  {
+    "product_id": 12581,
+    "product_name": "Cipo Кроссовки бело-розовый F4514-WHT-PNK",
+    "sum": 29900,
+    "product_create_date": "2025-02-11T16:55:41.000Z",
+    "qnt_price": [
+      { "size": "31", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "32", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "33", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "34", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "35", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "36", "sum": 29900, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Cipo Кроссовки бело-розовый F4514-WHT-PNK",
+    "artikul": "F4514-WHT-PNK",
+    "description": null,
+    "material_podoshva": "ТЭП",
+    "material_up": "натуральная кожа",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Демисезон",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57521,
+        "name": "3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57522,
+        "name": "3c789e97e89511ef91f750ebf624c538_3c789e99e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e99e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57523,
+        "name": "3c789e97e89511ef91f750ebf624c538_3c789e9ae89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e9ae89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57524,
+        "name": "3c789e97e89511ef91f750ebf624c538_3c789e9be89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e9be89511ef91f750ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg"
+  },
+  {
+    "product_id": 12582,
+    "product_name": "Cipo Кроссовки бело-зеленый F4514-WHT-GRN",
+    "sum": 29900,
+    "product_create_date": "2025-02-11T16:55:41.000Z",
+    "qnt_price": [
+      { "size": "31", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "32", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "33", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "34", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "35", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "36", "sum": 29900, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Cipo Кроссовки бело-зеленый F4514-WHT-GRN",
+    "artikul": "F4514-WHT-GRN",
+    "description": null,
+    "material_podoshva": "ТЭП",
+    "material_up": "натуральная кожа",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Демисезон",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57525,
+        "name": "3c789e9ce89511ef91f750ebf624c538_3c789e9de89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/3c/3c789e9ce89511ef91f750ebf624c538_3c789e9de89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57526,
+        "name": "3c789e9ce89511ef91f750ebf624c538_3c789e9ee89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789e9ce89511ef91f750ebf624c538_3c789e9ee89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57527,
+        "name": "3c789e9ce89511ef91f750ebf624c538_3c789e9fe89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789e9ce89511ef91f750ebf624c538_3c789e9fe89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57528,
+        "name": "3c789e9ce89511ef91f750ebf624c538_3c789ea0e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789e9ce89511ef91f750ebf624c538_3c789ea0e89511ef91f750ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/3c/3c789e9ce89511ef91f750ebf624c538_3c789e9de89511ef91f750ebf624c538.jpg"
+  },
+  {
+    "product_id": 12583,
+    "product_name": "Cipo Сандалии оливковый F4509-OLV",
+    "sum": 29900,
+    "product_create_date": "2025-02-11T16:55:41.000Z",
+    "qnt_price": [
+      { "size": "31", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "32", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "33", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "34", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "35", "sum": 29900, "qnt": 2, "store_id": [2] },
+      { "size": "36", "sum": 29900, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Cipo Сандалии оливковый F4509-OLV",
+    "artikul": "F4509-OLV",
+    "description": null,
+    "material_podoshva": "ТЭП",
+    "material_up": "натуральная кожа",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Лето (+30 +20)",
+    "vid_modeli_name": "Сандалии",
+    "vid_modeli_id": 98,
+    "image_registry": [
+      {
+        "id": 57529,
+        "name": "3c789ea1e89511ef91f750ebf624c538_3c789ea2e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/3c/3c789ea1e89511ef91f750ebf624c538_3c789ea2e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57530,
+        "name": "3c789ea1e89511ef91f750ebf624c538_3c789ea3e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789ea1e89511ef91f750ebf624c538_3c789ea3e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57531,
+        "name": "3c789ea1e89511ef91f750ebf624c538_3c789ea4e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789ea1e89511ef91f750ebf624c538_3c789ea4e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57532,
+        "name": "3c789ea1e89511ef91f750ebf624c538_3c789ea5e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789ea1e89511ef91f750ebf624c538_3c789ea5e89511ef91f750ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/3c/3c789ea1e89511ef91f750ebf624c538_3c789ea2e89511ef91f750ebf624c538.jpg"
+  },
+  {
+    "product_id": 12584,
+    "product_name": "Cipo Кроссовки бело-красный P4514-WHT-RED",
+    "sum": 28800,
+    "product_create_date": "2025-02-11T16:55:41.000Z",
+    "qnt_price": [
+      { "size": "26", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "27", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "28", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "29", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "30", "sum": 28800, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Cipo Кроссовки бело-красный P4514-WHT-RED",
+    "artikul": "P4514-WHT-RED",
+    "description": null,
+    "material_podoshva": "ТЭП",
+    "material_up": "натуральная кожа",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Демисезон",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57533,
+        "name": "3c789ea6e89511ef91f750ebf624c538_3c789ea7e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/3c/3c789ea6e89511ef91f750ebf624c538_3c789ea7e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57534,
+        "name": "3c789ea6e89511ef91f750ebf624c538_3c789ea8e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789ea6e89511ef91f750ebf624c538_3c789ea8e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57535,
+        "name": "3c789ea6e89511ef91f750ebf624c538_3c789ea9e89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789ea6e89511ef91f750ebf624c538_3c789ea9e89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57536,
+        "name": "3c789ea6e89511ef91f750ebf624c538_3c789eaae89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789ea6e89511ef91f750ebf624c538_3c789eaae89511ef91f750ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/3c/3c789ea6e89511ef91f750ebf624c538_3c789ea7e89511ef91f750ebf624c538.jpg"
+  },
+  {
+    "product_id": 12585,
+    "product_name": "Cipo Кроссовки бело-зеленый P4514-WHT-GRN",
+    "sum": 28800,
+    "product_create_date": "2025-02-11T16:55:41.000Z",
+    "qnt_price": [
+      { "size": "26", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "27", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "28", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "29", "sum": 28800, "qnt": 2, "store_id": [2] },
+      { "size": "30", "sum": 28800, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Cipo Кроссовки бело-зеленый P4514-WHT-GRN",
+    "artikul": "P4514-WHT-GRN",
+    "description": null,
+    "material_podoshva": "ТЭП",
+    "material_up": "натуральная кожа",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Демисезон",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57537,
+        "name": "3c789eabe89511ef91f750ebf624c538_3c789eace89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/3c/3c789eabe89511ef91f750ebf624c538_3c789eace89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57538,
+        "name": "3c789eabe89511ef91f750ebf624c538_3c789eade89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789eabe89511ef91f750ebf624c538_3c789eade89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57539,
+        "name": "3c789eabe89511ef91f750ebf624c538_3c789eaee89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789eabe89511ef91f750ebf624c538_3c789eaee89511ef91f750ebf624c538.jpg"
+      },
+      {
+        "id": 57540,
+        "name": "3c789eabe89511ef91f750ebf624c538_3c789eafe89511ef91f750ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/3c/3c789eabe89511ef91f750ebf624c538_3c789eafe89511ef91f750ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/3c/3c789eabe89511ef91f750ebf624c538_3c789eace89511ef91f750ebf624c538.jpg"
+  },
+  {
+    "product_id": 12563,
+    "product_name": "Amelly Кроссовки черный F-4512-BLK",
+    "sum": 31000,
+    "product_create_date": "2025-01-04T10:20:04.000Z",
+    "qnt_price": [
+      { "size": "31", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "32", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "33", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "34", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "35", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "36", "sum": 31000, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Amelly Кроссовки черный F-4512-BLK",
+    "artikul": "F-4512-BLK",
+    "description": null,
+    "material_podoshva": null,
+    "material_up": "замша",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Демисезон",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57467,
+        "name": "b7ddd356ca7711ef91b850ebf624c538_b7ddd357ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/b7/b7ddd356ca7711ef91b850ebf624c538_b7ddd357ca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57468,
+        "name": "b7ddd356ca7711ef91b850ebf624c538_b7ddd358ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd356ca7711ef91b850ebf624c538_b7ddd358ca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57469,
+        "name": "b7ddd356ca7711ef91b850ebf624c538_b7ddd359ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd356ca7711ef91b850ebf624c538_b7ddd359ca7711ef91b850ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/b7/b7ddd356ca7711ef91b850ebf624c538_b7ddd357ca7711ef91b850ebf624c538.jpg"
+  },
+  {
+    "product_id": 12564,
+    "product_name": "Cipo Кроссовки розовый F-4512-PNK",
+    "sum": 31000,
+    "product_create_date": "2025-01-04T10:20:04.000Z",
+    "qnt_price": [
+      { "size": "31", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "32", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "33", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "34", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "35", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "36", "sum": 31000, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Cipo Кроссовки розовый F-4512-PNK",
+    "artikul": "F-4512-PNK",
+    "description": null,
+    "material_podoshva": null,
+    "material_up": "замша",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Демисезон",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57470,
+        "name": "b7ddd35aca7711ef91b850ebf624c538_b7ddd35bca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/b7/b7ddd35aca7711ef91b850ebf624c538_b7ddd35bca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57471,
+        "name": "b7ddd35aca7711ef91b850ebf624c538_b7ddd35cca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd35aca7711ef91b850ebf624c538_b7ddd35cca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57472,
+        "name": "b7ddd35aca7711ef91b850ebf624c538_b7ddd35dca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd35aca7711ef91b850ebf624c538_b7ddd35dca7711ef91b850ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/b7/b7ddd35aca7711ef91b850ebf624c538_b7ddd35bca7711ef91b850ebf624c538.jpg"
+  },
+  {
+    "product_id": 12565,
+    "product_name": "Amelly Кроссовки черный F-4511-BLK",
+    "sum": 29800,
+    "product_create_date": "2025-01-04T10:20:04.000Z",
+    "qnt_price": [
+      { "size": "31", "sum": 29800, "qnt": 2, "store_id": [2] },
+      { "size": "32", "sum": 29800, "qnt": 2, "store_id": [2] },
+      { "size": "33", "sum": 29800, "qnt": 2, "store_id": [2] },
+      { "size": "34", "sum": 29800, "qnt": 2, "store_id": [2] },
+      { "size": "35", "sum": 29800, "qnt": 2, "store_id": [2] },
+      { "size": "36", "sum": 29800, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Amelly Кроссовки черный F-4511-BLK",
+    "artikul": "F-4511-BLK",
+    "description": null,
+    "material_podoshva": null,
+    "material_up": "натуральная кожа",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Лето (+30 +20)",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57473,
+        "name": "b7ddd35eca7711ef91b850ebf624c538_b7ddd35fca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/b7/b7ddd35eca7711ef91b850ebf624c538_b7ddd35fca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57474,
+        "name": "b7ddd35eca7711ef91b850ebf624c538_b7ddd360ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd35eca7711ef91b850ebf624c538_b7ddd360ca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57475,
+        "name": "b7ddd35eca7711ef91b850ebf624c538_b7ddd361ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd35eca7711ef91b850ebf624c538_b7ddd361ca7711ef91b850ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/b7/b7ddd35eca7711ef91b850ebf624c538_b7ddd35fca7711ef91b850ebf624c538.jpg"
+  },
+  {
+    "product_id": 12571,
+    "product_name": "Cipo Сандалии лимонный K-1912-LIM",
+    "sum": 23900,
+    "product_create_date": "2025-01-04T10:20:04.000Z",
+    "qnt_price": [
+      { "size": "21", "sum": 23900, "qnt": 2, "store_id": [2] },
+      { "size": "22", "sum": 23900, "qnt": 2, "store_id": [2] },
+      { "size": "23", "sum": 23900, "qnt": 2, "store_id": [2] },
+      { "size": "24", "sum": 23900, "qnt": 2, "store_id": [2] },
+      { "size": "25", "sum": 23900, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Cipo Сандалии лимонный K-1912-LIM",
+    "artikul": "K-1912-LIM",
+    "description": null,
+    "material_podoshva": null,
+    "material_up": "натуральная кожа",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Лето (+30 +20)",
+    "vid_modeli_name": "Сандалии",
+    "vid_modeli_id": 98,
+    "image_registry": [
+      {
+        "id": 57491,
+        "name": "b7ddd376ca7711ef91b850ebf624c538_b7ddd377ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/b7/b7ddd376ca7711ef91b850ebf624c538_b7ddd377ca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57492,
+        "name": "b7ddd376ca7711ef91b850ebf624c538_b7ddd378ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd376ca7711ef91b850ebf624c538_b7ddd378ca7711ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57493,
+        "name": "b7ddd376ca7711ef91b850ebf624c538_b7ddd379ca7711ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/b7/b7ddd376ca7711ef91b850ebf624c538_b7ddd379ca7711ef91b850ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/b7/b7ddd376ca7711ef91b850ebf624c538_b7ddd377ca7711ef91b850ebf624c538.jpg"
+  },
+  {
+    "product_id": 12580,
+    "product_name": "Amelly Кроссовки оранжевый F-4512-ORN",
+    "sum": 31000,
+    "product_create_date": "2025-01-04T10:20:04.000Z",
+    "qnt_price": [
+      { "size": "31", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "32", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "33", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "34", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "35", "sum": 31000, "qnt": 2, "store_id": [2] },
+      { "size": "36", "sum": 31000, "qnt": 2, "store_id": [2] }
+    ],
+    "name": "Amelly Кроссовки оранжевый F-4512-ORN",
+    "artikul": "F-4512-ORN",
+    "description": null,
+    "material_podoshva": null,
+    "material_up": "замша",
+    "material_inside": "натуральная кожа",
+    "sex": null,
+    "product_group_name": "Лето (+30 +20)",
+    "vid_modeli_name": "Кроссовки",
+    "vid_modeli_id": 200,
+    "image_registry": [
+      {
+        "id": 57518,
+        "name": "90f60442ca7b11ef91b850ebf624c538_90f60443ca7b11ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": true,
+        "full_name": "product_images/90/90f60442ca7b11ef91b850ebf624c538_90f60443ca7b11ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57519,
+        "name": "90f60442ca7b11ef91b850ebf624c538_90f60444ca7b11ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/90/90f60442ca7b11ef91b850ebf624c538_90f60444ca7b11ef91b850ebf624c538.jpg"
+      },
+      {
+        "id": 57520,
+        "name": "90f60442ca7b11ef91b850ebf624c538_90f60445ca7b11ef91b850ebf624c538.jpg",
+        "active": true,
+        "main": false,
+        "full_name": "product_images/90/90f60442ca7b11ef91b850ebf624c538_90f60445ca7b11ef91b850ebf624c538.jpg"
+      }
+    ],
+    "image_active_path": "product_images/90/90f60442ca7b11ef91b850ebf624c538_90f60443ca7b11ef91b850ebf624c538.jpg"
+  }
+]

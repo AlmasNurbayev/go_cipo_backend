@@ -1,0 +1,6 @@
+.env
+./config/.env
+/.vscode/
+/volume_db
+/backend/input/**
+/backend/assets/**

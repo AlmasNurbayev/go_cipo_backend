@@ -1,0 +1,185 @@
+{
+  "id": 12581,
+  "id_1c": "3c789e97-e895-11ef-91f7-50ebf624c538",
+  "name": "Cipo Кроссовки бело-розовый F4514-WHT-PNK",
+  "name_1c": "Cipo Кроссовки бело-розовый F4514-WHT-PNK",
+  "base_ed": "Штука",
+  "artikul": "F4514-WHT-PNK",
+  "material_up": "натуральная кожа",
+  "material_inside": "натуральная кожа",
+  "material_podoshva": "ТЭП",
+  "main_color": null,
+  "description": null,
+  "sex": null,
+  "product_folder": "c29debfc-0e27-11eb-8cb5-bc5ff43887cd",
+  "public_web": true,
+  "product_group_id": 1176,
+  "product_vid_id": 977,
+  "vid_modeli_id": 200,
+  "registrator_id": 8348,
+  "brend_id": null,
+  "country_id": null,
+  "create_date": "2025-02-11T16:55:41.000Z",
+  "changed_date": "2025-02-15T16:20:06.000Z",
+  "product_group": { "id": 1176, "name_1c": "Демисезон" },
+  "vid_modeli": { "id": 200, "name_1c": "Кроссовки" },
+  "image_registry": [
+    {
+      "id": 57521,
+      "resolution": null,
+      "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg",
+      "name": "3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg",
+      "path": "product_images/3c",
+      "size": 0,
+      "operation_date": "2025-02-11T16:55:44.000Z",
+      "main": true,
+      "main_change_date": "2025-02-11T16:55:40.000Z",
+      "active": true,
+      "active_change_date": "2025-02-11T16:55:40.000Z",
+      "product_id": 12581,
+      "registrator_id": 8348,
+      "create_date": "2025-02-11T16:55:45.000Z",
+      "changed_date": "2025-02-11T16:55:39.338Z"
+    },
+    {
+      "id": 57522,
+      "resolution": null,
+      "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e99e89511ef91f750ebf624c538.jpg",
+      "name": "3c789e97e89511ef91f750ebf624c538_3c789e99e89511ef91f750ebf624c538.jpg",
+      "path": "product_images/3c",
+      "size": 0,
+      "operation_date": "2025-02-11T16:55:44.000Z",
+      "main": false,
+      "main_change_date": "2025-02-11T16:55:40.000Z",
+      "active": true,
+      "active_change_date": "2025-02-11T16:55:40.000Z",
+      "product_id": 12581,
+      "registrator_id": 8348,
+      "create_date": "2025-02-11T16:55:45.000Z",
+      "changed_date": "2025-02-11T16:55:39.338Z"
+    },
+    {
+      "id": 57523,
+      "resolution": null,
+      "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e9ae89511ef91f750ebf624c538.jpg",
+      "name": "3c789e97e89511ef91f750ebf624c538_3c789e9ae89511ef91f750ebf624c538.jpg",
+      "path": "product_images/3c",
+      "size": 0,
+      "operation_date": "2025-02-11T16:55:44.000Z",
+      "main": false,
+      "main_change_date": "2025-02-11T16:55:40.000Z",
+      "active": true,
+      "active_change_date": "2025-02-11T16:55:40.000Z",
+      "product_id": 12581,
+      "registrator_id": 8348,
+      "create_date": "2025-02-11T16:55:45.000Z",
+      "changed_date": "2025-02-11T16:55:39.338Z"
+    },
+    {
+      "id": 57524,
+      "resolution": null,
+      "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e9be89511ef91f750ebf624c538.jpg",
+      "name": "3c789e97e89511ef91f750ebf624c538_3c789e9be89511ef91f750ebf624c538.jpg",
+      "path": "product_images/3c",
+      "size": 0,
+      "operation_date": "2025-02-11T16:55:44.000Z",
+      "main": false,
+      "main_change_date": "2025-02-11T16:55:40.000Z",
+      "active": true,
+      "active_change_date": "2025-02-11T16:55:40.000Z",
+      "product_id": 12581,
+      "registrator_id": 8348,
+      "create_date": "2025-02-11T16:55:45.000Z",
+      "changed_date": "2025-02-11T16:55:39.338Z"
+    }
+  ],
+  "price_registry": [],
+  "qnt_price_registry": [
+    {
+      "size_id": 2708,
+      "size_name_1c": "31",
+      "qnt": 2,
+      "sum": 29900,
+      "store_id": 2
+    },
+    {
+      "size_id": 2709,
+      "size_name_1c": "32",
+      "qnt": 2,
+      "sum": 29900,
+      "store_id": 2
+    },
+    {
+      "size_id": 2710,
+      "size_name_1c": "33",
+      "qnt": 2,
+      "sum": 29900,
+      "store_id": 2
+    },
+    {
+      "size_id": 2711,
+      "size_name_1c": "34",
+      "qnt": 2,
+      "sum": 29900,
+      "store_id": 2
+    },
+    {
+      "size_id": 2721,
+      "size_name_1c": "35",
+      "qnt": 2,
+      "sum": 29900,
+      "store_id": 2
+    },
+    {
+      "size_id": 2712,
+      "size_name_1c": "36",
+      "qnt": 2,
+      "sum": 29900,
+      "store_id": 2
+    }
+  ],
+  "qnt_price_registry_group": [
+    {
+      "size_id": 2708,
+      "size_name_1c": "31",
+      "sum": 29900,
+      "qnt": 2,
+      "store_id": [2]
+    },
+    {
+      "size_id": 2709,
+      "size_name_1c": "32",
+      "sum": 29900,
+      "qnt": 2,
+      "store_id": [2]
+    },
+    {
+      "size_id": 2710,
+      "size_name_1c": "33",
+      "sum": 29900,
+      "qnt": 2,
+      "store_id": [2]
+    },
+    {
+      "size_id": 2711,
+      "size_name_1c": "34",
+      "sum": 29900,
+      "qnt": 2,
+      "store_id": [2]
+    },
+    {
+      "size_id": 2721,
+      "size_name_1c": "35",
+      "sum": 29900,
+      "qnt": 2,
+      "store_id": [2]
+    },
+    {
+      "size_id": 2712,
+      "size_name_1c": "36",
+      "sum": 29900,
+      "qnt": 2,
+      "store_id": [2]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Нужно подключиться к консоли контейнера cipo-site-server
+
+Внутренний доступ для Next:
+- curl 127.0.0.1:3004/api/product?id=12581
+
+Внешний доступ со стороны SPA - прямого нет, Next перехватывает вызов:
+- curl 127.0.0.1:3004/api/productsFilter
+
+в Next это реализовано через кастомный route - src/app/api/productsFilter
+/route.ts, запрос по пути https://cite/api/productsFilter перехватывается Next и перенаправляет на функцию GET
+(https://github.com/AlmasNurbayev/cipo_next/blob/657e36808fb545b985d0860f5a975fb3b4098570/src/app/api/productsFilter/route.ts) 
+
+

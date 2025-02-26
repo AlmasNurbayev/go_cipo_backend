@@ -1,0 +1,28 @@
+[
+  {
+    "id": 2,
+    "id_1c": "779a0f56-696d-11ed-8f8c-bc5ff43887cd",
+    "name_1c": "Incore-Мухамедханова",
+    "address": "ул. Кайым Мухамедханов, 8,\r\nЖК Manhattan-5 (угол ул. Айтеке би, бульвар)",
+    "link_2gis": "https://go.2gis.com/smgyc",
+    "phone": "+7 778 812 1260",
+    "city": "Астана",
+    "image_path": "store_images/MH.jpg",
+    "public": true,
+    "working_hours": {
+      "d01": "10-20",
+      "d02": "10-20",
+      "d03": "10-20",
+      "d04": "10-20",
+      "d05": "10-20",
+      "d06": "10-19",
+      "d07": "10-19"
+    },
+    "yandex_widget_url": null,
+    "doublegis_widget_url": null,
+    "store_kaspi_id": "PP1",
+    "registrator_id": 116,
+    "create_date": "2023-02-26T10:57:06.000Z",
+    "changed_date": "2023-02-26T10:57:06.775Z"
+  }
+]

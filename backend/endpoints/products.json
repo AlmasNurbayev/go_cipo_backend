@@ -1,0 +1,63 @@
+{
+  "data": [
+    {
+      "product_id": 12581,
+      "product_create_date": "2025-02-11T16:55:41.000Z",
+      "sum": 29900,
+      "product_group_id": 1176,
+      "product_name": "Cipo Кроссовки бело-розовый F4514-WHT-PNK",
+      "qnt_price": [
+        { "size": "31", "sum": 29900, "qnt": 2, "store_id": [2] },
+        { "size": "32", "sum": 29900, "qnt": 2, "store_id": [2] },
+        { "size": "33", "sum": 29900, "qnt": 2, "store_id": [2] },
+        { "size": "34", "sum": 29900, "qnt": 2, "store_id": [2] },
+        { "size": "35", "sum": 29900, "qnt": 2, "store_id": [2] },
+        { "size": "36", "sum": 29900, "qnt": 2, "store_id": [2] }
+      ],
+      "artikul": "F4514-WHT-PNK",
+      "name": "Cipo Кроссовки бело-розовый F4514-WHT-PNK",
+      "description": null,
+      "material_podoshva": "ТЭП",
+      "material_up": "натуральная кожа",
+      "material_inside": "натуральная кожа",
+      "sex": null,
+      "product_group_name": "Демисезон",
+      "vid_modeli_name": "Кроссовки",
+      "vid_modeli_id": 200,
+      "image_registry": [
+        {
+          "id": 57521,
+          "name": "3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg",
+          "active": true,
+          "main": true,
+          "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg"
+        },
+        {
+          "id": 57522,
+          "name": "3c789e97e89511ef91f750ebf624c538_3c789e99e89511ef91f750ebf624c538.jpg",
+          "active": true,
+          "main": false,
+          "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e99e89511ef91f750ebf624c538.jpg"
+        },
+        {
+          "id": 57523,
+          "name": "3c789e97e89511ef91f750ebf624c538_3c789e9ae89511ef91f750ebf624c538.jpg",
+          "active": true,
+          "main": false,
+          "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e9ae89511ef91f750ebf624c538.jpg"
+        },
+        {
+          "id": 57524,
+          "name": "3c789e97e89511ef91f750ebf624c538_3c789e9be89511ef91f750ebf624c538.jpg",
+          "active": true,
+          "main": false,
+          "full_name": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e9be89511ef91f750ebf624c538.jpg"
+        }
+      ],
+      "image_active_path": "product_images/3c/3c789e97e89511ef91f750ebf624c538_3c789e98e89511ef91f750ebf624c538.jpg",
+      "create_date": "2025-02-11T16:55:41.000Z"
+    }
+  ],
+  "full_count": 398,
+  "current_count": 1
+}

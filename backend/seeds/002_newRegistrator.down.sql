@@ -1,0 +1,1 @@
+DELETE FROM registrator WHERE id=1

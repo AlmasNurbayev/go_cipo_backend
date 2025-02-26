@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS size;
+DROP TABLE IF EXISTS price_vid;
+DROP INDEX IF EXISTS idx_size_name_1c;

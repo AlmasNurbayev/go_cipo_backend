@@ -1,0 +1,48 @@
+services:
+  cipo_backend_server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    #container_name: cipo_backend_server
+    environment:
+      - ENV=${ENV}
+      - TOKEN_TTL=${TOKEN_TTL}
+      - HTTP_PORT=${HTTP_PORT}
+      - HTTP_READ_TIMEOUT=${HTTP_READ_TIMEOUT}
+      - HTTP_WRITE_TIMEOUT=${HTTP_WRITE_TIMEOUT}
+      - HTTP_IDLE_TIMEOUT=${HTTP_IDLE_TIMEOUT}
+      - HTTP_PREFORK=${HTTP_PREFORK}
+      - GOMAXPROCS=${GOMAXPROCS}
+      - DSN=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@cipo_backend_postgres:5432/${POSTGRES_DB}?sslmode=disable
+      - PARSER_CLASSIFICATOR_FILE=${PARSER_CLASSIFICATOR_FILE}
+      - PARSER_OFFER_FILE=${PARSER_OFFER_FILE}
+      - PARSER_IMAGE_FOLDER=${PARSER_IMAGE_FOLDER}
+      - PARSER_DEFAULT_USER_ID=${PARSER_DEFAULT_USER_ID}
+
+    restart: unless-stopped
+    depends_on:
+      - cipo_backend_postgres
+    networks:
+      - cipo_backend_network
+
+  cipo_backend_postgres:
+    image: postgres:17.3-alpine3.21
+    #container_name: cipo_backend_postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    volumes:
+      - ./pg_conf:/etc/postgresql/postgresql.conf
+      - ./volume_db/:/var/lib/postgresql/data
+    networks:
+      - cipo_backend_network
+    #command: ['postgres', '-c', 'config_file=/etc/postgresql/postgresql.conf']
+
+networks:
+  cipo_backend_network:
+    driver: bridge
