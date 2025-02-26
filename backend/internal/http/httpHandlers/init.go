@@ -14,7 +14,7 @@ type servicesProvider interface {
 	GetProductFilters(ctx context.Context) (dto.ProductsFilterResponse, error)
 	GetStores(ctx context.Context) (dto.StoresResponse, error)
 
-	GetProductById(ctx context.Context, id int64) (dto.ProductResponse, error)
+	GetProductById(ctx context.Context, id int64) (dto.ProductByIdResponse, error)
 }
 
 type Handler struct {

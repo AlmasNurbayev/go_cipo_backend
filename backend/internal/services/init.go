@@ -24,7 +24,7 @@ type postgresStorage interface {
 	ListProductGroup(ctx context.Context) ([]models.ProductsGroupEntity, error)
 	ListBrend(ctx context.Context) ([]models.BrendEntity, error)
 
-	GetProductById(ctx context.Context, id int64) (models.ProductEntity, error)
+	GetProductById(ctx context.Context, id int64) (models.ProductByIdEntity, error)
 	GetImagesByProductId(ctx context.Context, id int64) ([]models.ImageRegistryEntity, error)
 
 	GetProductGroupById(ctx context.Context, id int64) (models.ProductsGroupEntity, error)

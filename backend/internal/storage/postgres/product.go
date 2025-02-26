@@ -88,14 +88,20 @@ func (s *Storage) UpdateProductById1c(ctx context.Context, data models.ProductEn
 	return nil
 }
 
-func (s *Storage) GetProductById(ctx context.Context, id int64) (models.ProductEntity, error) {
+func (s *Storage) GetProductById(ctx context.Context, id int64) (models.ProductByIdEntity, error) {
 	op := "postgres.GetProductById"
 	log := s.log.With(slog.String("op", op))
 
-	var product = models.ProductEntity{}
+	var product = models.ProductByIdEntity{}
 
 	db := s.Db
-	query := `SELECT * FROM product WHERE id = $1;`
+	query := `SELECT p.*, 
+	vid.id as "vid_modeli.id", vid.name_1c as "vid_modeli.name_1c", 
+	pg.id as "product_group.id", pg.name_1c as "product_group.name_1c" 
+	FROM product p
+	LEFT JOIN vid_modeli vid ON p.vid_modeli_id = vid.id
+	LEFT JOIN product_group pg ON p.product_group_id = pg.id
+	WHERE p.id = $1;`
 	err := pgxscan.Get(ctx, db, &product, query, id)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {

@@ -14,7 +14,7 @@ func (h *Handler) GetProductById(c fiber.Ctx) error {
 	op := "HttpHandlers.GetProductById"
 	log := h.log.With(slog.String("op", op))
 
-	err := validate.ValidateParams(c, &dto.ProductQueryRequest{})
+	err := validate.ValidateParams(c, &dto.ProductByIdQueryRequest{})
 	if err != nil {
 		log.Warn(err.Error())
 		return c.Status(400).SendString(err.Error())

@@ -6,11 +6,11 @@ import (
 	"github.com/guregu/null/v5"
 )
 
-type ProductQueryRequest struct {
+type ProductByIdQueryRequest struct {
 	Id *int `form:"id" binding:"required" example:"5"`
 }
 
-type ProductResponse struct {
+type ProductByIdResponse struct {
 	Id                int         `json:"id"`
 	Id_1c             string      `json:"id_1c"`
 	Name_1c           string      `json:"name_1c"`
