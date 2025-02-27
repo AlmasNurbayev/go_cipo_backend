@@ -31,7 +31,8 @@ type postgresStorage interface {
 	GetVidModeliById(ctx context.Context, id int64) (models.VidModeliEntity, error)
 	GetLastOfferRegistrator(ctx context.Context) (models.RegistratorEntity, error)
 
-	GetQntPriceRegistryByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntity, error)
+	GetQntPriceRegistryByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntityByProduct, error)
+	GetQntPriceRegistryGroupByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntityGroupByProduct, error)
 }
 
 func NewService(log *slog.Logger,

@@ -26,26 +26,6 @@ func (s *Service) GetProductById(ctx context.Context, id int64) (dto.ProductById
 		return productByIdDto, err
 	}
 
-	// productGroup, err := s.postgresStorage.GetProductGroupById(ctx, productEntity.Product_group_id)
-	// if err != nil {
-	// 	log.Error("", slog.String("err", err.Error()))
-	// 	return productDto, err
-	// }
-
-	// if productEntity.Vid_modeli_id.Valid {
-	// 	vidModeliId := null.IntFrom(productEntity.Vid_modeli_id.Int64).Int64
-	// 	vidModeli, err := s.postgresStorage.GetVidModeliById(ctx, vidModeliId)
-	// 	if err != nil {
-	// 		log.Error("", slog.String("err", err.Error()))
-	// 		return productDto, err
-	// 	}
-	// 	err = copier.Copy(&productDto.Vid_modeli, &vidModeli)
-	// 	if err != nil {
-	// 		log.Error("", slog.String("err", err.Error()))
-	// 		return productDto, err
-	// 	}
-	// }
-
 	lastOfferRegistrator, err := s.postgresStorage.GetLastOfferRegistrator(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
@@ -53,6 +33,12 @@ func (s *Service) GetProductById(ctx context.Context, id int64) (dto.ProductById
 	}
 
 	qntPriceRegistry, err := s.postgresStorage.GetQntPriceRegistryByProductId(ctx, id, lastOfferRegistrator.Id)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByIdDto, err
+	}
+
+	qntPriceRegistryGroup, err := s.postgresStorage.GetQntPriceRegistryGroupByProductId(ctx, id, lastOfferRegistrator.Id)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productByIdDto, err
@@ -80,6 +66,20 @@ func (s *Service) GetProductById(ctx context.Context, id int64) (dto.ProductById
 	}
 
 	// TODO - "qnt_price_registry_group" section
+
+	err = copier.Copy(&productByIdDto.Qnt_price_registry_group, &qntPriceRegistryGroup)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByIdDto, err
+	}
+	// 	['qnt'],
+	// 	['store_id'])
+	// = groupAndSum(
+	// 	res.qnt_price_registry,
+	// 	['size_id', 'size_name_1c', 'sum'],
+	// 	['qnt'],
+	// 	['store_id']
+	// ).sort((a, b) => (a.size_name_1c > b.size_name_1c ? 1 : -1));
 
 	return productByIdDto, nil
 }

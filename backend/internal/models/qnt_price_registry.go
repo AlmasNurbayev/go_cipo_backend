@@ -31,3 +31,19 @@ type QntPriceRegistryEntity struct {
 	Changed_date time.Time `json:"changed_date" db:"changed_date"`
 	Create_date  time.Time `json:"create_date" db:"create_date"`
 }
+
+type QntPriceRegistryEntityByProduct struct {
+	Store_id     int64   `json:"store_id" db:"store_id"`
+	Size_id      int64   `json:"size_id" db:"size_id"`
+	Size_name_1c string  `json:"size_name_1c" db:"size_name_1c"`
+	Qnt          float32 `json:"qnt" db:"qnt"`
+	Sum          float32 `json:"sum" db:"sum"`
+}
+
+type QntPriceRegistryEntityGroupByProduct struct {
+	Size_id      int64   `json:"size_id" db:"size_id"`
+	Size_name_1c string  `json:"size_name_1c" db:"size_name_1c"`
+	Sum          float32 `json:"sum" db:"sum"`
+	Qnt          float32 `json:"qnt" db:"qnt"`
+	Store_id     []int64 `json:"store_id" db:"store_id"`
+}

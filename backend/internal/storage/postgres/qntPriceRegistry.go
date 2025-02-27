@@ -83,7 +83,7 @@ func (s *Storage) DeleteQntPriceRegistryById(ctx context.Context, ids []int64) e
 	return nil
 }
 
-func (s *Storage) GetQntPriceRegistryByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntity, error) {
+func (s *Storage) GetQntPriceRegistryByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntityByProduct, error) {
 	op := "postgres.GetQntPriceRegistryByProductId"
 	log := s.log.With(slog.String("op", op))
 
@@ -92,11 +92,36 @@ func (s *Storage) GetQntPriceRegistryByProductId(ctx context.Context, product_id
 	WHERE product_id = $1 and registrator_id = $2;`
 	db := s.Db
 
-	var qntPriceRegistry []models.QntPriceRegistryEntity
+	var qntPriceRegistry []models.QntPriceRegistryEntityByProduct
 	err := pgxscan.Select(ctx, db, &qntPriceRegistry, query, product_id, registrator_id)
 	if err != nil {
 		log.Error("error: ", slog.String("err", err.Error()))
 		return nil, err
 	}
 	return qntPriceRegistry, nil
+}
+
+func (s *Storage) GetQntPriceRegistryGroupByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntityGroupByProduct, error) {
+	op := "postgres.GetQntPriceRegistryGroupByProductId"
+	log := s.log.With(slog.String("op", op))
+
+	//json_agg (DISTINCT store_id) as store_id
+	query := `select
+  size_id,
+  size_name_1c,
+  SUM(sum) AS sum,
+  SUM(qnt) AS qnt,
+	json_agg (DISTINCT store_id) as store_id
+	FROM qnt_price_registry
+	WHERE product_id = $1 and registrator_id = $2
+	GROUP BY size_name_1c, size_id;`
+	db := s.Db
+
+	var res []models.QntPriceRegistryEntityGroupByProduct
+	err := pgxscan.Select(ctx, db, &res, query, product_id, registrator_id)
+	if err != nil {
+		log.Error("error: ", slog.String("err", err.Error()))
+		return nil, err
+	}
+	return res, nil
 }
