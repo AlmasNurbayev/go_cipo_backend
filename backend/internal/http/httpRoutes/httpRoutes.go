@@ -14,6 +14,7 @@ type handlersProvider interface {
 	GetStores(c fiber.Ctx) error
 
 	GetProductById(c fiber.Ctx) error
+	ListProductNews(c fiber.Ctx) error
 	//Tracing(c fiber.Ctx) error
 }
 
@@ -42,4 +43,7 @@ func RegisterRoutes(app *fiber.App, handler handlersProvider, log *slog.Logger) 
 
 	log.Info("/product/")
 	api.Get("/product/", handler.GetProductById)
+
+	log.Info("/productNews/")
+	api.Get("/productNews/", handler.ListProductNews)
 }
