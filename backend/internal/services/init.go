@@ -35,6 +35,9 @@ type postgresStorage interface {
 	GetQntPriceRegistryGroupByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntityGroupByProduct, error)
 
 	ListProductNews(ctx context.Context, registrator_id int64, count int64) ([]models.ProductNewsEntity, error)
+
+	GetNewsById(ctx context.Context, id int64) (models.NewsEntity, error)
+	ListNews(ctx context.Context, count int64) ([]models.NewsEntity, error)
 }
 
 func NewService(log *slog.Logger,

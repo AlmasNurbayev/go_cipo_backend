@@ -1,5 +1,7 @@
 package dto
 
+import "time"
+
 type ProductsQueryRequest struct {
 	Search_name   string `form:"search_name" binding:"omitempty" example:"name"`
 	MinPrice      string `form:"min_price" binding:"omitempty" example:"100"`
@@ -37,7 +39,7 @@ type ProductsItemResponse struct {
 	Vid_modeli_id       int              `json:"vid_modeli_id"`
 	Image_registry      *[]imageRegistry `json:"image_registry"`
 	Image_active_path   string           `json:"image_active_path"`
-	Create_date         string           `json:"create_date"`
+	Create_date         time.Time        `json:"create_date"`
 }
 
 type qnt_price struct {

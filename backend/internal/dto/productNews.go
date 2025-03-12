@@ -3,7 +3,7 @@ package dto
 import "github.com/guregu/null/v5"
 
 type ProductNewsQueryRequest struct {
-	News *int `form:"news" binding:"omitempty" example:"5"`
+	News int `form:"news" binding:"omitempty" example:"5" validate:"gt=0,lte=10"`
 }
 
 type ProductNewsResponse struct {
@@ -11,7 +11,7 @@ type ProductNewsResponse struct {
 	Product_name        string      `json:"product_name"`
 	Sum                 float32     `json:"sum"`
 	Product_create_date string      `json:"product_create_date"`
-	Qnt_price           qnt_price   `json:"qnt_price"`
+	Qnt_price           []qnt_price `json:"qnt_price"`
 	Name                string      `json:"name"`
 	Artikul             string      `json:"artikul"`
 	Description         null.String `json:"description"`

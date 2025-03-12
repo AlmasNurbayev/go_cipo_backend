@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -21,7 +22,12 @@ func NewStorage(DSN string, log *slog.Logger, timeout time.Duration) (*Storage, 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	const op = "postgres.NewStorage"
-	log.With(slog.String("op", op)).Info("init storage " + DSN)
+	var shortDSN = ""
+	if idx := strings.Index(DSN, "@"); idx != -1 {
+		shortDSN = DSN[idx+1:]
+	}
+
+	log.With(slog.String("op", op)).Info("init storage " + shortDSN)
 
 	newConfig, err := pgxpool.ParseConfig(DSN)
 	if err != nil {

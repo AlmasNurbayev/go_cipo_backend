@@ -23,6 +23,7 @@ type ProductNewsEntity struct {
 	Vid_modeli_name    string                `json:"vid_modeli_name" db:"vid_modeli_name"`
 	Vid_modeli_id      null.Int64            `json:"vid_modeli_id" db:"vid_modeli_id"`
 	Image_registry     []imageRegistryEntity `json:"image_registry" db:"image_registry"`
+	Qnt_price          []qnt_price           `json:"qnt_price" db:"qnt_price"`
 	Image_active_path  string                `json:"image_active_path" db:"image_active_path"`
 }
 
@@ -32,4 +33,11 @@ type imageRegistryEntity struct {
 	Active    bool   `json:"active" db:"active"`
 	Main      bool   `json:"main" db:"main"`
 	Full_name string `json:"full_name" db:"full_name"`
+}
+
+type qnt_price struct {
+	Size     string  `json:"size" db:"size"`
+	Sum      float32 `json:"sum" db:"sum"`
+	Qnt      float32 `json:"qnt" db:"qnt"`
+	Store_id []int64 `json:"store_id" db:"store_id"`
 }

@@ -1,5 +1,11 @@
 package dto
 
+import (
+	"time"
+
+	"github.com/guregu/null/v5"
+)
+
 type StoresResponse struct {
 	Stores []StoreResponse `json:"stores"`
 }
@@ -19,8 +25,8 @@ type StoreResponse struct {
 	Doublegis_widget_url string        `json:"doublegis_widget_url"`
 	Store_kaspi_id       string        `json:"store_kaspi_id"`
 	Registrator_id       int           `json:"registrator_id"`
-	Create_date          string        `json:"create_date"`
-	Changed_date         string        `json:"changed_date"`
+	Create_date          time.Time     `json:"create_date"`
+	Changed_date         null.Time     `json:"changed_date"`
 }
 
 type Working_hours struct {

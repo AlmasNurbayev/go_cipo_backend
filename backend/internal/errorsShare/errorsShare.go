@@ -33,4 +33,9 @@ var (
 		Code:    404,
 		Message: "product not found",
 		Error:   errors.New("product not found")}
+
+	ErrNewsNotFound = ErrorHttp{
+		Code:    404,
+		Message: "news not found",
+		Error:   errors.New("news not found")}
 )

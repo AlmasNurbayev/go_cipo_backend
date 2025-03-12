@@ -44,9 +44,10 @@ func (s *ParserService) ProductService(mainStruct *xmltypes.ImportType,
 	NewProducts := partParsers.ProductsParser(mainStruct, registrator_id,
 		productGroups, productVids, vidsMideli, productDescMappings)
 
-	// сортируем по первым 20 символам поля id_1c, для хронологии
+	// сортируем по части символов поля id_1c, для хронологии
 	sort.Slice(NewProducts, func(i, j int) bool {
-		return NewProducts[i].Id_1c[19:] < NewProducts[j].Id_1c[19:]
+		//log.Debug(NewProducts[i].Id_1c[14:23])
+		return NewProducts[i].Id_1c[14:23] < NewProducts[j].Id_1c[14:23]
 	})
 
 	existsMap := make(map[string]models.ProductEntity)
