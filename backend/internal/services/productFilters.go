@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"log/slog"
+	"sort"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/jinzhu/copier"
@@ -19,12 +20,18 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
 	}
+	sort.Slice(sizeEntity, func(i, j int) bool {
+		return sizeEntity[i].Name_1c < sizeEntity[j].Name_1c
+	})
 
 	productGroupEntity, err := s.postgresStorage.ListProductGroup(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
 	}
+	sort.Slice(productGroupEntity, func(i, j int) bool {
+		return productGroupEntity[i].Name_1c < productGroupEntity[j].Name_1c
+	})
 
 	storeEntity, err := s.postgresStorage.ListStore(ctx)
 	if err != nil {
@@ -37,6 +44,9 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
 	}
+	sort.Slice(vidModeliEntity, func(i, j int) bool {
+		return vidModeliEntity[i].Name_1c < vidModeliEntity[j].Name_1c
+	})
 
 	brendEntity, err := s.postgresStorage.ListBrend(ctx)
 	if err != nil {

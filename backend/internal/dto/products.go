@@ -1,17 +1,21 @@
 package dto
 
-import "time"
+import (
+	"time"
+
+	"github.com/guregu/null/v5"
+)
 
 type ProductsQueryRequest struct {
-	Search_name   string `form:"search_name" binding:"omitempty" example:"name"`
-	MinPrice      string `form:"min_price" binding:"omitempty" example:"100"`
-	MaxPrice      string `form:"max_price" binding:"omitempty" example:"1000"`
-	Sort          string `form:"sort" binding:"omitempty" example:"sum-desc"`
-	Size          string `form:"size" binding:"omitempty" example:"31"`
-	Vid_modeli    string `form:"vid_modeli" binding:"omitempty" example:"1"`
-	Product_group string `form:"product_group" binding:"omitempty" example:"1"`
-	Take          string `form:"page" binding:"omitempty" example:"20"`
-	Skip          string `form:"skip" binding:"omitempty" example:"0"`
+	Search_name   string  `form:"search_name" binding:"omitempty" example:"name" query:"search_name" validate:"omitempty,gte=3"`
+	MinPrice      float32 `form:"min_price" binding:"omitempty" example:"100" query:"minPrice" validate:"omitempty,min=0"`
+	MaxPrice      float32 `form:"max_price" binding:"omitempty" example:"1000" query:"maxPrice" validate:"omitempty,min=0"`
+	Sort          string  `form:"sort" binding:"omitempty" example:"sum-desc" query:"Sort"`
+	Size          []int64 `form:"size" binding:"omitempty" example:"31" query:"size"`
+	Vid_modeli    []int64 `form:"vid_modeli" binding:"omitempty" example:"1" query:"vid_modeli"`
+	Product_group []int64 `form:"product_group" binding:"omitempty" example:"1" query:"product_group" `
+	Take          int     `form:"page" binding:"omitempty" example:"20" query:"page" validate:"omitempty,min=0,max=100"`
+	Skip          int     `form:"skip" binding:"omitempty" example:"0" query:"skip" validate:"omitempty,min=0"`
 }
 
 type ProductsResponse struct {
@@ -21,25 +25,25 @@ type ProductsResponse struct {
 }
 
 type ProductsItemResponse struct {
-	Product_id          int64            `json:"product_id"`
-	Product_create_date string           `json:"product_create_date"`
-	Sum                 float32          `json:"sum"`
-	Product_group_id    int64            `json:"product_group_id"`
-	Product_name        string           `json:"product_name"`
-	Qnt_price           *[]qnt_price     `json:"qnt_price"`
-	Artikul             string           `json:"artikul"`
-	Name                string           `json:"name"`
-	Description         *string          `json:"description"`
-	Material_podoshva   *string          `json:"material_podoshva"`
-	Material_up         *string          `json:"material_up"`
-	Material_inside     *string          `json:"material_inside"`
-	Sex                 *string          `json:"sex"`
-	Product_group_name  string           `json:"product_group_name"`
-	Vid_modeli_name     *string          `json:"vid_modeli_name"`
-	Vid_modeli_id       int              `json:"vid_modeli_id"`
-	Image_registry      *[]imageRegistry `json:"image_registry"`
-	Image_active_path   string           `json:"image_active_path"`
-	Create_date         time.Time        `json:"create_date"`
+	Product_id          int64           `json:"product_id"`
+	Product_create_date time.Time       `json:"product_create_date"`
+	Sum                 float32         `json:"sum"`
+	Product_group_id    int64           `json:"product_group_id"`
+	Product_name        string          `json:"product_name"`
+	Qnt_price           []qnt_price     `json:"qnt_price"`
+	Artikul             string          `json:"artikul"`
+	Name                string          `json:"name"`
+	Description         null.String     `json:"description"`
+	Material_podoshva   null.String     `json:"material_podoshva"`
+	Material_up         null.String     `json:"material_up"`
+	Material_inside     null.String     `json:"material_inside"`
+	Sex                 null.String     `json:"sex"`
+	Product_group_name  string          `json:"product_group_name"`
+	Vid_modeli_name     null.String     `json:"vid_modeli_name"`
+	Vid_modeli_id       int             `json:"vid_modeli_id"`
+	Image_registry      []imageRegistry `json:"image_registry"`
+	Image_active_path   string          `json:"image_active_path"`
+	Create_date         time.Time       `json:"create_date"`
 }
 
 type qnt_price struct {

@@ -31,15 +31,15 @@ func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, cou
 	)) from image_registry im where im.product_id = p.id) as image_registry,
 	(select json_agg(jsonb_build_object('size', agg.size_name_1c, 'sum', agg.sum,
 	'qnt', agg.qnt, 'store_id', agg.store_id)) FROM (
-            SELECT 
-                json_agg (distinct iq.store_id) as store_id,
-                iq.size_name_1c,
-                SUM(iq.sum) AS sum,
-                SUM(iq.qnt) AS qnt
-            FROM qnt_price_registry iq
-            WHERE iq.product_id = p.id
-            GROUP BY iq.store_id, iq.size_name_1c
-        ) agg) as qnt_price  
+		SELECT 
+		json_agg (distinct iq.store_id) as store_id,
+		iq.size_name_1c,
+		SUM(iq.sum) AS sum,
+		SUM(iq.qnt) AS qnt
+		FROM qnt_price_registry iq
+		WHERE iq.product_id = p.id
+		GROUP BY iq.store_id, iq.size_name_1c
+	) agg) as qnt_price  
 	FROM product p
 	LEFT JOIN vid_modeli vid ON vid_modeli_id = vid.id
 	LEFT JOIN product_group pg ON product_group_id = pg.id
@@ -50,9 +50,9 @@ func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, cou
     GROUP BY sum, product_id 
     ORDER BY product_id DESC 
     LIMIT $2
-) qpr ON qpr.product_id = p.id
+	) qpr ON qpr.product_id = p.id
 	ORDER BY product_id desc;`
-	// TODO - добавить qnt_price
+
 	err := pgxscan.Select(ctx, db, &products, query, registrator_id, count)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {

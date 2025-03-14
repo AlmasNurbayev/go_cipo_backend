@@ -5,6 +5,7 @@ import (
 	"log/slog"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
 )
 
@@ -38,6 +39,8 @@ type postgresStorage interface {
 
 	GetNewsById(ctx context.Context, id int64) (models.NewsEntity, error)
 	ListNews(ctx context.Context, count int64) ([]models.NewsEntity, error)
+
+	ListProductsSearch(ctx context.Context, registrator_id int64, params dto.ProductsQueryRequest) ([]models.ProductsItemEntity, int, error)
 }
 
 func NewService(log *slog.Logger,

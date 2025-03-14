@@ -38,4 +38,14 @@ var (
 		Code:    404,
 		Message: "news not found",
 		Error:   errors.New("news not found")}
+
+	ErrMaxPriceLessMinPrice = ErrorHttp{
+		Code:    400,
+		Message: "max price less then min price",
+		Error:   errors.New("max price less then min price")}
+
+	ErrSortBadFormat = ErrorHttp{
+		Code:    400,
+		Message: "sort don't contain -",
+		Error:   errors.New("sort don't contain -")}
 )

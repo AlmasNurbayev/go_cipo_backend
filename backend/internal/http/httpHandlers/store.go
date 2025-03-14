@@ -16,6 +16,6 @@ func (h *Handler) GetStores(c fiber.Ctx) error {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
 	}
-	return c.Status(200).JSON(res)
+	return c.Status(200).JSON(res.Stores)
 
 }

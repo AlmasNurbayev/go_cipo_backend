@@ -35,7 +35,7 @@ type storageProvider interface {
 	UpdatePriceVid(ctx context.Context, data models.PriceVidEntity) error
 	CreateStore(ctx context.Context, data models.StoreEntity) (int64, error)
 	ListStore(ctx context.Context) ([]models.StoreEntity, error)
-	UpdateStore(ctx context.Context, data models.StoreEntity) error
+	UpdateStoreFrom1C(ctx context.Context, data models.StoreEntity) error
 	CreateQntPriceRegistry(ctx context.Context, data models.QntPriceRegistryEntity) (int64, error)
 }
 

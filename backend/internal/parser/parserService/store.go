@@ -36,7 +36,7 @@ func (s *ParserService) StoreService(mainStruct *xmltypes.OfferType,
 		if _, exists := existsMap[n.Id_1c]; exists {
 			// Элемент есть → Обновляем (если изменился)
 			toUpdate = append(toUpdate, n)
-			err := s.storage.UpdateStore(s.ctx, n)
+			err := s.storage.UpdateStoreFrom1C(s.ctx, n)
 			if err != nil {
 				s.log.Error(err.Error())
 			}

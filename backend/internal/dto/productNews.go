@@ -3,7 +3,7 @@ package dto
 import "github.com/guregu/null/v5"
 
 type ProductNewsQueryRequest struct {
-	News int `form:"news" binding:"omitempty" example:"5" validate:"gt=0,lte=10"`
+	News int `form:"news" binding:"omitempty" example:"5" validate:"min=0,max=11"`
 }
 
 type ProductNewsResponse struct {

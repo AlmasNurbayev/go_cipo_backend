@@ -19,6 +19,8 @@ type servicesProvider interface {
 
 	GetNewsById(ctx context.Context, id int64) (dto.NewsIDItemResponse, error)
 	ListNews(ctx context.Context, count int64) ([]dto.NewsItemResponse, error)
+
+	ListProducts(ctx context.Context, params dto.ProductsQueryRequest) (dto.ProductsResponse, error)
 }
 
 type Handler struct {

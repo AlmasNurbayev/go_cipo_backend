@@ -18,7 +18,11 @@ services:
       - PARSER_OFFER_FILE=${PARSER_OFFER_FILE}
       - PARSER_IMAGE_FOLDER=${PARSER_IMAGE_FOLDER}
       - PARSER_DEFAULT_USER_ID=${PARSER_DEFAULT_USER_ID}
-
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT}
+    volumes:
+      - ./pg_conf:/etc/postgresql/postgresql.conf
+      - ./input:/input
     restart: unless-stopped
     depends_on:
       - cipo_backend_postgres
@@ -35,6 +39,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_PORT=${POSTGRES_PORT}
     ports:
+      # - '${HTTP_PORT}:${HTTP_PORT}'
       - '${POSTGRES_PORT}:5432'
     volumes:
       - ./pg_conf:/etc/postgresql/postgresql.conf
@@ -42,6 +47,45 @@ services:
     networks:
       - cipo_backend_network
     #command: ['postgres', '-c', 'config_file=/etc/postgresql/postgresql.conf']
+
+  cipo_next:
+    image: node:22.14.0
+    working_dir: /app
+    depends_on:
+      - cipo_backend_server
+      # - rabbitmq
+    command: bash -c "npm install && npm run build && npm run start"
+    # command: bash -c "npm install && npm run dev"                                                               62     working_dir: /app
+    volumes:
+      - ./cipo_next/:/app
+    ports:
+      - 3200:3200
+    environment:
+      - TZ='Asia/Qyzylorda'
+      - backendUrl=${backendUrl}
+      - NEXT_PUBLIC_backendUrl=${NEXT_PUBLIC_backendUrl}
+      - frontUrl=${frontUrl}
+      - NEXT_PUBLIC_frontUrl=${NEXT_PUBLIC_frontUrl}
+    networks:
+      - cipo_backend_network
+
+  cipo_nginx:
+    image: nginx:1.27.4
+    depends_on:
+      - cipo_next
+    #environment:                                                                                                79       TZ: 'Asia/Qyzylorda'
+    #  - TZ='Asia/Qyzylorda'
+    ports:
+      - 3201:3201
+    volumes:
+      - ./backend/assets/:/app/static
+      # - ./backend/assets/store_images:/app/static/store_images
+      # - ./backend/assets/product_images:/app/static/product_images
+      # - ./backend/assets/shared_price:/app/static/shared_price
+      - ./cipo_nginx/conf.d/app.conf:/etc/nginx/conf.d/default.conf
+    restart: always
+    networks:
+      - cipo_backend_network
 
 networks:
   cipo_backend_network:

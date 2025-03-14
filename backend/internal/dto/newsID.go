@@ -7,7 +7,7 @@ import (
 )
 
 type NewsIDQueryRequest struct {
-	Id *int `form:"id" binding:"required" example:"5" validate:"gt=0,lte=20"`
+	Id int `form:"id" binding:"required" example:"5" validate:"min=0"`
 }
 
 type NewsIDItemResponse struct {

@@ -65,8 +65,6 @@ func (s *Service) GetProductById(ctx context.Context, id int64) (dto.ProductById
 		return productByIdDto, err
 	}
 
-	// TODO - "qnt_price_registry_group" section
-
 	err = copier.Copy(&productByIdDto.Qnt_price_registry_group, &qntPriceRegistryGroup)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
