@@ -12,16 +12,16 @@ import (
 )
 
 func main() {
-	var DSN, migrationsPath, migrationTable, typeTask string
+	var DSN, migrationsPath, typeTask string
 
 	flag.StringVar(&DSN, "dsn", "", "Database DSN")
 	flag.StringVar(&migrationsPath, "migrationsPath", "file://seeds", "Path to migrations")
-	flag.StringVar(&migrationTable, "migrationTable", "migrations", "Migration table name")
+	//	flag.StringVar(&migrationTable, "migrationTable", "migrations", "Migration table name")
 	flag.StringVar(&typeTask, "typeTask", "up", "what you want - up or down")
 	flag.Parse()
 
 	dir, _ := os.Getwd()
-	fmt.Println("Текущая директория:", dir)
+	fmt.Println("Seeder start - current directory:", dir)
 
 	m, err := migrate.New(migrationsPath, DSN+"&x-migrations-table=schema_seeds")
 	if err != nil {

@@ -34,6 +34,7 @@ func RequestTracingMiddleware(log *slog.Logger) fiber.Handler {
 			"ip", c.IP(),
 			"method", c.Method(),
 			"path", c.Path(),
+			"originalUrl", c.OriginalURL(),
 			"status", statusCode,
 			"duration", duration)
 		return nil

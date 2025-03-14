@@ -217,8 +217,6 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		return products, 0, errorsShare.ErrInternalError.Error
 	}
 
-	log.Info("Count query")
-
 	// считаем кол-во строк без пагинации
 	var productsCount = []models.ProductsItemEntity{}
 	qntDistinctCount := qntDistinct.RemoveLimit().RemoveOffset()
@@ -227,7 +225,7 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		log.Error(errCount.Error())
 		return products, 0, errorsShare.ErrInternalError.Error
 	}
-	log.Debug(queryCount)
+	//log.Debug(queryCount)
 	err = pgxscan.Select(ctx, s.Db, &productsCount, queryCount, argsCount...)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {

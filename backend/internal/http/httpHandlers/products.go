@@ -34,17 +34,23 @@ func (h *Handler) ListProducts(c fiber.Ctx) error {
 	params.Search_name = queryMap["search_name"]
 	params.Sort = queryMap["sort"]
 
+	// проверяем формат сортировки
 	if params.Sort != "" && !strings.Contains(params.Sort, "-") {
 		log.Error(errorsShare.ErrMaxPriceLessMinPrice.Message)
 		return c.Status(errorsShare.ErrSortBadFormat.Code).SendString(errorsShare.ErrSortBadFormat.Message)
 	}
 
+	// проверяем корректность Макс суммы
 	if (params.MinPrice != 0) && (params.MaxPrice != 0) {
 		if params.MaxPrice < params.MinPrice {
 			log.Error(errorsShare.ErrMaxPriceLessMinPrice.Message)
 			return c.Status(errorsShare.ErrMaxPriceLessMinPrice.Code).SendString(errorsShare.ErrMaxPriceLessMinPrice.Message)
-
 		}
+	}
+
+	// проверяем наличие take, если нет то задает дефолтные 20
+	if params.Take == 0 {
+		params.Take = 20
 	}
 
 	res, err := h.service.ListProducts(c.Context(), params)

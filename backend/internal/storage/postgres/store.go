@@ -38,18 +38,19 @@ func (s *Storage) CreateStore(ctx context.Context, data models.StoreEntity) (int
 }
 
 func (s *Storage) UpdateStoreFrom1C(ctx context.Context, data models.StoreEntity) error {
-	op := "postgres.UpdateStore"
+	op := "postgres.UpdateStoreFrom1C"
 	log := s.log.With(slog.String("op", op))
 
 	query := `UPDATE store SET
-	id_1c = $1, name_1c = $2, registrator_id = $3
-		WHERE id_1c = $14 RETURNING *;`
+	name_1c = $1, registrator_id = $2
+		WHERE id_1c = $3 RETURNING *;`
 	db := *s.Tx
 
 	err := pgxscan.Get(ctx, db, &data, query,
-		data.Id_1c,
 		data.Name_1c,
-		data.Registrator_id)
+		data.Registrator_id,
+		data.Id_1c,
+	)
 	if err != nil {
 		log.Error("error: ", slog.String("err", err.Error()))
 		return err

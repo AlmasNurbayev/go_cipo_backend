@@ -18,10 +18,11 @@ RUN go build -o SEEDER ./cmd/seeder/main.go
 
 # Используем stage 2: минимальный контейнер
 FROM alpine:latest
-WORKDIR /root/
+WORKDIR /app/
 
 # Копируем бинарники, миграции и конфиги из builder-образа
 COPY --from=builder /app/migrations ./migrations
+COPY --from=builder /app/seeds ./seeds
 COPY --from=builder /app/SERVER .
 COPY --from=builder /app/MIGRATOR .
 COPY --from=builder /app/PARSER .
@@ -30,4 +31,4 @@ COPY --from=builder /app/SEEDER .
 # Запускаем приложение
 #CMD sh -c './MIGRATOR -typeTask up -dsn $DSN && ./SERVER'
 #CMD sh -c './SERVER'
-ENTRYPOINT ["sh", "-c", "./MIGRATOR -typeTask up -dsn $DSN && exec ./SERVER"]
+ENTRYPOINT ["sh", "-c", "./MIGRATOR -typeTask up -dsn $DSN && ./SEEDER -typeTask up -dsn $DSN && exec ./SERVER"]
