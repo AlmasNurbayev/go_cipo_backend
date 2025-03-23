@@ -20,6 +20,7 @@ RUN go build -o CLEARDB ./cmd/cleardb/main.go
 # Используем stage 2: минимальный контейнер
 FROM alpine:latest
 WORKDIR /app/
+RUN apk add --no-cache tzdata
 
 # Копируем бинарники, миграции и конфиги из builder-образа
 COPY --from=builder /app/migrations ./migrations
