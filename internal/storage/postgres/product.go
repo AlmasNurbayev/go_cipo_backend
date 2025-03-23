@@ -110,6 +110,32 @@ func (s *Storage) GetProductById(ctx context.Context, id int64) (models.ProductB
 	return product, nil
 }
 
+func (s *Storage) GetProductByName1c(ctx context.Context, name_1c string) (models.ProductByIdEntity, error) {
+	op := "postgres.GetProductByName1c"
+	log := s.log.With(slog.String("op", op))
+
+	var product = models.ProductByIdEntity{}
+
+	db := s.Db
+	query := `SELECT p.*, 
+	vid.id as "vid_modeli.id", vid.name_1c as "vid_modeli.name_1c", 
+	pg.id as "product_group.id", pg.name_1c as "product_group.name_1c" 
+	FROM product p
+	LEFT JOIN vid_modeli vid ON p.vid_modeli_id = vid.id
+	LEFT JOIN product_group pg ON p.product_group_id = pg.id
+	WHERE p.name_1c = $1;`
+	err := pgxscan.Get(ctx, db, &product, query, name_1c)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			return product, errorsShare.ErrProductNotFound.Error
+		}
+		log.Error(err.Error())
+		return product, errorsShare.ErrInternalError.Error
+	}
+	return product, nil
+}
+
 func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, params dto.ProductsQueryRequest) ([]models.ProductsItemEntity, int, error) {
 	op := "postgres.ListProducts"
 	log := s.log.With("op", op)

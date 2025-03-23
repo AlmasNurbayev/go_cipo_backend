@@ -7,7 +7,8 @@ import (
 )
 
 type ProductByIdQueryRequest struct {
-	Id *int `form:"id" binding:"required" example:"5"`
+	Id      *int `form:"id" binding:"required" example:"5"`
+	Name_1c *int `form:"name_1c" binding:"omitempty" example:"Cipo PRL043"`
 }
 
 type ProductByIdResponse struct {

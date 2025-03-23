@@ -13,7 +13,7 @@ type handlersProvider interface {
 	GetProductFilters(c fiber.Ctx) error
 	GetStores(c fiber.Ctx) error
 
-	GetProductById(c fiber.Ctx) error
+	GetProductBy(c fiber.Ctx) error
 	ListProductNews(c fiber.Ctx) error
 
 	GetNewsById(c fiber.Ctx) error
@@ -47,7 +47,7 @@ func RegisterRoutes(app *fiber.App, handler handlersProvider, log *slog.Logger) 
 	log.Info("/stores")
 
 	log.Info("/product/")
-	api.Get("/product/", handler.GetProductById)
+	api.Get("/product/", handler.GetProductBy)
 
 	log.Info("/productsNews/")
 	api.Get("/productsNews/", handler.ListProductNews)

@@ -81,3 +81,67 @@ func (s *Service) GetProductById(ctx context.Context, id int64) (dto.ProductById
 
 	return productByIdDto, nil
 }
+
+func (s *Service) GetProductByName1c(ctx context.Context, name_1c string) (dto.ProductByIdResponse, error) {
+	op := "services.GetProductByName1c"
+	log := s.log.With(slog.String("op", op))
+
+	productByNameDto := dto.ProductByIdResponse{}
+
+	productByIdEntity, err := s.postgresStorage.GetProductByName1c(ctx, name_1c)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	log.Info("productByIdEntity", slog.Any("productByIdEntity", productByIdEntity))
+
+	imagesEntity, err := s.postgresStorage.GetImagesByProductId(ctx, productByIdEntity.Id)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	lastOfferRegistrator, err := s.postgresStorage.GetLastOfferRegistrator(ctx)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	qntPriceRegistry, err := s.postgresStorage.GetQntPriceRegistryByProductId(ctx, productByIdEntity.Id, lastOfferRegistrator.Id)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	qntPriceRegistryGroup, err := s.postgresStorage.GetQntPriceRegistryGroupByProductId(ctx, productByIdEntity.Id, lastOfferRegistrator.Id)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	err = copier.Copy(&productByNameDto, &productByIdEntity)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+	err = copier.Copy(&productByNameDto.Image_registry, &imagesEntity)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	err = copier.Copy(&productByNameDto.Qnt_price_registry, &qntPriceRegistry)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	err = copier.Copy(&productByNameDto.Qnt_price_registry_group, &qntPriceRegistryGroup)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productByNameDto, err
+	}
+
+	return productByNameDto, nil
+}
