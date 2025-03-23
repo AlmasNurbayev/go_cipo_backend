@@ -94,8 +94,6 @@ func (s *Service) GetProductByName1c(ctx context.Context, name_1c string) (dto.P
 		return productByNameDto, err
 	}
 
-	log.Info("productByIdEntity", slog.Any("productByIdEntity", productByIdEntity))
-
 	imagesEntity, err := s.postgresStorage.GetImagesByProductId(ctx, productByIdEntity.Id)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
