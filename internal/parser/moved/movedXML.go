@@ -14,8 +14,13 @@ func MovedInputFiles(cfg *config.Config, log *slog.Logger) (*MovedInputFilesT, e
 	op := "moved.MovedInputFiles"
 	log = log.With(slog.String("op", op))
 
+	inputPath := "input"
+	if cfg.Parser.PARSER_INPUT_PATH != "" {
+		inputPath = cfg.Parser.PARSER_INPUT_PATH
+	}
+
 	currentTime := time.Now()
-	folderName := "input/webdata_" + currentTime.Format("2006_01_02_15_04_05")
+	folderName := inputPath + "/webdata_" + currentTime.Format("2006_01_02_15_04_05")
 	if _, err := os.Stat(folderName); os.IsNotExist(err) {
 		err := os.Mkdir(folderName, 0755)
 		if err != nil {
@@ -31,7 +36,7 @@ func MovedInputFiles(cfg *config.Config, log *slog.Logger) (*MovedInputFilesT, e
 	}
 
 	for i, file := range filesName {
-		oldPath := "input/" + file.PathFile
+		oldPath := inputPath + "/" + file.PathFile
 		newPath := folderName + "/" + file.PathFile
 		filesName[i].PathFile = newPath
 		if _, err := os.Stat(oldPath); err == nil {

@@ -66,7 +66,11 @@ func (p *Parser) Run() {
 		p.Log.Error(err.Error())
 		os.Exit(1)
 	}
-	if err = moved.CopyImages("assets", movedFiles.NewPath, p.Log); err != nil {
+	assets_path := "assets"
+	if p.Cfg.Parser.PARSER_ASSETS_PATH != "" {
+		assets_path = p.Cfg.Parser.PARSER_ASSETS_PATH
+	}
+	if err = moved.CopyImages(assets_path, movedFiles.NewPath, p.Log); err != nil {
 		p.Log.Error(err.Error())
 	}
 	bytes, err := utils.PrintAsJSON(movedFiles)

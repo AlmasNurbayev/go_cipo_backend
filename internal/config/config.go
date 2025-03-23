@@ -30,6 +30,8 @@ type Config struct {
 		PARSER_OFFER_FILE         string `env:"PARSER_OFFER_FILE"`
 		PARSER_IMAGE_FOLDER       string `env:"PARSER_IMAGE_FOLDER"`
 		PARSER_DEFAULT_USER_ID    int64  `env:"PARSER_DEFAULT_USER_ID"`
+		PARSER_ASSETS_PATH        string `env:"PARSER_ASSETS_PATH"`
+		PARSER_INPUT_PATH         string `env:"PARSER_INPUT_PATH"`
 	}
 }
 
