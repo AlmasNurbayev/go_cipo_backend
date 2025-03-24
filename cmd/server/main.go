@@ -21,7 +21,7 @@ func main() {
 	var logFile *os.File
 	if cfg.Env == "prod" {
 		var err error
-		logFile, err = os.OpenFile("../assets/server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0775)
+		logFile, err = os.OpenFile("assets/server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0775)
 		if err != nil {
 			panic(err)
 		}
