@@ -86,7 +86,7 @@ func (s *Storage) UpdateProductById1c(ctx context.Context, data models.ProductEn
 
 func (s *Storage) GetProductById(ctx context.Context, id int64) (models.ProductByIdEntity, error) {
 	op := "postgres.GetProductById"
-	log := s.log.With(slog.String("op", op))
+	log := s.log.With("op", op, "id", id)
 
 	var product = models.ProductByIdEntity{}
 
@@ -112,7 +112,7 @@ func (s *Storage) GetProductById(ctx context.Context, id int64) (models.ProductB
 
 func (s *Storage) GetProductByName1c(ctx context.Context, name_1c string) (models.ProductByIdEntity, error) {
 	op := "postgres.GetProductByName1c"
-	log := s.log.With(slog.String("op", op))
+	log := s.log.With("op", op, "name_1c", name_1c)
 
 	var product = models.ProductByIdEntity{}
 

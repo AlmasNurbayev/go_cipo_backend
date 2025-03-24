@@ -13,7 +13,7 @@ import (
 
 func (s *Storage) GetNewsById(ctx context.Context, id int64) (models.NewsEntity, error) {
 	op := "postgres.GetNewsById"
-	log := s.log.With("op", op)
+	log := s.log.With("op", op, "id", id)
 
 	var news = models.NewsEntity{}
 
