@@ -19,6 +19,16 @@ func main() {
 	cfg := config.MustLoad()
 
 	var logFile *os.File
+	if cfg.Env == "prod" {
+		var err error
+		logFile, err = os.OpenFile("../assets/server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0775)
+		if err != nil {
+			panic(err)
+		}
+		defer logFile.Close()
+	} else {
+		logFile = nil
+	}
 
 	Log := logger.InitLogger(cfg.Env, logFile)
 	Log.Info("============ start main ============")
@@ -39,12 +49,6 @@ func main() {
 	fmt.Println("received signal " + signalString.String())
 
 	app.Stop()
-	err := logFile.Close()
-	if err != nil {
-		Log.Error(err.Error())
-	}
-
 	Log.Info("server stopped")
 	fmt.Println("server stopped")
-
 }

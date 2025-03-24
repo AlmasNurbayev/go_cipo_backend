@@ -31,10 +31,6 @@ func InitLogger(env string, logFile *os.File) *slog.Logger {
 	case envProd:
 		// если передан файл лога - создаем и используем файл
 		if logFile != nil {
-			logFile, err := os.OpenFile("../assets/server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0775)
-			if err != nil {
-				panic(err)
-			}
 			log = slog.New(slog.NewJSONHandler(logFile, &slog.HandlerOptions{
 				Level: slog.LevelInfo,
 			}))
