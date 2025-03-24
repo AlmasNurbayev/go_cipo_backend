@@ -39,7 +39,10 @@ func main() {
 	fmt.Println("received signal " + signalString.String())
 
 	app.Stop()
-	logFile.Close()
+	err := logFile.Close()
+	if err != nil {
+		Log.Error(err.Error())
+	}
 
 	Log.Info("server stopped")
 	fmt.Println("server stopped")

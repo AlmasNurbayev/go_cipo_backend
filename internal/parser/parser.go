@@ -34,7 +34,7 @@ func (p *Parser) Init() {
 
 	p.Version = "v0.1.0"
 	p.Cfg = config.MustLoad()
-	p.Log = logger.InitLogger(p.Cfg.Env)
+	p.Log = logger.InitLogger(p.Cfg.Env, nil)
 	p.Log.With("op", op)
 	p.Log.Info("init parser on env: " + p.Cfg.Env)
 	p.Log.Debug("debug message is enabled")

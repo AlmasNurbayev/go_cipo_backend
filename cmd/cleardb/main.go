@@ -23,7 +23,7 @@ func main() {
 	flag.Parse()
 
 	Cfg := config.MustLoad()
-	Logger := logger.InitLogger(Cfg.Env)
+	Logger := logger.InitLogger(Cfg.Env, nil)
 	Logger.With("op", op)
 	Logger.Info("init cleardb on env: " + Cfg.Env)
 
