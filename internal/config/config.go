@@ -19,6 +19,7 @@ type Config struct {
 	POSTGRES_PORT     string        `env:"POSTGRES_PORT"`
 	TokenTTL          time.Duration `env:"TOKEN_TTL"`
 	HTTP              struct {
+		HTTP_LOG_FILE      string        `env:"HTTP_LOG_FILE"`
 		HTTP_PORT          string        `env:"HTTP_PORT"`
 		HTTP_READ_TIMEOUT  time.Duration `env:"HTTP_READ_TIMEOUT"`
 		HTTP_WRITE_TIMEOUT time.Duration `env:"HTTP_WRITE_TIMEOUT"`
