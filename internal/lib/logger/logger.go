@@ -16,7 +16,7 @@ const (
 // InitLogger initializes a logger based on the environment.
 //
 // It takes a string parameter 'env' and returns a pointer to slog.Logger.
-func InitLogger(env string) *slog.Logger {
+func InitLogger(env string, logFile *os.File) *slog.Logger {
 	var log *slog.Logger
 
 	switch env {
@@ -29,7 +29,11 @@ func InitLogger(env string) *slog.Logger {
 			Level: slog.LevelDebug,
 		}))
 	case envProd:
-		log = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		logFile, err := os.OpenFile("../assets/server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0775)
+		if err != nil {
+			panic(err)
+		}
+		log = slog.New(slog.NewJSONHandler(logFile, &slog.HandlerOptions{
 			Level: slog.LevelInfo,
 		}))
 	}

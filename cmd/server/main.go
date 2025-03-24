@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"os/signal"
 	"runtime"
@@ -10,19 +11,18 @@ import (
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/app"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/logger"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/utils"
 )
 
 func main() {
+	// ключевые сообщения дублируем и в консоль и в логгер (он может писать в файл)
 	fmt.Println("============ start main ============")
 	cfg := config.MustLoad()
-	Log := logger.InitLogger(cfg.Env)
-	p, err := utils.PrintAsJSON(cfg)
-	if err != nil {
-		panic(err)
-	}
-	Log.Info("load config: ")
-	Log.Info(string(*p))
+
+	var logFile *os.File
+
+	Log := logger.InitLogger(cfg.Env, logFile)
+	Log.Info("============ start main ============")
+	Log.Info("load: ", slog.Any("config", cfg))
 	Log.Debug("debug message is enabled")
 
 	runtime.GOMAXPROCS(cfg.GOMAXPROCS)
@@ -36,8 +36,12 @@ func main() {
 
 	signalString := <-done
 	Log.Info("received signal " + signalString.String())
+	fmt.Println("received signal " + signalString.String())
 
 	app.Stop()
+	logFile.Close()
 
 	Log.Info("server stopped")
+	fmt.Println("server stopped")
+
 }

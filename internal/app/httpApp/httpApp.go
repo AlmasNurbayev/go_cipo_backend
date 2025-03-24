@@ -39,7 +39,10 @@ func NewApp(
 		WriteTimeout:    cfg.HTTP.HTTP_WRITE_TIMEOUT,
 		IdleTimeout:     cfg.HTTP.HTTP_IDLE_TIMEOUT,
 	})
-	server.Use(middleware.RequestTracingMiddleware(log))
+
+	if cfg.Env != "prod" {
+		server.Use(middleware.RequestTracingMiddleware(log))
+	}
 
 	service := services.NewService(log, storage, cfg)
 
