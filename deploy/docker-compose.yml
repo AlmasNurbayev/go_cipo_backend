@@ -26,6 +26,11 @@ services:
       - ./input:/app/input
       - ./assets:/app/assets
       - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:${HTTP_PORT}/healthz']
+      interval: 10s
+      timeout: 5s
+      retries: 3
     restart: unless-stopped
     depends_on:
       - cipo_backend_postgres

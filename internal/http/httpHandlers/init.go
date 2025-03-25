@@ -5,6 +5,7 @@ import (
 	"log/slog"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 type servicesProvider interface {
@@ -25,14 +26,16 @@ type servicesProvider interface {
 }
 
 type Handler struct {
-	log     *slog.Logger
-	service servicesProvider
+	log          *slog.Logger
+	service      servicesProvider
+	promRegistry *prometheus.Registry
 }
 
-func NewHandler(log *slog.Logger, service servicesProvider) *Handler {
+func NewHandler(log *slog.Logger, service servicesProvider, registry *prometheus.Registry) *Handler {
 	return &Handler{
-		log:     log,
-		service: service,
+		log:          log,
+		service:      service,
+		promRegistry: registry,
 	}
 }
 

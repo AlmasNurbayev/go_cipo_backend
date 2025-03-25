@@ -44,10 +44,15 @@ func NewApp(
 		server.Use(middleware.RequestTracingMiddleware(log))
 	}
 
+	server.Use(middleware.PrometheusMiddleware)
 	service := services.NewService(log, storage, cfg)
 
-	handlers := httphandlers.NewHandler(log, service)
+	handlers := httphandlers.NewHandler(log, service, newPromRegistry())
 	httproutes.RegisterRoutes(server, handlers, log)
+
+	server.Get("/healthz", func(c fiber.Ctx) error {
+		return c.Status(200).SendString("OK")
+	})
 
 	return &HttpApp{
 		Log:             log,
