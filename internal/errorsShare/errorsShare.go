@@ -29,11 +29,6 @@ var (
 		Message: "bad request",
 		Error:   errors.New("bad request")}
 
-	ErrProductNotFound = ErrorHttp{
-		Code:    404,
-		Message: "product not found",
-		Error:   errors.New("product not found")}
-
 	ErrNewsNotFound = ErrorHttp{
 		Code:    404,
 		Message: "news not found",
@@ -48,4 +43,9 @@ var (
 		Code:    400,
 		Message: "sort don't contain -",
 		Error:   errors.New("sort don't contain -")}
+
+	ErrProductNotFound = ErrorHttp{
+		Code:    404,
+		Message: "product not found",
+		Error:   errors.New("product not found")}
 )
