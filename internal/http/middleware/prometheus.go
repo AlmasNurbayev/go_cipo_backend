@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
@@ -44,7 +43,7 @@ func PrometheusMiddleware(c fiber.Ctx) error {
 	httpRequestCounter.WithLabelValues(c.Method(), strconv.Itoa(c.Response().StatusCode()), c.Route().Path, c.OriginalURL()).Inc()
 	httpRequestDuration.WithLabelValues(c.Method(), c.Route().Path, strconv.Itoa(c.Response().StatusCode()), c.OriginalURL()).Observe(duration)
 
-	fmt.Println("Duration: ", duration)
+	//fmt.Println("Duration: ", duration)
 
 	return err
 }
