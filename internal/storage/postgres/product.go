@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"log/slog"
+	"strconv"
 	"strings"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
@@ -102,6 +103,7 @@ func (s *Storage) GetProductById(ctx context.Context, id int64) (models.ProductB
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			log.Error(errorsShare.ErrProductNotFound.Message, slog.String("id", strconv.FormatInt(id, 10)))
 			return product, errorsShare.ErrProductNotFound.Error
 		}
 		log.Error(err.Error())
@@ -128,6 +130,7 @@ func (s *Storage) GetProductByName1c(ctx context.Context, name_1c string) (model
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			log.Error(errorsShare.ErrProductNotFound.Message, slog.String("name_1c", name_1c))
 			return product, errorsShare.ErrProductNotFound.Error
 		}
 		log.Error(err.Error())
