@@ -24,7 +24,7 @@ func PrometheusMiddleware(httpRequestCounter *prometheus.CounterVec, httpRequest
 		duration := time.Since(start).Seconds()
 
 		// Записываем метрики
-		httpRequestCounter.WithLabelValues(c.Method(), strconv.Itoa(c.Response().StatusCode()), c.Route().Path, c.OriginalURL()).Inc()
+		httpRequestCounter.WithLabelValues(c.Method(), c.Route().Path, strconv.Itoa(c.Response().StatusCode()), c.OriginalURL()).Inc()
 		httpRequestDuration.WithLabelValues(c.Method(), c.Route().Path, strconv.Itoa(c.Response().StatusCode()), c.OriginalURL()).Observe(duration)
 
 		return nil
