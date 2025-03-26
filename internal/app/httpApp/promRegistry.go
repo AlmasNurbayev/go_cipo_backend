@@ -5,7 +5,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/collectors"
 )
 
-func newPromRegistry() *prometheus.Registry {
+func newPromRegistry() (*prometheus.Registry, *prometheus.CounterVec, *prometheus.HistogramVec) {
 	registry := prometheus.NewRegistry()
 	httpRequestDuration := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
@@ -30,5 +30,5 @@ func newPromRegistry() *prometheus.Registry {
 		httpRequestCounter,
 	)
 
-	return registry
+	return registry, httpRequestCounter, httpRequestDuration
 }

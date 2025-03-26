@@ -11,8 +11,6 @@ import (
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/storage/postgres"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v3"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/collectors"
 )
 
 type structValidator struct {
@@ -48,31 +46,8 @@ func NewApp(
 
 	service := services.NewService(log, storage, cfg)
 
-	registry := prometheus.NewRegistry()
-	httpRequestDuration := prometheus.NewHistogramVec(
-		prometheus.HistogramOpts{
-			Name:    "http_request_duration_milliseconds",
-			Help:    "Duration of HTTP requests in milliseconds",
-			Buckets: []float64{1, 10, 50, 100, 200, 500, 1000}, // Бакеты аналогичны JS
-		},
-		[]string{"method", "route", "statusCode", "originalUrl"},
-	)
-	httpRequestCounter := prometheus.NewCounterVec(
-		prometheus.CounterOpts{
-			Name: "http_requests_total",
-			Help: "Total number of HTTP requests",
-		},
-		[]string{"method", "route", "statusCode", "originalUrl"},
-	)
-
-	registry.MustRegister(
-		collectors.NewGoCollector(),
-		collectors.NewProcessCollector(collectors.ProcessCollectorOpts{}),
-		httpRequestDuration,
-		httpRequestCounter,
-	)
-
-	server.Use(middleware.PrometheusMiddlewareFunc(httpRequestCounter, httpRequestDuration))
+	registry, httpRequestCounter, httpRequestDuration := newPromRegistry()
+	server.Use(middleware.PrometheusMiddleware(httpRequestCounter, httpRequestDuration))
 
 	handlers := httphandlers.NewHandler(log, service, registry)
 	httproutes.RegisterRoutes(server, handlers, log)

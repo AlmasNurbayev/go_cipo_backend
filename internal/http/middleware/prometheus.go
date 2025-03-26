@@ -9,13 +9,16 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-func PrometheusMiddlewareFunc(httpRequestCounter *prometheus.CounterVec, httpRequestDuration *prometheus.HistogramVec) fiber.Handler {
+func PrometheusMiddleware(httpRequestCounter *prometheus.CounterVec, httpRequestDuration *prometheus.HistogramVec) fiber.Handler {
 	return func(c fiber.Ctx) error {
 
 		start := time.Now()
 
 		// Выполняем следующий обработчик
 		err := c.Next()
+		if err != nil {
+			return err
+		}
 
 		// Засекаем время выполнения
 		duration := time.Since(start).Seconds()
@@ -24,9 +27,7 @@ func PrometheusMiddlewareFunc(httpRequestCounter *prometheus.CounterVec, httpReq
 		httpRequestCounter.WithLabelValues(c.Method(), strconv.Itoa(c.Response().StatusCode()), c.Route().Path, c.OriginalURL()).Inc()
 		httpRequestDuration.WithLabelValues(c.Method(), c.Route().Path, strconv.Itoa(c.Response().StatusCode()), c.OriginalURL()).Observe(duration)
 
-		//fmt.Println("Duration: ", duration)
-
-		return err
+		return nil
 	}
 
 }

@@ -5,7 +5,6 @@ import (
 	"log/slog"
 
 	"github.com/gofiber/fiber/v3"
-	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/expfmt"
 )
 
@@ -15,7 +14,7 @@ func (h *Handler) GetMetrics(c fiber.Ctx) error {
 	log := h.log.With(slog.String("op", op))
 
 	// Собираем метрики из глобального реестра
-	mfs, err := prometheus.DefaultGatherer.Gather()
+	mfs, err := h.promRegistry.Gather()
 	if err != nil {
 		log.Error("Error gathering metrics:", slog.String("err", err.Error()))
 		return c.Status(500).SendString("Error gathering metrics")
