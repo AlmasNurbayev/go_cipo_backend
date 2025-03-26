@@ -36,20 +36,21 @@ func RegisterRoutes(app *fiber.App, handler handlersProvider, log *slog.Logger) 
 
 	log.Info("/api")
 	api := app.Group("/api")
+
 	log.Info("/api/user")
 	api.Get("/user/search/", handler.GetUserSearch)
 
 	log.Info("/api/user/:id?")
 	api.Get("/user/:id?", handler.GetUserById)
 
-	api.Get("/api/user/search/", handler.GetUserSearch)
-	log.Info("/user/search/")
+	log.Info("/api/user/search/")
+	api.Get("/user/search/", handler.GetUserSearch)
 
-	api.Get("/api/productsFilter", handler.GetProductFilters)
-	log.Info("/productsFilter")
+	log.Info("/api/productsFilter")
+	api.Get("/productsFilter", handler.GetProductFilters)
 
-	api.Get("/api/stores", handler.GetStores)
-	log.Info("/stores")
+	log.Info("/api/stores")
+	api.Get("/stores", handler.GetStores)
 
 	log.Info("/api/product/")
 	api.Get("/product/", handler.GetProductBy)
