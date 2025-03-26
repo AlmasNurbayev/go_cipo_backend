@@ -9,7 +9,7 @@ func newPromRegistry() *prometheus.Registry {
 	registry := prometheus.NewRegistry()
 	httpRequestDuration := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
-			Name:    "myapp_http_request_duration_milliseconds",
+			Name:    "http_request_duration_milliseconds",
 			Help:    "Duration of HTTP requests in milliseconds",
 			Buckets: []float64{1, 10, 50, 100, 200, 500, 1000}, // Бакеты аналогичны JS
 		},
