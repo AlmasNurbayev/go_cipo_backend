@@ -23,9 +23,18 @@ func PrometheusMiddleware(httpRequestCounter *prometheus.CounterVec, httpRequest
 		// Засекаем время выполнения
 		duration := time.Since(start).Seconds()
 
+		routePath := "unknown"
+		if c.Route() != nil {
+			routePath = c.Route().Path
+		}
+		statusCode := c.Response().StatusCode()
+		if statusCode == 0 {
+			statusCode = 200 // Значение по умолчанию
+		}
+
 		// Записываем метрики
-		httpRequestCounter.WithLabelValues(c.Method(), c.Route().Path, strconv.Itoa(c.Response().StatusCode()), c.OriginalURL()).Inc()
-		httpRequestDuration.WithLabelValues(c.Method(), c.Route().Path, strconv.Itoa(c.Response().StatusCode()), c.OriginalURL()).Observe(duration)
+		httpRequestCounter.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), c.OriginalURL()).Inc()
+		httpRequestDuration.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), c.OriginalURL()).Observe(duration)
 
 		return nil
 	}
