@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
@@ -33,10 +32,12 @@ func PrometheusMiddleware(httpRequestCounter *prometheus.CounterVec, httpRequest
 			statusCode = 200 // Значение по умолчанию
 		}
 
-		fmt.Println("httpRequestDuration address", httpRequestDuration)
-		// Записываем метрики
-		httpRequestCounter.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), c.OriginalURL()).Inc()
-		httpRequestDuration.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), c.OriginalURL()).Observe(duration)
+		//fmt.Println("httpRequestDuration address", httpRequestDuration)
+		// сменили полный originalUrl на частичный routePath
+		//httpRequestCounter.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), c.OriginalURL()).Inc()
+		//httpRequestDuration.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), c.OriginalURL()).Observe(duration)
+		httpRequestCounter.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), routePath).Inc()
+		httpRequestDuration.WithLabelValues(c.Method(), routePath, strconv.Itoa(statusCode), routePath).Observe(duration)
 
 		return nil
 	}
