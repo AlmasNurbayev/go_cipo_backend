@@ -1,11 +1,14 @@
 package httpApp
 
 import (
+	"fmt"
+	"log/slog"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/collectors"
 )
 
-func newPromRegistry() (*prometheus.Registry, *prometheus.CounterVec, *prometheus.HistogramVec) {
+func newPromRegistry(log *slog.Logger) (*prometheus.Registry, *prometheus.CounterVec, *prometheus.HistogramVec) {
 	registry := prometheus.NewRegistry()
 	httpRequestDuration := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
@@ -29,6 +32,8 @@ func newPromRegistry() (*prometheus.Registry, *prometheus.CounterVec, *prometheu
 		httpRequestDuration,
 		httpRequestCounter,
 	)
+	log.Info("init prometheus registry")
+	fmt.Println("init prometheus registry")
 
 	return registry, httpRequestCounter, httpRequestDuration
 }

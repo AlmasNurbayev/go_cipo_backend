@@ -46,7 +46,7 @@ func NewApp(
 
 	service := services.NewService(log, storage, cfg)
 
-	registry, httpRequestCounter, httpRequestDuration := newPromRegistry()
+	registry, httpRequestCounter, httpRequestDuration := newPromRegistry(log)
 	server.Use(middleware.PrometheusMiddleware(httpRequestCounter, httpRequestDuration))
 
 	handlers := httphandlers.NewHandler(log, service, registry)
