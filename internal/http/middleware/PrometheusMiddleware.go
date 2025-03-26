@@ -21,7 +21,7 @@ func PrometheusMiddleware(httpRequestCounter *prometheus.CounterVec, httpRequest
 		}
 
 		// Засекаем время выполнения
-		duration := time.Since(start).Seconds()
+		duration := time.Since(start).Milliseconds()
 
 		routePath := "unknown"
 		if c.Route() != nil {
