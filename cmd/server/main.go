@@ -51,5 +51,5 @@ func main() {
 
 	app.Stop()
 	Log.Info("server stopped")
-	fmt.Println("server stopped")
+	fmt.Println("============ server stopped ============")
 }

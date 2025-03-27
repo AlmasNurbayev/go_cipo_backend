@@ -36,8 +36,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./
-          file: ./Dockerfile # Укажите путь, если Dockerfile в другом месте
-          push: true
+          file: ./Dockerfile
+          push:
+          target: final # Если multi-stage
           tags: |
             almasnurbayev/go_cipo_backend:latest
             almasnurbayev/go_cipo_backend:${{ env.VERSION }}

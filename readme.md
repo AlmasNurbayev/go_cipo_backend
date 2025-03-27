@@ -39,7 +39,7 @@
 - [v] парсер целиком
 - [v] clearDB - бинарник для чистки в БД таблицы qnt_price_registry, которая разрастается при каждом парсинге
 - [v] docker билд контейнера и пуш в docker hub
-- [ ] healthcheck в сервере и docker compose
-- [ ] prom-client для мониторинга
+- [v] healthcheck в сервере и docker compose
+- [v] prom-client для мониторинга
 - [ ] e2e-тесты и юнит-тесты (парсера целиком и отдельных функций)
 - [ ] стейдж-развертывание из контейнеров в docker swarm, helm

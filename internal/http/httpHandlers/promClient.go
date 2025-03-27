@@ -16,7 +16,7 @@ func (h *Handler) GetMetrics(c fiber.Ctx) error {
 	// Собираем метрики из глобального реестра
 	mfs, err := h.promRegistry.Gather()
 	if err != nil {
-		log.Error("Error gathering metrics:", slog.String("err", err.Error()[:20]))
+		log.Error("Error gathering metrics:", slog.String("err", err.Error()[:40]))
 		return c.Status(500).SendString("Error gathering metrics")
 	}
 
