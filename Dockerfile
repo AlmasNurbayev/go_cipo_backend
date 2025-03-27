@@ -18,7 +18,7 @@ RUN go build -o CLEARDB ./cmd/cleardb/main.go
 
 
 # Используем stage 2: минимальный контейнер
-FROM alpine:latest
+FROM alpine:3.21.3 AS final
 WORKDIR /app/
 
 # Добавляем необходимые зависимости
