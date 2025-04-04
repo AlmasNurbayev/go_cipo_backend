@@ -17,3 +17,10 @@ func ValidateQueryParams(c fiber.Ctx, dataStruct any) error {
 	}
 	return nil
 }
+
+func ValidateBody(c fiber.Ctx, dataStruct any) error {
+	if err := c.Bind().Body(dataStruct); err != nil {
+		return err
+	}
+	return nil
+}

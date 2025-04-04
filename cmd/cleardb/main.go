@@ -56,7 +56,10 @@ func main() {
 	if err != nil {
 		// если ошибка, то откатываем транзакцию
 		Logger.Error(err.Error())
-		pgxTransaction.Rollback(ctx)
+		err := pgxTransaction.Rollback(ctx)
+		if err != nil {
+			Logger.Error(err.Error())
+		}
 		Storage.Close()
 		os.Exit(1)
 	}
@@ -65,7 +68,10 @@ func main() {
 	if len(list) == 0 {
 		// если ничего нет для удаления, то откатываем транзакцию
 		Logger.Info("No items to delete")
-		pgxTransaction.Rollback(ctx)
+		err := pgxTransaction.Rollback(ctx)
+		if err != nil {
+			Logger.Error(err.Error())
+		}
 		Storage.Close()
 		defer cancel()
 		return
@@ -85,7 +91,10 @@ func main() {
 	if err != nil {
 		// если ошибка, то откатываем транзакцию
 		Logger.Error(err.Error())
-		pgxTransaction.Rollback(ctx)
+		err := pgxTransaction.Rollback(ctx)
+		if err != nil {
+			Logger.Error(err.Error())
+		}
 		Storage.Close()
 		defer cancel()
 		os.Exit(1)

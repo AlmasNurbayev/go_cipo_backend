@@ -23,7 +23,7 @@ func (s *ParserService) ProductGroupService(mainStruct *xmltypes.ImportType,
 		log.Error("Error selecting product_groups:", slog.String("err", err.Error()))
 		return err
 	}
-	log.Info("exist product_groups: " + strconv.Itoa(len(existsProductGroups)))
+	log.Debug("exist product_groups: " + strconv.Itoa(len(existsProductGroups)))
 
 	existsMap := make(map[string]models.ProductsGroupEntity)
 	for _, e := range existsProductGroups {
@@ -50,9 +50,9 @@ func (s *ParserService) ProductGroupService(mainStruct *xmltypes.ImportType,
 		}
 	}
 
-	log.Info("ProductGroup parsing: ", slog.Int("count", len(NewProductGroups)))
-	log.Info("== Duplicated and updated ProductGroup: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new ProductGroup: ", slog.Int("count", len(toCreate)))
+	log.Debug("ProductGroup parsing: ", slog.Int("count", len(NewProductGroups)))
+	log.Debug("Duplicated and updated ProductGroup: ", slog.Int("count", len(toUpdate)))
+	log.Info("Created new ProductGroup: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

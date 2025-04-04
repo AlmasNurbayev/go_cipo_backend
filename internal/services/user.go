@@ -13,11 +13,9 @@ func (s *Service) GetUserByIdService(ctx context.Context, id int64) (dto.UserRes
 	op := "services.GetUserByIdService"
 	log := s.log.With(slog.String("op", op))
 
-	userEntity, err := s.postgresStorage.GetUserByIdStorage(ctx, id)
-
 	userDTO := dto.UserResponse{}
-	copier.Copy(&userDTO, &userEntity)
 
+	userEntity, err := s.postgresStorage.GetUserByIdStorage(ctx, id)
 	if err != nil {
 		log.Warn(err.Error())
 		if err == errorsShare.ErrUserNotFound.Error {
@@ -25,6 +23,13 @@ func (s *Service) GetUserByIdService(ctx context.Context, id int64) (dto.UserRes
 		}
 		return userDTO, err
 	}
+
+	err = copier.Copy(&userDTO, &userEntity)
+	if err != nil {
+		log.Warn(err.Error())
+		return userDTO, errorsShare.ErrInternalError.Error
+	}
+
 	return userDTO, nil
 }
 

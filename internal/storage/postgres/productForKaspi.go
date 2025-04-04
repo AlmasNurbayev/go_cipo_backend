@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"errors"
 	"log/slog"
-	"strconv"
 	"strings"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
@@ -15,135 +14,7 @@ import (
 	"github.com/georgysavva/scany/v2/pgxscan"
 )
 
-func (s *Storage) ListProduct(ctx context.Context) ([]models.ProductEntity, error) {
-	op := "postgres.ListProduct"
-	log := s.log.With("op", op)
-
-	var products = []models.ProductEntity{}
-
-	query := `SELECT * FROM product;`
-	err := pgxscan.Select(ctx, *s.Tx, &products, query)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			// если выкидывается ошибка нет строк, возвращаем пустой массив
-			return products, nil
-		}
-		log.Error(err.Error())
-		return products, errorsShare.ErrInternalError.Error
-	}
-	return products, nil
-}
-
-func (s *Storage) CreateProduct(ctx context.Context, data models.ProductEntity) (int64, error) {
-	op := "postgres.CreateProduct"
-	log := s.log.With(slog.String("op", op))
-
-	query := `INSERT INTO product
-	(id_1c, name_1c, registrator_id, name, product_group_id, product_vid_id,
-		 vid_modeli_id, artikul, base_ed, description, material_inside, 
-		 material_podoshva, material_up, sex, product_folder, main_color, public_web,
-		 kaspi_category, kaspi_in_sale) 
-		VALUES 
-		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) 
-		RETURNING id;`
-	db := *s.Tx
-
-	err := db.QueryRow(ctx, query,
-		data.Id_1c, data.Name_1c, data.Registrator_id, data.Name, data.Product_group_id,
-		data.Product_vid_id, data.Vid_modeli_id, data.Artikul, data.Base_ed, data.Description,
-		data.Material_inside, data.Material_podoshva, data.Material_up, data.Sex,
-		data.Product_folder, data.Main_color, data.Public_web, data.Kaspi_category,
-		data.Kaspi_in_sale).Scan(
-		&data.Id)
-	if err != nil {
-		log.Error("error: ", slog.String("err", err.Error()))
-		return data.Id, err
-	}
-	return data.Id, nil
-}
-
-func (s *Storage) UpdateProductById1c(ctx context.Context, data models.ProductEntity) error {
-	op := "postgres.UpdateProduct"
-	log := s.log.With(slog.String("op", op))
-
-	query := `UPDATE product SET
-	id_1c = $1, name_1c = $2, registrator_id = $3, name = $4, 
-	product_group_id = $5, product_vid_id = $6, vid_modeli_id = $7, 
-	artikul = $8, base_ed = $9, description = $10, material_inside = $11, 
-	material_podoshva = $12, material_up = $13, sex = $14, 
-	product_folder = $15, main_color = $16, public_web = $17,
-	kaspi_category = $18, kaspi_in_sale = $19
-		WHERE id_1c = $20 RETURNING *;`
-	db := *s.Tx
-
-	err := pgxscan.Get(ctx, db, &data, query,
-		data.Id_1c, data.Name_1c, data.Registrator_id, data.Name, data.Product_group_id,
-		data.Product_vid_id, data.Vid_modeli_id, data.Artikul, data.Base_ed, data.Description,
-		data.Material_inside, data.Material_podoshva, data.Material_up, data.Sex,
-		data.Product_folder, data.Main_color, data.Public_web, data.Kaspi_category,
-		data.Kaspi_in_sale, data.Id_1c)
-	if err != nil {
-		log.Error("error: ", slog.String("err", err.Error()))
-		return err
-	}
-	return nil
-}
-
-func (s *Storage) GetProductById(ctx context.Context, id int64) (models.ProductByIdEntity, error) {
-	op := "postgres.GetProductById"
-	log := s.log.With("op", op, "id", id)
-
-	var product = models.ProductByIdEntity{}
-
-	db := s.Db
-	query := `SELECT p.*, 
-	vid.id as "vid_modeli.id", vid.name_1c as "vid_modeli.name_1c", 
-	pg.id as "product_group.id", pg.name_1c as "product_group.name_1c" 
-	FROM product p
-	LEFT JOIN vid_modeli vid ON p.vid_modeli_id = vid.id
-	LEFT JOIN product_group pg ON p.product_group_id = pg.id
-	WHERE p.id = $1;`
-	err := pgxscan.Get(ctx, db, &product, query, id)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			// если выкидывается ошибка нет строк, возвращаем пустой массив
-			log.Error(errorsShare.ErrProductNotFound.Message, slog.String("id", strconv.FormatInt(id, 10)))
-			return product, errorsShare.ErrProductNotFound.Error
-		}
-		log.Error(err.Error())
-		return product, errorsShare.ErrInternalError.Error
-	}
-	return product, nil
-}
-
-func (s *Storage) GetProductByName1c(ctx context.Context, name_1c string) (models.ProductByIdEntity, error) {
-	op := "postgres.GetProductByName1c"
-	log := s.log.With("op", op, "name_1c", name_1c)
-
-	var product = models.ProductByIdEntity{}
-
-	db := s.Db
-	query := `SELECT p.*, 
-	vid.id as "vid_modeli.id", vid.name_1c as "vid_modeli.name_1c", 
-	pg.id as "product_group.id", pg.name_1c as "product_group.name_1c" 
-	FROM product p
-	LEFT JOIN vid_modeli vid ON p.vid_modeli_id = vid.id
-	LEFT JOIN product_group pg ON p.product_group_id = pg.id
-	WHERE p.name_1c = $1;`
-	err := pgxscan.Get(ctx, db, &product, query, name_1c)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			// если выкидывается ошибка нет строк, возвращаем пустой массив
-			log.Error(errorsShare.ErrProductNotFound.Message, slog.String("name_1c", name_1c))
-			return product, errorsShare.ErrProductNotFound.Error
-		}
-		log.Error(err.Error())
-		return product, errorsShare.ErrInternalError.Error
-	}
-	return product, nil
-}
-
-func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, params dto.ProductsQueryRequest) ([]models.ProductsItemEntity, int, error) {
+func (s *Storage) ListProductsKaspiSearch(ctx context.Context, registrator_id int64, params dto.ProductsQueryRequest) ([]models.ProductsItemEntity, int, error) {
 	op := "postgres.ListProducts"
 	log := s.log.With("op", op)
 
@@ -152,7 +23,7 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 
 	qntDistinct := sb.Select(
 		"qpr.product_id",
-		"qpr.sum",
+		//"qpr.sum",
 		"qpr.product_create_date",
 		"qpr.vid_modeli_id",
 		"qpr.product_group_id",

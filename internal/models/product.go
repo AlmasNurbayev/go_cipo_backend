@@ -29,6 +29,8 @@ type ProductEntity struct {
 	Product_folder    null.String `json:"product_folder" db:"product_folder"`
 	Main_color        null.String `json:"main_color" db:"main_color"`
 	Public_web        bool        `json:"public_web" db:"public_web"`
+	Kaspi_category    null.String `json:"kaspi_category" db:"kaspi_category"`
+	Kaspi_in_sale     bool        `json:"kaspi_in_sale" db:"kaspi_in_sale"`
 
 	Changed_date time.Time `json:"changed_date" db:"changed_date"`
 	Create_date  time.Time `json:"create_date" db:"create_date"`
@@ -57,6 +59,8 @@ type ProductByIdEntity struct {
 	Product_folder    null.String `json:"product_folder" db:"product_folder"`
 	Main_color        null.String `json:"main_color" db:"main_color"`
 	Public_web        bool        `json:"public_web" db:"public_web"`
+	Kaspi_category    null.String `json:"kaspi_category" db:"kaspi_category"`
+	Kaspi_in_sale     bool        `json:"kaspi_in_sale" db:"kaspi_in_sale"`
 
 	Changed_date time.Time `json:"changed_date" db:"changed_date"`
 	Create_date  time.Time `json:"create_date" db:"create_date"`

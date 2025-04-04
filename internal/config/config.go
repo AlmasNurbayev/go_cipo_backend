@@ -5,19 +5,19 @@ import (
 	"os"
 	"time"
 
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/utils"
 	"github.com/caarlos0/env/v11"
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	Env               string        `env:"ENV"`
-	Dsn               string        `env:"DSN" json:"-"`
-	GOMAXPROCS        int           `env:"GOMAXPROCS"`
-	POSTGRES_USER     string        `env:"POSTGRES_USER" json:"-"`
-	POSTGRES_PASSWORD string        `env:"POSTGRES_PASSWORD" json:"-"`
-	POSTGRES_DB       string        `env:"POSTGRES_DB"`
-	POSTGRES_PORT     string        `env:"POSTGRES_PORT"`
-	TokenTTL          time.Duration `env:"TOKEN_TTL"`
+	Env               string `env:"ENV"`
+	Dsn               string `env:"DSN" json:"-"`
+	GOMAXPROCS        int    `env:"GOMAXPROCS"`
+	POSTGRES_USER     string `env:"POSTGRES_USER" json:"-"`
+	POSTGRES_PASSWORD string `env:"POSTGRES_PASSWORD" json:"-"`
+	POSTGRES_DB       string `env:"POSTGRES_DB"`
+	POSTGRES_PORT     string `env:"POSTGRES_PORT"`
 	HTTP              struct {
 		HTTP_LOG_FILE      string        `env:"HTTP_LOG_FILE"`
 		HTTP_PORT          string        `env:"HTTP_PORT"`
@@ -33,6 +33,14 @@ type Config struct {
 		PARSER_DEFAULT_USER_ID    int64  `env:"PARSER_DEFAULT_USER_ID"`
 		PARSER_ASSETS_PATH        string `env:"PARSER_ASSETS_PATH"`
 		PARSER_INPUT_PATH         string `env:"PARSER_INPUT_PATH"`
+	}
+	Auth struct {
+		TokenTTL    time.Duration `env:"TOKEN_TTL"`
+		SECRET_KEY  string        `env:"SECRET_KEY"  json:"-"`
+		SECRET_BYTE []byte        `json:"-"`
+	}
+	Kaspi struct {
+		KASPI_API_URL string `env:"KASPI_API_URL"`
 	}
 }
 
@@ -63,6 +71,10 @@ func MustLoad() *Config {
 		db := os.Getenv("POSTGRES_DB")
 		port := os.Getenv("POSTGRES_PORT")
 		cfg.Dsn = "postgres://" + user + ":" + password + "@" + host + ":" + port + "/" + db + "?sslmode=disable"
+	}
+
+	if cfg.Auth.SECRET_KEY != "" {
+		cfg.Auth.SECRET_BYTE = utils.DeriveKeyFromSecret(cfg.Auth.SECRET_KEY)
 	}
 
 	if cfg.Env == "" {

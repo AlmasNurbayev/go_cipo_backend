@@ -24,7 +24,7 @@ func (s *ParserService) VidModeliService(mainStruct *xmltypes.ImportType,
 		log.Error("Error selecting vids:", slog.String("err", err.Error()))
 		return err
 	}
-	log.Info("exist vids: " + strconv.Itoa(len(existsVidsModeli)))
+	log.Debug("exist vids: " + strconv.Itoa(len(existsVidsModeli)))
 
 	existsMap := make(map[string]models.VidModeliEntity)
 	for _, e := range existsVidsModeli {
@@ -51,9 +51,9 @@ func (s *ParserService) VidModeliService(mainStruct *xmltypes.ImportType,
 		}
 	}
 
-	log.Info("VidModeli parsing: ", slog.Int("count", len(NewVidsModeli)))
-	log.Info("== Duplicated and updated VidModeli: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new VidModeli: ", slog.Int("count", len(toCreate)))
+	log.Debug("VidModeli parsing: ", slog.Int("count", len(NewVidsModeli)))
+	log.Debug("Duplicated and updated VidModeli: ", slog.Int("count", len(toUpdate)))
+	log.Info("Created new VidModeli: ", slog.Int("count", len(toCreate)))
 
 	// for _, val := range NewVidsModeli {
 	// 	indexDuplicated := slices.IndexFunc(existsVidsModeli, func(item models.VidModeliEntity) bool {

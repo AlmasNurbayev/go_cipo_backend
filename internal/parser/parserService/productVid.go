@@ -24,7 +24,7 @@ func (s *ParserService) ProductVidService(mainStruct *xmltypes.ImportType,
 		log.Error("Error selecting product vids:", slog.String("err", err.Error()))
 		return err
 	}
-	log.Info("exist product vids: " + strconv.Itoa(len(existsVids)))
+	log.Debug("exist product vids: " + strconv.Itoa(len(existsVids)))
 
 	existsMap := make(map[string]models.ProductVidEntity)
 	for _, e := range existsVids {
@@ -51,9 +51,9 @@ func (s *ParserService) ProductVidService(mainStruct *xmltypes.ImportType,
 		}
 	}
 
-	log.Info("ProductVid parsing: ", slog.Int("count", len(NewVids)))
-	log.Info("== Duplicated and updated productVid: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new productVid: ", slog.Int("count", len(toCreate)))
+	log.Debug("ProductVid parsing: ", slog.Int("count", len(NewVids)))
+	log.Debug("Duplicated and updated productVid: ", slog.Int("count", len(toUpdate)))
+	log.Info("Created new productVid: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

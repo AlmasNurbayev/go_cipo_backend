@@ -1,0 +1,5 @@
+ALTER TABLE "user"
+  DROP COLUMN is_active;
+
+ALTER TABLE "user"
+  ADD COLUMN IF NOT EXISTS salt TEXT;

@@ -15,7 +15,7 @@ func (p *Parser) OfferParser(mainStruct *xmltypes.OfferType, filePath string, ne
 	// p.Log.Info(string(*json))
 	op := "parser.OfferParser"
 	log := p.Log.With(slog.String("op", op))
-	log.Info("Starting offer parsing")
+	log.Debug("Starting offer parsing")
 
 	// получаем из XML и записываем регистратор
 	registrator_id, err := p.service.RegistratorOfferService(mainStruct, filePath, newPath)

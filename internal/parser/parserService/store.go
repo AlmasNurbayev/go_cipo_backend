@@ -23,7 +23,7 @@ func (s *ParserService) StoreService(mainStruct *xmltypes.OfferType,
 		s.log.Error("Error selecting stores:", slog.String("err", err.Error()))
 		return err
 	}
-	s.log.Info("exist stores: " + strconv.Itoa(len(existsStores)))
+	s.log.Debug("exist stores: " + strconv.Itoa(len(existsStores)))
 
 	existsMap := make(map[string]models.StoreEntity)
 	for _, e := range existsStores {
@@ -50,9 +50,9 @@ func (s *ParserService) StoreService(mainStruct *xmltypes.OfferType,
 		}
 	}
 
-	log.Info("Store parsing: ", slog.Int("count", len(NewStores)))
-	log.Info("== Duplicated and updated stores: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new stores: ", slog.Int("count", len(toCreate)))
+	log.Debug("Store parsing: ", slog.Int("count", len(NewStores)))
+	log.Debug("Duplicated and updated stores: ", slog.Int("count", len(toUpdate)))
+	log.Info("Created new stores: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

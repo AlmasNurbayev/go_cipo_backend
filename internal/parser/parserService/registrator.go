@@ -25,7 +25,7 @@ func (s *ParserService) RegistratorImportService(mainStruct *xmltypes.ImportType
 		log.Error("Error inserting registrators:", slog.String("err", err.Error()))
 		return 0, err
 	}
-	log.Info("added registrator with id: " + strconv.Itoa(int(registrator_id)))
+	log.Debug("added registrator with id: " + strconv.Itoa(int(registrator_id)))
 	return registrator_id, nil
 }
 
@@ -46,6 +46,6 @@ func (s *ParserService) RegistratorOfferService(mainStruct *xmltypes.OfferType,
 		log.Error("Error inserting registrators:", slog.String("err", err.Error()))
 		return 0, err
 	}
-	log.Info("added registrator with id: " + strconv.Itoa(int(registrator_id)))
+	log.Debug("added registrator with id: " + strconv.Itoa(int(registrator_id)))
 	return registrator_id, nil
 }

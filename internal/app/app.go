@@ -32,13 +32,21 @@ func NewApp(cfg *config.Config, log *slog.Logger) *App {
 }
 
 func (a *App) Run() {
-	a.httpApp.Server.Listen(":"+a.Cfg.HTTP.HTTP_PORT, fiber.ListenConfig{
+	err := a.httpApp.Server.Listen(":"+a.Cfg.HTTP.HTTP_PORT, fiber.ListenConfig{
 		EnablePrefork:   a.Cfg.HTTP.HTTP_PREFORK,
 		ShutdownTimeout: a.Cfg.HTTP.HTTP_WRITE_TIMEOUT + a.Cfg.HTTP.HTTP_IDLE_TIMEOUT,
 	})
+	if err != nil {
+		a.Log.Error("not start server: ", slog.String("err", err.Error()))
+		panic(err)
+	}
 }
 
 func (a *App) Stop() {
-	a.httpApp.Server.Shutdown()
+	err := a.httpApp.Server.Shutdown()
 	a.PostgresStorage.Close()
+	if err != nil {
+		a.Log.Error("error on stop server: ", slog.String("err", err.Error()))
+		panic(err)
+	}
 }

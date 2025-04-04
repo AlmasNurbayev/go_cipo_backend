@@ -17,7 +17,7 @@ func (p *Parser) ImportParser(ctx context.Context, mainStruct *xmltypes.ImportTy
 	// 	return err
 	// }
 	// p.Log.Info(string(*json))
-	p.Log.Info("Starting import parsing")
+	p.Log.Debug("Starting import parsing")
 
 	// получаем из XML и записываем регистратор
 	registrator_id, err := p.service.RegistratorImportService(mainStruct, filePath, newPath)

@@ -48,4 +48,9 @@ var (
 		Code:    404,
 		Message: "product not found",
 		Error:   errors.New("product not found")}
+
+	ErrKaspiCategoryDuplicate = ErrorHttp{
+		Code:    400,
+		Message: "kaspi category is exists",
+		Error:   errors.New("kaspi category is exists")}
 )

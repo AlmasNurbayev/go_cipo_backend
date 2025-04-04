@@ -42,6 +42,11 @@ type postgresStorage interface {
 	ListNews(ctx context.Context, count int64) ([]models.NewsEntity, error)
 
 	ListProductsSearch(ctx context.Context, registrator_id int64, params dto.ProductsQueryRequest) ([]models.ProductsItemEntity, int, error)
+
+	CreateKaspiOrganization(ctx context.Context, data models.KaspiOrganizationEntity) (models.KaspiOrganizationEntity, error)
+	ListKaspiOrganization(ctx context.Context) ([]models.KaspiOrganizationEntity, error)
+	CreateKaspiCategory(ctx context.Context, data models.KaspiCategoriesEntity) (models.KaspiCategoriesEntity, error)
+	ListKaspiCategory(ctx context.Context) ([]models.KaspiCategoriesEntity, error)
 }
 
 func NewService(log *slog.Logger,

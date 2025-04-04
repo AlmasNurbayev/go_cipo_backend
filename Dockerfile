@@ -22,7 +22,10 @@ FROM alpine:3.21.3 AS final
 WORKDIR /app/
 
 # Добавляем необходимые зависимости
-RUN apk add --no-cache tzdata curl 
+# tzdata - для установки временной зоны
+# curl - для проверки доступности сервиса
+# dumb-init - для корректного запуска и завершения работы приложения в prefork-режиме
+RUN apk add --no-cache tzdata curl dumb-init
 
 # Копируем бинарники, миграции и конфиги из builder-образа
 COPY --from=builder /app/migrations ./migrations
@@ -33,7 +36,6 @@ COPY --from=builder /app/PARSER .
 COPY --from=builder /app/SEEDER .
 COPY --from=builder /app/CLEARDB .
 
-# Запускаем приложение
-#CMD sh -c './MIGRATOR -typeTask up -dsn $DSN && ./SERVER'
-#CMD sh -c './SERVER'
-ENTRYPOINT ["sh", "-c", "./MIGRATOR -typeTask up -dsn $DSN && ./SEEDER -typeTask up -dsn $DSN && exec ./SERVER"]
+# dumb-init нужен для нормального запуска в prefork-режиме
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["sh", "-c", "./MIGRATOR -typeTask up -dsn $DSN && ./SEEDER -typeTask up -dsn $DSN && exec ./SERVER"]

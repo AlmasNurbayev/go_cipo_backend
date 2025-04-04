@@ -1,5 +1,8 @@
 # Description: Makefile
 
+lint:
+	golangci-lint run ./...
+
 cleardb:
 	go run cmd/cleardb/main.go -period "1d"
 

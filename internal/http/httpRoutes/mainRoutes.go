@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-type handlersProvider interface {
+type handlersMainProvider interface {
 	GetMetrics(c fiber.Ctx) error
 
 	GetUserById(c fiber.Ctx) error
@@ -25,46 +25,46 @@ type handlersProvider interface {
 	//Tracing(c fiber.Ctx) error
 }
 
-func RegisterRoutes(app *fiber.App, handler handlersProvider, log *slog.Logger) {
+func RegisterMainRoutes(app *fiber.App, handler handlersMainProvider, log *slog.Logger) {
 
 	cp := "registerRoutes"
 	log = log.With(slog.String("cp", cp))
 	log.Info("Register routes:")
 
-	app.Get("/metrics", handler.GetMetrics)
+	app.Get("GET /metrics", handler.GetMetrics)
 	log.Info("/metrics")
 
 	log.Info("/api")
 	api := app.Group("/api")
 
-	log.Info("/api/user")
+	log.Info("GET /api/user")
 	api.Get("/user/search/", handler.GetUserSearch)
 
-	log.Info("/api/user/:id?")
+	log.Info("GET /api/user/:id?")
 	api.Get("/user/:id?", handler.GetUserById)
 
-	log.Info("/api/user/search/")
+	log.Info("GET /api/user/search/")
 	api.Get("/user/search/", handler.GetUserSearch)
 
-	log.Info("/api/productsFilter")
+	log.Info("GET /api/productsFilter")
 	api.Get("/productsFilter", handler.GetProductFilters)
 
-	log.Info("/api/stores")
+	log.Info("GET /api/stores")
 	api.Get("/stores", handler.GetStores)
 
-	log.Info("/api/product/")
+	log.Info("GET /api/product/")
 	api.Get("/product/", handler.GetProductBy)
 
-	log.Info("/api/productsNews/")
+	log.Info("GET /api/productsNews/")
 	api.Get("/productsNews/", handler.ListProductNews)
 
-	log.Info("/api/newsID/")
+	log.Info("GET /api/newsID/")
 	api.Get("/newsID/", handler.GetNewsById)
 
-	log.Info("/api/news/")
+	log.Info("GET /api/news/")
 	api.Get("/news/", handler.ListNews)
 
-	log.Info("/api/products/")
+	log.Info("GET /api/products/")
 	api.Get("/products/", handler.ListProducts)
 
 }

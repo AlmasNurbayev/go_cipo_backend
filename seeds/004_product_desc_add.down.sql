@@ -1,0 +1,1 @@
+DELETE FROM registrator WHERE id IN (9,10)

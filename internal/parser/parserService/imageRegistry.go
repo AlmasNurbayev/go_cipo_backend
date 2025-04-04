@@ -31,7 +31,7 @@ func (s *ParserService) ImageRegistryService(mainStruct *xmltypes.ImportType, re
 		return err
 	}
 
-	log.Info("image exists count: ", slog.Int("count", len(existsImages)))
+	log.Debug("image exists count: ", slog.Int("count", len(existsImages)))
 
 	existsMap := make(map[string]models.ImageRegistryEntity)
 	for _, e := range existsImages {
@@ -59,9 +59,9 @@ func (s *ParserService) ImageRegistryService(mainStruct *xmltypes.ImportType, re
 		}
 	}
 
-	log.Info("images parsing: ", slog.Int("count", len(newImages)))
-	log.Info("== Duplicated and updated images: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new images: ", slog.Int("count", len(toCreate)))
+	log.Debug("images parsing: ", slog.Int("count", len(newImages)))
+	log.Debug("Duplicated and updated images: ", slog.Int("count", len(toUpdate)))
+	log.Info("Created new images: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

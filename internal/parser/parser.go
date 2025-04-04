@@ -8,7 +8,6 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/logger"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/utils"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/moved"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/parserService"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
@@ -36,7 +35,7 @@ func (p *Parser) Init() {
 	p.Cfg = config.MustLoad()
 	p.Log = logger.InitLogger(p.Cfg.Env, nil)
 	p.Log.With("op", op)
-	p.Log.Info("init parser on env: " + p.Cfg.Env)
+	p.Log.Info("==== init parser on env: " + p.Cfg.Env)
 	p.Log.Debug("debug message is enabled")
 	postgresStorage, err := postgres.NewStorage(p.Cfg.Dsn, p.Log, p.Cfg.HTTP.HTTP_WRITE_TIMEOUT)
 	if err != nil {
@@ -73,11 +72,7 @@ func (p *Parser) Run() {
 	if err = moved.CopyImages(assets_path, movedFiles.NewPath, p.Log); err != nil {
 		p.Log.Error(err.Error())
 	}
-	bytes, err := utils.PrintAsJSON(movedFiles)
-	if err != nil {
-		p.Log.Error(err.Error())
-	}
-	p.Log.Info(string(*bytes))
+	p.Log.Info("movedFiles", slog.Any("movedFiles", movedFiles))
 
 	ctx, cancel := context.WithTimeout(context.Background(), p.Cfg.HTTP.HTTP_WRITE_TIMEOUT)
 	defer cancel()
@@ -151,5 +146,6 @@ func (p *Parser) Run() {
 		p.Log.Info("DB changes committed")
 	}
 	p.storage.Close()
-	p.Log.Info("DB shutdown")
+	p.Log.Debug("DB shutdown")
+	p.Log.Info("==== Parser success finished")
 }

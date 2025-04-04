@@ -50,7 +50,8 @@ func NewApp(
 	server.Use(middleware.PrometheusMiddleware(httpRequestCounter, httpRequestDuration))
 
 	handlers := httphandlers.NewHandler(log, service, registry)
-	httproutes.RegisterRoutes(server, handlers, log)
+	httproutes.RegisterMainRoutes(server, handlers, log)
+	httproutes.RegisterKaspiRoutes(server, handlers, log)
 
 	server.Get("/healthz", func(c fiber.Ctx) error {
 		return c.Status(200).SendString("OK")

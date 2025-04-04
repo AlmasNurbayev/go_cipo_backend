@@ -23,7 +23,7 @@ func (s *ParserService) PriceVidService(mainStruct *xmltypes.OfferType,
 		log.Error("Error selecting price_vids:", slog.String("err", err.Error()))
 		return err
 	}
-	log.Info("exist price_vid: " + strconv.Itoa(len(existsPriceVids)))
+	log.Debug("exist price_vid: " + strconv.Itoa(len(existsPriceVids)))
 
 	existsMap := make(map[string]models.PriceVidEntity)
 	for _, e := range existsPriceVids {
@@ -50,9 +50,9 @@ func (s *ParserService) PriceVidService(mainStruct *xmltypes.OfferType,
 		}
 	}
 
-	log.Info("priceVid parsing: ", slog.Int("count", len(NewPriceVids)))
-	log.Info("== Duplicated and updated priceVids: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new priceVids: ", slog.Int("count", len(toCreate)))
+	log.Debug("priceVid parsing: ", slog.Int("count", len(NewPriceVids)))
+	log.Debug("Duplicated and updated priceVids: ", slog.Int("count", len(toUpdate)))
+	log.Info("Created new priceVids: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

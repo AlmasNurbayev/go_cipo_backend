@@ -1,3 +1,6 @@
+SELECT setval(pg_get_serial_sequence('product_desc_mapping', 'id'), 
+              (SELECT MAX(id) FROM product_desc_mapping));
+
 INSERT INTO product_desc_mapping
 (id, id_1c, name_1c, field)
 VALUES 

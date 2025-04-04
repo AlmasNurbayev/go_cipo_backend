@@ -23,7 +23,7 @@ func (s *ParserService) SizeService(mainStruct *xmltypes.OfferType,
 		log.Error("Error selecting sizes:", slog.String("err", err.Error()))
 		return err
 	}
-	log.Info("exist size: " + strconv.Itoa(len(existsSizes)))
+	log.Debug("exist size: " + strconv.Itoa(len(existsSizes)))
 
 	existsMap := make(map[string]models.SizeEntity)
 	for _, e := range existsSizes {
@@ -51,9 +51,9 @@ func (s *ParserService) SizeService(mainStruct *xmltypes.OfferType,
 		}
 	}
 
-	log.Info("size parsing: ", slog.Int("count", len(NewSizes)))
-	log.Info("== Duplicated and updated sizes: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new sizes: ", slog.Int("count", len(toCreate)))
+	log.Debug("size parsing: ", slog.Int("count", len(NewSizes)))
+	log.Debug("== Duplicated and updated sizes: ", slog.Int("count", len(toUpdate)))
+	log.Info("Created new sizes: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

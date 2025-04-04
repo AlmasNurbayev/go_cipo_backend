@@ -23,6 +23,11 @@ type servicesProvider interface {
 	ListNews(ctx context.Context, count int64) ([]dto.NewsItemResponse, error)
 
 	ListProducts(ctx context.Context, params dto.ProductsQueryRequest) (dto.ProductsResponse, error)
+
+	KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategoryRequest) (dto.KaspiAddCategoryResponse, error)
+	KaspiListCategory(ctx context.Context) (dto.KaspiListCategoryResponse, error)
+	KaspiAddOrganization(ctx context.Context, data dto.KaspiAddOrganizationRequest) (dto.KaspiAddOrganizationResponse, error)
+	KaspiListOrganization(ctx context.Context) (dto.KaspiListOrganizationResponse, error)
 }
 
 type Handler struct {

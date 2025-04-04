@@ -32,6 +32,8 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 			public_web        bool
 			Product_group_id  int64
 			VidModeli_id      null.Int64
+			Kaspi_category    null.String
+			Kaspi_in_sale     bool
 		}
 		var base_ed string
 
@@ -64,6 +66,16 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 		for k := 0; k < len(root_svoistv); k++ {
 			for _, val := range existsProductDescMappings {
 				if val.Id_1c == root_svoistv[k].Ид {
+					if val.Field == "kaspi_category" {
+						product_desc.Kaspi_category = null.StringFrom(root_svoistv[k].Значение)
+					}
+					if val.Field == "kaspi_in_sale" {
+						if root_svoistv[k].Значение == "Да" {
+							product_desc.Kaspi_in_sale = true
+						} else {
+							product_desc.Kaspi_in_sale = false
+						}
+					}
 					if val.Field == "material_podoshva" {
 						product_desc.Material_podoshva = null.StringFrom(root_svoistv[k].Значение)
 					}
@@ -131,6 +143,8 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 			Main_color:        product_desc.Main_color,
 			Public_web:        product_desc.public_web,
 			Vid_modeli_id:     product_desc.VidModeli_id,
+			Kaspi_category:    product_desc.Kaspi_category,
+			Kaspi_in_sale:     product_desc.Kaspi_in_sale,
 		}
 		products = append(products, newProduct)
 	}
