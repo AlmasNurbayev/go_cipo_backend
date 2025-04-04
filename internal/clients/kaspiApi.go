@@ -18,7 +18,7 @@ type KaspiRequestParameters struct {
 	query   url.Values
 	urlMain string
 	urlPart string
-	body    string
+	//body    string
 }
 
 // по нужной категории товара получаем список атрибутов
@@ -122,7 +122,11 @@ func apiKaspiSender(params KaspiRequestParameters) (int, string, error) {
 		params.log.Error("Api error:", slog.String("err", err.Error()))
 		return 0, "", err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			params.log.Error("Error closing response body:", slog.String("err", err.Error()))
+		}
+	}()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {

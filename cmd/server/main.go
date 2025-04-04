@@ -26,7 +26,11 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		defer logFile.Close()
+		defer func() {
+			if err := logFile.Close(); err != nil {
+				fmt.Println("Error closing file:", err)
+			}
+		}()
 	} else {
 		logFile = nil
 	}

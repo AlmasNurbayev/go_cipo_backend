@@ -95,7 +95,11 @@ func (p *Parser) Run() {
 			p.Log.Error("Error open file:", slog.String("err", err.Error()))
 			os.Exit(1)
 		}
-		defer file.Close()
+		defer func() {
+			if err := file.Close(); err != nil {
+				p.Log.Error("Error closing file:", slog.String("err", err.Error()))
+			}
+		}()
 
 		switch fileItem.TypeFile {
 		case "classificator":

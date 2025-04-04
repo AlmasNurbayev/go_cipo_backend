@@ -20,7 +20,7 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 
 	for i := 0; i < len(root); i++ {
 
-		var product_folder null.String = null.StringFrom("")
+		product_folder := null.StringFrom("")
 		var product_vid_id int64
 		var description null.String
 		var product_desc struct {

@@ -36,7 +36,7 @@ func ImageRegistryParser(mainStruct xmltypes.ImportType, registrator_id int64,
 
 		root_images := root[productIndex].Картинка
 		for imageIndex := 0; imageIndex < len(root_images); imageIndex++ {
-			full_name := strings.Replace(root_images[imageIndex], "import_files", "product_images", -1)
+			full_name := strings.ReplaceAll(root_images[imageIndex], "import_files", "product_images")
 			fileInfo, err := os.Stat("assets/" + full_name)
 			if err != nil {
 				return nil, errors.New("Error getting file information: " + err.Error())
