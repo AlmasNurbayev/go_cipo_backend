@@ -31,8 +31,8 @@ func RegisterMainRoutes(app *fiber.App, handler handlersMainProvider, log *slog.
 	log = log.With(slog.String("cp", cp))
 	log.Info("Register routes:")
 
-	app.Get("GET /metrics", handler.GetMetrics)
-	log.Info("/metrics")
+	log.Info("GET /metrics")
+	app.Get("/metrics", handler.GetMetrics)
 
 	log.Info("/api")
 	api := app.Group("/api")
