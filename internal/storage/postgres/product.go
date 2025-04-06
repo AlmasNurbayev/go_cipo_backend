@@ -170,8 +170,11 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 	}
 	if len(params.Size) != 0 {
 		qntDistinct = qntDistinct.Where(squirrel.Eq{"size_id": params.Size})
-		//qntDistinctCount = qntDistinctCount.Where(squirrel.Eq{"size_id": params.Size})
 	}
+	// if params.Kaspi_in_sale {
+	// 	qntDistinct = qntDistinct.Where(squirrel.Eq{"kaspi_in_sale": params.Kaspi_in_sale})
+	// }
+
 	if len(params.Product_group) != 0 {
 		qntDistinct = qntDistinct.Where(squirrel.Eq{"product_group_id": params.Product_group})
 	}
@@ -208,10 +211,12 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
     p.artikul AS artikul,
     p.name AS name,
     p.description AS description,
-	p.material_podoshva AS material_podoshva,
-	p.material_up AS material_up,
-	p.material_inside AS material_inside,
-	p.sex AS sex,
+		p.material_podoshva AS material_podoshva,
+		p.material_up AS material_up,
+		p.material_inside AS material_inside,
+		p.sex AS sex,
+		p.kaspi_in_sale AS kaspi_in_sale,
+		p.kaspi_category AS kaspi_category,
     v.name_1c AS vid_modeli_name,
     q.vid_modeli_id,
     q.create_date,

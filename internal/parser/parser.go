@@ -63,6 +63,7 @@ func (p *Parser) Run() {
 
 	if err != nil {
 		p.Log.Error(err.Error())
+		p.Log.Info("==== Parser ERROR finished")
 		os.Exit(1)
 	}
 	assets_path := "assets"
@@ -79,6 +80,7 @@ func (p *Parser) Run() {
 	pgxTransaction, err := p.storage.Db.Begin(ctx)
 	if err != nil {
 		p.Log.Error("Not created transaction:", slog.String("err", err.Error()))
+		p.Log.Info("==== Parser ERROR finished")
 		os.Exit(1)
 	}
 	p.storage.Tx = &pgxTransaction
@@ -93,6 +95,7 @@ func (p *Parser) Run() {
 		file, err := os.Open(fileItem.PathFile)
 		if err != nil {
 			p.Log.Error("Error open file:", slog.String("err", err.Error()))
+			p.Log.Info("==== Parser ERROR finished")
 			os.Exit(1)
 		}
 		defer func() {
@@ -109,6 +112,7 @@ func (p *Parser) Run() {
 			decoder.Strict = false
 			if err := decoder.Decode(&xmlStruct); err != nil {
 				p.Log.Error("Error decode file:", slog.String("err", err.Error()))
+				p.Log.Info("==== Parser ERROR finished")
 				panic(err)
 			}
 			// передаем полный тип, чтобы не выделять подчиненный узел в парсере
@@ -120,6 +124,7 @@ func (p *Parser) Run() {
 					p.Log.Error("Error rollback all db changes:", slog.String("err", err.Error()))
 				}
 				p.storage.Close()
+				p.Log.Info("==== Parser ERROR finished")
 				panic(err)
 			}
 		case "offer":
@@ -128,6 +133,7 @@ func (p *Parser) Run() {
 			decoder := xml.NewDecoder(file)
 			if err := decoder.Decode(&xmlStruct); err != nil {
 				p.Log.Error("Error rollback all db changes:", slog.String("err", err.Error()))
+				p.Log.Info("==== Parser ERROR finished")
 				panic(err)
 			}
 			// передаем полный тип, чтобы не выделять подчиненный узел в парсере
@@ -139,6 +145,7 @@ func (p *Parser) Run() {
 					p.Log.Error("Error rollback all db changes:", slog.String("err", err.Error()))
 				}
 				p.storage.Close()
+				p.Log.Info("==== Parser ERROR finished")
 				panic(err)
 			}
 		}
@@ -146,10 +153,12 @@ func (p *Parser) Run() {
 	err = pgxTransaction.Commit(ctx)
 	if err != nil {
 		p.Log.Error("Error commit all db changes:", slog.String("err", err.Error()))
+		p.Log.Info("==== Parser ERROR finished")
 	} else {
 		p.Log.Info("DB changes committed")
+		p.Log.Info("==== Parser success finished")
 	}
 	p.storage.Close()
 	p.Log.Debug("DB shutdown")
-	p.Log.Info("==== Parser success finished")
+
 }

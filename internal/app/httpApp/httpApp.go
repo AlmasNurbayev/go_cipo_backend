@@ -11,6 +11,7 @@ import (
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/storage/postgres"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
 )
 
 type structValidator struct {
@@ -43,6 +44,12 @@ func NewApp(
 	if cfg.Env != "prod" {
 		server.Use(middleware.RequestTracingMiddleware(log))
 	}
+
+	server.Use(cors.New(cors.Config{
+		AllowOrigins:     cfg.HTTP.CORS_ALLOW_ORIGINS,
+		AllowCredentials: cfg.HTTP.CORS_ALLOW_CREDENTIALS,
+		AllowHeaders:     cfg.HTTP.CORS_ALLOW_HEADERS,
+	}))
 
 	service := services.NewService(log, storage, cfg)
 

@@ -28,4 +28,7 @@ type ProductsItemEntity struct {
 	Qnt_price          []qnt_price           `json:"qnt_price" db:"qnt_price"`
 	Image_active_path  string                `json:"image_active_path" db:"image_active_path"`
 	Create_date        time.Time             `db:"create_date"`
+
+	Kaspi_in_sale  bool        `db:"kaspi_in_sale"`
+	Kaspi_category null.String `db:"kaspi_category"`
 }

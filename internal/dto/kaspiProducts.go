@@ -6,7 +6,7 @@ import (
 	"github.com/guregu/null/v5"
 )
 
-type ProductsQueryRequest struct {
+type KaspiProductsQueryRequest struct {
 	Search_name   string  `form:"search_name" binding:"omitempty" example:"name" query:"search_name" validate:"omitempty,gte=3"`
 	MinPrice      float32 `form:"min_price" binding:"omitempty" example:"100" query:"minPrice" validate:"omitempty,min=0"`
 	MaxPrice      float32 `form:"max_price" binding:"omitempty" example:"1000" query:"maxPrice" validate:"omitempty,min=0"`
@@ -19,13 +19,13 @@ type ProductsQueryRequest struct {
 	Kaspi_in_sale bool    `form:"kaspi_in_sale" binding:"omitempty" example:"true" query:"kaspi_in_sale"`
 }
 
-type ProductsResponse struct {
-	Data          []ProductsItemResponse `json:"data"`
-	Full_count    int                    `json:"full_count"`
-	Current_count int                    `json:"current_count"`
+type KaspiProductsResponse struct {
+	Data          []KaspiProductsItemResponse `json:"data"`
+	Full_count    int                         `json:"full_count"`
+	Current_count int                         `json:"current_count"`
 }
 
-type ProductsItemResponse struct {
+type KaspiProductsItemResponse struct {
 	Product_id          int64           `json:"product_id"`
 	Product_create_date time.Time       `json:"product_create_date"`
 	Sum                 float32         `json:"sum"`
@@ -45,19 +45,7 @@ type ProductsItemResponse struct {
 	Image_registry      []imageRegistry `json:"image_registry"`
 	Image_active_path   string          `json:"image_active_path"`
 	Create_date         time.Time       `json:"create_date"`
-}
 
-type qnt_price struct {
-	Size     string  `json:"size"`
-	Sum      float32 `json:"sum"`
-	Qnt      float32 `json:"qnt"`
-	Store_id []int   `json:"store_id"`
-}
-
-type imageRegistry struct {
-	Id        int64  `json:"id"`
-	Name      string `json:"name"`
-	Active    bool   `json:"active"`
-	Main      bool   `json:"main"`
-	Full_name string `json:"full_name"`
+	Kaspi_in_sale  bool        `json:"kaspi_in_sale"`
+	Kaspi_category null.String `json:"kaspi_category"`
 }

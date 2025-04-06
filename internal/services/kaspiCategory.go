@@ -17,10 +17,11 @@ import (
 )
 
 func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategoryRequest) (dto.KaspiAddCategoryResponse, error) {
+	op := "services.KaspiAddCategory"
+	log := s.log.With(slog.String("op", op))
 
 	newCategory := models.KaspiCategoriesEntity{
 		Name_kaspi: data.Name_kaspi,
-		// Title_kaspi:  data.Title_kaspi, нужно получить из списка категорий
 	}
 
 	response := dto.KaspiAddCategoryResponse{}
@@ -38,7 +39,7 @@ func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategor
 			if err != nil {
 				return response, errorsShare.ErrInternalError.Error
 			}
-			fmt.Println("organization", organization)
+			log.Debug("selected organization", slog.String("organization_name", organization.Name))
 		}
 	}
 	if token == "" {
@@ -46,7 +47,7 @@ func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategor
 		return response, errorsShare.ErrInternalError.Error
 	}
 
-	// получаем список категорий и проверяем
+	// получаем список категорий и проверяем на соответствие кода
 	statusCategories, bodyCategories, _ := clients.KaspiGetCategories(s.cfg, s.log, token)
 	type category struct {
 		code  string
@@ -66,8 +67,7 @@ func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategor
 			categories = append(categories, category{code: item["code"].(string), title: item["title"].(string)})
 		}
 	} else {
-		fmt.Println("===5")
-		//s.log.Error("Error", slog.String("err", errCategories.Error()))
+		//log.Error("Error", slog.String("err", errCategories.Error()))
 		return response, fmt.Errorf("categories response %d", statusCategories)
 	}
 	titleIndex := slices.IndexFunc(categories, func(category category) bool {
@@ -104,9 +104,8 @@ func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategor
 	} else {
 		return response, errors.New("get list attributes of category response not 200")
 	}
-	str, _ := utils.PrintAsJSON(attributes)
-
-	fmt.Println("attributes", string(*str))
+	// str, _ := utils.PrintAsJSON(attributes)
+	// fmt.Println("attributes", string(*str))
 
 	values := clients.KaspiGetAllValues(s.cfg, s.log, data.Name_kaspi, token)
 	// strValues, _ := utils.PrintAsJSON(values)
@@ -133,115 +132,15 @@ func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategor
 		}
 	}
 
-	// // получаем список размеров
-	// statusSize, bodySize, err := clients.KaspiGetValues(s.cfg, s.log, "Shoes*Size", data.Name_kaspi, token)
-	// if err != nil {
-	// 	return response, err
-	// }
-	// sizes := []string{}
-	// if statusSize == 200 {
-	// 	var rawData []map[string]interface{}
-	// 	if err := json.Unmarshal([]byte(bodySize), &rawData); err != nil {
-	// 		return response, err
-	// 	}
-	// 	for _, obj := range rawData {
-	// 		if size, ok := obj["name"].(string); ok {
-	// 			sizes = append(sizes, size)
-	// 		}
-	// 	}
-	// 	sort.Strings(sizes)
-	// 	newCategory.Size_kaspi = sizes
-	// }
-
-	// // получаем список сезонов
-	// statusSeason, bodySeason, err := clients.KaspiGetValues(s.cfg, s.log, "Shoes*Season", data.Name_kaspi, token)
-	// if err != nil {
-	// 	return response, err
-	// }
-	// seasons := []string{}
-	// if statusSeason == 200 {
-	// 	var rawData []map[string]interface{}
-	// 	if err := json.Unmarshal([]byte(bodySeason), &rawData); err != nil {
-	// 		return response, err
-	// 	}
-	// 	for _, obj := range rawData {
-	// 		if season, ok := obj["name"].(string); ok {
-	// 			seasons = append(seasons, season)
-	// 		}
-	// 	}
-	// 	sort.Strings(seasons)
-	// 	newCategory.Season_kaspi = seasons
-	// }
-
-	// // получаем список цветов
-	// statusColors, bodyColors, err := clients.KaspiGetValues(s.cfg, s.log, "Shoes*Colour", data.Name_kaspi, token)
-	// if err != nil {
-	// 	return response, err
-	// }
-	// colours := []string{}
-	// if statusColors == 200 {
-	// 	var rawData []map[string]interface{}
-	// 	if err := json.Unmarshal([]byte(bodyColors), &rawData); err != nil {
-	// 		return response, err
-	// 	}
-	// 	for _, obj := range rawData {
-	// 		if color, ok := obj["name"].(string); ok {
-	// 			colours = append(colours, color)
-	// 		}
-	// 	}
-	// 	sort.Strings(colours)
-	// 	newCategory.Colour_kaspi = colours
-	// }
-
-	// // получаем список цветов
-	// statusModels, bodyModels, err := clients.KaspiGetValues(s.cfg, s.log, "Shoes*Model", data.Name_kaspi, token)
-	// if err != nil {
-	// 	return response, err
-	// }
-	// models := []string{}
-	// if statusModels == 200 {
-	// 	var rawData []map[string]interface{}
-	// 	if err := json.Unmarshal([]byte(bodyModels), &rawData); err != nil {
-	// 		return response, err
-	// 	}
-	// 	for _, obj := range rawData {
-	// 		if model, ok := obj["name"].(string); ok {
-	// 			models = append(models, model)
-	// 		}
-	// 	}
-	// 	sort.Strings(colours)
-	// 	newCategory.Model_kaspi = models
-	// }
-
-	// // получаем список полов
-	// statusGenders, bodyGenders, err := clients.KaspiGetValues(s.cfg, s.log, "Shoes*Gender", data.Name_kaspi, token)
-	// if err != nil {
-	// 	return response, err
-	// }
-	// models := []string{}
-	// if statusModels == 200 {
-	// 	var rawData []map[string]interface{}
-	// 	if err := json.Unmarshal([]byte(bodyModels), &rawData); err != nil {
-	// 		return response, err
-	// 	}
-	// 	for _, obj := range rawData {
-	// 		if model, ok := obj["name"].(string); ok {
-	// 			models = append(models, model)
-	// 		}
-	// 	}
-	// 	sort.Strings(colours)
-	// 	newCategory.Model_kaspi = models
-	// }
-
 	result, err := s.postgresStorage.CreateKaspiCategory(ctx, newCategory)
 	if err != nil {
-		s.log.Error("", slog.String("err", err.Error()))
+		log.Error("", slog.String("err", err.Error()))
 		return response, err
 	}
 
 	err = copier.Copy(&response, &result)
 	if err != nil {
-		s.log.Error("", slog.String("err", err.Error()))
+		log.Error("", slog.String("err", err.Error()))
 		return response, err
 	}
 

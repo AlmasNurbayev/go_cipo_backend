@@ -12,7 +12,7 @@ import (
 )
 
 func (h *Handler) ListProducts(c fiber.Ctx) error {
-	op := "HttpHandlers.ListProductNews"
+	op := "HttpHandlers.ListProducts"
 	log := h.log.With(slog.String("op", op))
 
 	err := validate.ValidateQueryParams(c, &dto.ProductsQueryRequest{})

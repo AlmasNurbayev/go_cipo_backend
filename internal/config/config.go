@@ -3,6 +3,7 @@ package config
 import (
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/utils"
@@ -19,12 +20,15 @@ type Config struct {
 	POSTGRES_DB       string `env:"POSTGRES_DB"`
 	POSTGRES_PORT     string `env:"POSTGRES_PORT"`
 	HTTP              struct {
-		HTTP_LOG_FILE      string        `env:"HTTP_LOG_FILE"`
-		HTTP_PORT          string        `env:"HTTP_PORT"`
-		HTTP_READ_TIMEOUT  time.Duration `env:"HTTP_READ_TIMEOUT"`
-		HTTP_WRITE_TIMEOUT time.Duration `env:"HTTP_WRITE_TIMEOUT"`
-		HTTP_IDLE_TIMEOUT  time.Duration `env:"HTTP_IDLE_TIMEOUT"`
-		HTTP_PREFORK       bool          `env:"HTTP_PREFORK"`
+		HTTP_LOG_FILE          string        `env:"HTTP_LOG_FILE"`
+		HTTP_PORT              string        `env:"HTTP_PORT"`
+		HTTP_READ_TIMEOUT      time.Duration `env:"HTTP_READ_TIMEOUT"`
+		HTTP_WRITE_TIMEOUT     time.Duration `env:"HTTP_WRITE_TIMEOUT"`
+		HTTP_IDLE_TIMEOUT      time.Duration `env:"HTTP_IDLE_TIMEOUT"`
+		HTTP_PREFORK           bool          `env:"HTTP_PREFORK"`
+		CORS_ALLOW_ORIGINS     []string      `env:"HTTP_CORS_ALLOW_ORIGINS" envSeparator:","` // разделенные запятыми
+		CORS_ALLOW_HEADERS     []string      `env:"HTTP_CORS_ALLOW_HEADERS" envSeparator:","` // разделенные запятыми
+		CORS_ALLOW_CREDENTIALS bool          `env:"HTTP_CORS_ALLOW_CREDENTIALS"`
 	}
 	Parser struct {
 		PARSER_CLASSIFICATOR_FILE string `env:"PARSER_CLASSIFICATOR_FILE"`
@@ -81,6 +85,17 @@ func MustLoad() *Config {
 		log.Fatal("not load config: env is empty")
 	} else if cfg.Dsn == "" {
 		log.Fatal("not load config: Dsn is empty")
+	}
+
+	// убрать кавычки и обратные слэши
+	for i, origin := range cfg.HTTP.CORS_ALLOW_ORIGINS {
+		cfg.HTTP.CORS_ALLOW_ORIGINS[i] = strings.ReplaceAll(origin, "\"", "")                         // удаляем кавычки
+		cfg.HTTP.CORS_ALLOW_ORIGINS[i] = strings.ReplaceAll(cfg.HTTP.CORS_ALLOW_ORIGINS[i], "\\", "") // удаляем обратные слэши
+	}
+
+	for i, origin := range cfg.HTTP.CORS_ALLOW_HEADERS {
+		cfg.HTTP.CORS_ALLOW_HEADERS[i] = strings.ReplaceAll(origin, "\"", "")                         // удаляем кавычки
+		cfg.HTTP.CORS_ALLOW_HEADERS[i] = strings.ReplaceAll(cfg.HTTP.CORS_ALLOW_HEADERS[i], "\\", "") // удаляем обратные слэши
 	}
 
 	return &cfg
