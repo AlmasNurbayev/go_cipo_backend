@@ -26,25 +26,25 @@ type KaspiProductsResponse struct {
 }
 
 type KaspiProductsItemResponse struct {
-	Product_id          int64           `json:"product_id"`
-	Product_create_date time.Time       `json:"product_create_date"`
-	Sum                 float32         `json:"sum"`
-	Product_group_id    int64           `json:"product_group_id"`
-	Product_name        string          `json:"product_name"`
-	Qnt_price           []qnt_price     `json:"qnt_price"`
-	Artikul             string          `json:"artikul"`
-	Name                string          `json:"name"`
-	Description         null.String     `json:"description"`
-	Material_podoshva   null.String     `json:"material_podoshva"`
-	Material_up         null.String     `json:"material_up"`
-	Material_inside     null.String     `json:"material_inside"`
-	Sex                 null.String     `json:"sex"`
-	Product_group_name  string          `json:"product_group_name"`
-	Vid_modeli_name     null.String     `json:"vid_modeli_name"`
-	Vid_modeli_id       int             `json:"vid_modeli_id"`
-	Image_registry      []imageRegistry `json:"image_registry"`
-	Image_active_path   string          `json:"image_active_path"`
-	Create_date         time.Time       `json:"create_date"`
+	Product_id          int64     `json:"product_id"`
+	Product_create_date time.Time `json:"product_create_date"`
+	// Sum                 float32         `json:"sum"`
+	Product_group_id   int64           `json:"product_group_id"`
+	Product_name       string          `json:"product_name"`
+	Qnt_price          []qnt_price     `json:"qnt_price"`
+	Artikul            string          `json:"artikul"`
+	Name               string          `json:"name"`
+	Description        null.String     `json:"description"`
+	Material_podoshva  null.String     `json:"material_podoshva"`
+	Material_up        null.String     `json:"material_up"`
+	Material_inside    null.String     `json:"material_inside"`
+	Sex                null.String     `json:"sex"`
+	Product_group_name string          `json:"product_group_name"`
+	Vid_modeli_name    null.String     `json:"vid_modeli_name"`
+	Vid_modeli_id      int             `json:"vid_modeli_id"`
+	Image_registry     []imageRegistry `json:"image_registry"`
+	Image_active_path  string          `json:"image_active_path"`
+	Create_date        time.Time       `json:"create_date"`
 
 	Kaspi_in_sale  bool        `json:"kaspi_in_sale"`
 	Kaspi_category null.String `json:"kaspi_category"`

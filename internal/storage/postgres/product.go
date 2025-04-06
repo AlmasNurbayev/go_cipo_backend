@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"log/slog"
 	"strconv"
 	"strings"
@@ -202,9 +203,9 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		qntDistinct = qntDistinct.OrderBy("product_id desc")
 	}
 
-	mainQuery := `    q.product_id,
+	// TODO - нормально выделить подзапрос SUB и условие WHERE
+	mainQuery := fmt.Sprintf(`    q.product_id,
     q.product_create_date,
-    q.sum,
     q.product_group_id,
     pg.name_1c AS product_group_name,
     p.name AS product_name,
@@ -228,10 +229,10 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
         FROM (
             SELECT size_name_1c, sum, qnt, array_agg(distinct store_id) as store_id
             FROM qnt_price_registry
-            WHERE product_id = q.product_id and sum = q.sum
+            WHERE product_id = q.product_id and registrator_id = %d
             group by size_name_1c, sum, qnt, store_id
         ) sub
-    ) AS qnt_price`
+    ) AS qnt_price`, registrator_id)
 
 	queryBuilder := sb.Select(mainQuery).FromSelect(qntDistinct, "q").
 		LeftJoin(`product p ON q.product_id = p.id`).
