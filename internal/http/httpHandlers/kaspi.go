@@ -33,11 +33,13 @@ func (h *Handler) KaspiAddCategory(c fiber.Ctx) error {
 		log.Error("", slog.String("err", err.Error()))
 		if err == errorsShare.ErrKaspiCategoryDuplicate.Error {
 			return c.Status(errorsShare.ErrKaspiCategoryDuplicate.Code).SendString(errorsShare.ErrKaspiCategoryDuplicate.Message)
+		} else if err.Error() == "category code not found" {
+			return c.Status(400).SendString("category code not found")
 		} else {
 			return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
 		}
 	}
-	return c.Status(200).JSON(response)
+	return c.Status(201).JSON(response)
 }
 
 func (h *Handler) KaspiListCategory(c fiber.Ctx) error {

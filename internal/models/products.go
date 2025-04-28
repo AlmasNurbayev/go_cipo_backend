@@ -19,7 +19,7 @@ type ProductsItemEntity struct {
 	Material_up        null.String           `json:"material_up" db:"material_up"`
 	Material_inside    null.String           `json:"material_inside" db:"material_inside"`
 	Material_podoshva  null.String           `json:"material_podoshva" db:"material_podoshva"`
-	Sex                null.Int16            `json:"sex" db:"sex"`
+	Sex                null.Int              `json:"sex" db:"sex"`
 	Product_group_name string                `json:"product_group_name" db:"product_group_name"`
 	Product_group_id   int64                 `json:"product_group_id" db:"product_group_id"`
 	Vid_modeli_name    string                `json:"vid_modeli_name" db:"vid_modeli_name"`

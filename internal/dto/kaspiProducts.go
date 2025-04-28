@@ -38,7 +38,7 @@ type KaspiProductsItemResponse struct {
 	Material_podoshva  null.String     `json:"material_podoshva"`
 	Material_up        null.String     `json:"material_up"`
 	Material_inside    null.String     `json:"material_inside"`
-	Sex                null.String     `json:"sex"`
+	Sex                null.Int        `json:"sex"`
 	Product_group_name string          `json:"product_group_name"`
 	Vid_modeli_name    null.String     `json:"vid_modeli_name"`
 	Vid_modeli_id      int             `json:"vid_modeli_id"`
