@@ -15,7 +15,7 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 
 	productFilterDto := dto.ProductsFilterResponse{}
 
-	sizeEntity, err := s.postgresStorage.ListSize(ctx)
+	sizeEntity, err := s.classifierStorage.ListSize(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
@@ -24,7 +24,7 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		return sizeEntity[i].Name_1c < sizeEntity[j].Name_1c
 	})
 
-	productGroupEntity, err := s.postgresStorage.ListProductGroup(ctx)
+	productGroupEntity, err := s.classifierStorage.ListProductGroup(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
@@ -33,13 +33,13 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		return productGroupEntity[i].Name_1c < productGroupEntity[j].Name_1c
 	})
 
-	storeEntity, err := s.postgresStorage.ListStore(ctx)
+	storeEntity, err := s.classifierStorage.ListStore(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
 	}
 
-	vidModeliEntity, err := s.postgresStorage.ListVidModeli(ctx)
+	vidModeliEntity, err := s.classifierStorage.ListVidModeli(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
@@ -48,7 +48,7 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		return vidModeliEntity[i].Name_1c < vidModeliEntity[j].Name_1c
 	})
 
-	brendEntity, err := s.postgresStorage.ListBrend(ctx)
+	brendEntity, err := s.classifierStorage.ListBrend(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err

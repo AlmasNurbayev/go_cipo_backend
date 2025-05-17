@@ -11,7 +11,7 @@ type NewsQueryRequest struct {
 }
 
 type NewsItemResponse struct {
-	Id             int       `json:"id"`
+	Id             int64     `json:"id"`
 	Operation_date time.Time `json:"operation_date"`
 	Title          string    `json:"title"`
 	Data           string    `json:"data"`

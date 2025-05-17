@@ -14,7 +14,7 @@ func (s *Service) GetNewsById(ctx context.Context, id int64) (dto.NewsIDItemResp
 
 	dto := dto.NewsIDItemResponse{}
 
-	entity, err := s.postgresStorage.GetNewsById(ctx, id)
+	entity, err := s.newsStorage.GetNewsById(ctx, id)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return dto, err
@@ -35,7 +35,7 @@ func (s *Service) ListNews(ctx context.Context, count int64) ([]dto.NewsItemResp
 
 	dto := []dto.NewsItemResponse{}
 
-	entity, err := s.postgresStorage.ListNews(ctx, count)
+	entity, err := s.newsStorage.ListNews(ctx, count)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return dto, err

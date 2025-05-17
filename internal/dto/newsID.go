@@ -7,11 +7,11 @@ import (
 )
 
 type NewsIDQueryRequest struct {
-	Id int `form:"id" binding:"required" example:"5" validate:"min=0"`
+	Id int64 `form:"id" binding:"required" example:"5" validate:"min=0"`
 }
 
 type NewsIDItemResponse struct {
-	Id             int       `json:"id"`
+	Id             int64     `json:"id"`
 	Operation_date time.Time `json:"operation_date"`
 	Title          string    `json:"title"`
 	Data           string    `json:"data"`

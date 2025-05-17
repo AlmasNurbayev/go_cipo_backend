@@ -32,7 +32,8 @@ func (v *structValidator) Validate(out any) error {
 func NewApp(
 	log *slog.Logger,
 	cfg *config.Config,
-	storage *postgres.Storage) *HttpApp {
+	storage *postgres.Storage,
+) *HttpApp {
 
 	server := fiber.New(fiber.Config{
 		StructValidator: &structValidator{validate: validator.New()},

@@ -23,7 +23,7 @@ func (s *Service) KaspiAddOrganization(ctx context.Context, data dto.KaspiAddOrg
 	token := utils.EncryptToken(s.cfg.Auth.SECRET_BYTE, data.Kaspi_api_token)
 	newOrg.Kaspi_api_token_hash = token
 
-	response, err := s.postgresStorage.CreateKaspiOrganization(ctx, newOrg)
+	response, err := s.kaspiStorage.CreateKaspiOrganization(ctx, newOrg)
 	if err != nil {
 		return result, errorsShare.ErrInternalError.Error
 	}
@@ -43,7 +43,7 @@ func (s *Service) KaspiListOrganization(ctx context.Context) (dto.KaspiListOrgan
 
 	var result dto.KaspiListOrganizationResponse
 
-	response, err := s.postgresStorage.ListKaspiOrganization(ctx)
+	response, err := s.kaspiStorage.ListKaspiOrganization(ctx)
 	if err != nil {
 		return result, errorsShare.ErrInternalError.Error
 	}

@@ -20,7 +20,7 @@ func (s *Service) ListKaspiProducts(ctx context.Context, params dto.KaspiProduct
 		return data, err
 	}
 
-	list, fullCount, err := s.postgresStorage.ListKaspiProductsSearch(ctx, registrator.Id, params)
+	list, fullCount, err := s.kaspiStorage.ListKaspiProductsSearch(ctx, registrator.Id, params)
 	if err != nil {
 		log.Error("error", slog.String("err", err.Error()))
 		return data, err

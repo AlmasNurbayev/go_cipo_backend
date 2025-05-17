@@ -32,13 +32,13 @@ func (s *Service) GetProductById(ctx context.Context, id int64) (dto.ProductById
 		return productByIdDto, err
 	}
 
-	qntPriceRegistry, err := s.postgresStorage.GetQntPriceRegistryByProductId(ctx, id, lastOfferRegistrator.Id)
+	qntPriceRegistry, err := s.qntPriceStorage.GetQntPriceRegistryByProductId(ctx, id, lastOfferRegistrator.Id)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productByIdDto, err
 	}
 
-	qntPriceRegistryGroup, err := s.postgresStorage.GetQntPriceRegistryGroupByProductId(ctx, id, lastOfferRegistrator.Id)
+	qntPriceRegistryGroup, err := s.qntPriceStorage.GetQntPriceRegistryGroupByProductId(ctx, id, lastOfferRegistrator.Id)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productByIdDto, err
@@ -106,13 +106,13 @@ func (s *Service) GetProductByName1c(ctx context.Context, name_1c string) (dto.P
 		return productByNameDto, err
 	}
 
-	qntPriceRegistry, err := s.postgresStorage.GetQntPriceRegistryByProductId(ctx, productByIdEntity.Id, lastOfferRegistrator.Id)
+	qntPriceRegistry, err := s.qntPriceStorage.GetQntPriceRegistryByProductId(ctx, productByIdEntity.Id, lastOfferRegistrator.Id)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productByNameDto, err
 	}
 
-	qntPriceRegistryGroup, err := s.postgresStorage.GetQntPriceRegistryGroupByProductId(ctx, productByIdEntity.Id, lastOfferRegistrator.Id)
+	qntPriceRegistryGroup, err := s.qntPriceStorage.GetQntPriceRegistryGroupByProductId(ctx, productByIdEntity.Id, lastOfferRegistrator.Id)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productByNameDto, err

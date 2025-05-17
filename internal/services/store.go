@@ -13,7 +13,7 @@ func (s *Service) GetStores(ctx context.Context) (dto.StoresResponse, error) {
 	log := s.log.With(slog.String("op", op))
 
 	storesDTO := dto.StoresResponse{}
-	storesEntity, err := s.postgresStorage.ListStore(ctx)
+	storesEntity, err := s.classifierStorage.ListStore(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return storesDTO, err

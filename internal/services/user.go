@@ -15,7 +15,7 @@ func (s *Service) GetUserByIdService(ctx context.Context, id int64) (dto.UserRes
 
 	userDTO := dto.UserResponse{}
 
-	userEntity, err := s.postgresStorage.GetUserByIdStorage(ctx, id)
+	userEntity, err := s.userStorage.GetUserByIdStorage(ctx, id)
 	if err != nil {
 		log.Warn(err.Error())
 		if err == errorsShare.ErrUserNotFound.Error {
@@ -37,7 +37,7 @@ func (s *Service) GetUserByNameService(ctx context.Context, name string) (dto.Us
 	op := "services.GetUserByNameService"
 	log := s.log.With(slog.String("op", op))
 
-	userEntity, err := s.postgresStorage.GetUserByNameStorage(ctx, name)
+	userEntity, err := s.userStorage.GetUserByNameStorage(ctx, name)
 	userDTO := dto.UserResponse{}
 
 	if err != nil {

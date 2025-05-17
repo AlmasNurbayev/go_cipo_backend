@@ -27,7 +27,7 @@ func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategor
 	response := dto.KaspiAddCategoryResponse{}
 	response.Name_kaspi = data.Name_kaspi
 
-	organizations, err := s.postgresStorage.ListKaspiOrganization(ctx)
+	organizations, err := s.kaspiStorage.ListKaspiOrganization(ctx)
 	if err != nil {
 		return response, err
 	}
@@ -132,7 +132,7 @@ func (s *Service) KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategor
 		}
 	}
 
-	result, err := s.postgresStorage.CreateKaspiCategory(ctx, newCategory)
+	result, err := s.kaspiStorage.CreateKaspiCategory(ctx, newCategory)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return response, err
@@ -153,7 +153,7 @@ func (s *Service) KaspiListCategory(ctx context.Context) (dto.KaspiListCategoryR
 
 	var result dto.KaspiListCategoryResponse
 
-	response, err := s.postgresStorage.ListKaspiCategory(ctx)
+	response, err := s.kaspiStorage.ListKaspiCategory(ctx)
 	if err != nil {
 		return result, errorsShare.ErrInternalError.Error
 	}
