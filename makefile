@@ -30,7 +30,7 @@ parser:
 	go run cmd/parser/main.go
 
 test:
-	go test -v -count=1 ./tests/...
+	go test -v -count=1 ./...
 
 docker_run:
 	cd ../ && docker-compose up -d --build
