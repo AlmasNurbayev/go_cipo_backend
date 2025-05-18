@@ -49,4 +49,5 @@ type KaspiProductsItemResponse struct {
 
 	Kaspi_in_sale  bool        `json:"kaspi_in_sale"`
 	Kaspi_category null.String `json:"kaspi_category"`
+	Main_color     null.String `json:"main_color"`
 }

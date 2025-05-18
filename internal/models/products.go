@@ -31,4 +31,5 @@ type ProductsItemEntity struct {
 
 	Kaspi_in_sale  bool        `db:"kaspi_in_sale"`
 	Kaspi_category null.String `db:"kaspi_category"`
+	Main_color     null.String `db:"main_color"`
 }

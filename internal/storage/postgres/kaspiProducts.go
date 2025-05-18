@@ -84,6 +84,7 @@ func (s *Storage) ListKaspiProductsSearch(ctx context.Context, registrator_id in
     p.artikul AS artikul,
     p.name AS name,
     p.description AS description,
+		p.main_color AS main_color,
 		p.material_podoshva AS material_podoshva,
 		p.material_up AS material_up,
 		p.material_inside AS material_inside,
