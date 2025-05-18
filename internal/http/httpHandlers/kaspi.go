@@ -106,6 +106,7 @@ func (h *Handler) ListKaspiProducts(c fiber.Ctx) error {
 	params := dto.KaspiProductsQueryRequest{}
 	queryMap := c.Queries()
 
+	params.Id = utils.String2Int64(queryMap["id"])
 	params.Take = utils.String2Int(queryMap["take"])
 	params.Skip = utils.String2Int(queryMap["skip"])
 	params.MinPrice = utils.String2Float32(queryMap["minPrice"])

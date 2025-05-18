@@ -41,6 +41,10 @@ func (s *Storage) ListKaspiProductsSearch(ctx context.Context, registrator_id in
 	if params.Take != 0 {
 		qntDistinct = qntDistinct.Limit(uint64(params.Take))
 	}
+	if params.Id != 0 {
+		fmt.Println("params.Id", params.Id)
+		qntDistinct = qntDistinct.Where(squirrel.Eq{"product_id": params.Id})
+	}
 	if len(params.Size) != 0 {
 		qntDistinct = qntDistinct.Where(squirrel.Eq{"size_id": params.Size})
 	}

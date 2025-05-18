@@ -17,6 +17,7 @@ type KaspiProductsQueryRequest struct {
 	Take          int     `form:"page" binding:"omitempty" example:"20" query:"page" validate:"omitempty,min=0,max=100"`
 	Skip          int     `form:"skip" binding:"omitempty" example:"0" query:"skip" validate:"omitempty,min=0"`
 	Kaspi_in_sale bool    `form:"kaspi_in_sale" binding:"omitempty" example:"true" query:"kaspi_in_sale"`
+	Id            int64   `form:"id" binding:"omitempty" example:"1" query:"id"`
 }
 
 type KaspiProductsResponse struct {
