@@ -1,10 +1,12 @@
 # Используем официальный образ Go
-FROM golang:1.23-alpine AS builder
+FROM golang:1.24-alpine AS builder
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
 COPY go.mod ./
-RUN go mod download && go mod verify && go mod tidy
+RUN go mod download
+RUN go mod verify
+RUN go mod tidy
 
 # Копируем файлы проекта
 COPY . .
