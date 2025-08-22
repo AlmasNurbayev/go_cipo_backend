@@ -15,7 +15,7 @@ func RequestTracingMiddleware(log *slog.Logger) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		traceID := uuid.New().String()
 
-		ctx := context.WithValue(c.Context(), traceIDKey("traceID"), traceID)
+		ctx := context.WithValue(c, traceIDKey("traceID"), traceID)
 		c.Set("X-Trace-ID", traceID)
 		start := time.Now()
 

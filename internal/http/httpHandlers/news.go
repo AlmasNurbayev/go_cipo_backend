@@ -27,7 +27,7 @@ func (h *Handler) GetNewsById(c fiber.Ctx) error {
 		return c.Status(400).SendString(errorsShare.ErrBadRequest.Message)
 	}
 
-	res, err := h.service.GetNewsById(c.Context(), id)
+	res, err := h.service.GetNewsById(c, id)
 	if err != nil {
 		if err == errorsShare.ErrNewsNotFound.Error {
 			return c.Status(404).SendString(errorsShare.ErrNewsNotFound.Message)
@@ -56,7 +56,7 @@ func (h *Handler) ListNews(c fiber.Ctx) error {
 		return c.Status(400).SendString(errorsShare.ErrBadRequest.Message)
 	}
 
-	res, err := h.service.ListNews(c.Context(), count)
+	res, err := h.service.ListNews(c, count)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)

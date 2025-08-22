@@ -28,7 +28,7 @@ func (h *Handler) GetProductBy(c fiber.Ctx) error {
 			return c.Status(400).SendString(errorsShare.ErrBadRequest.Message)
 		}
 
-		res, err := h.service.GetProductById(c.Context(), id)
+		res, err := h.service.GetProductById(c, id)
 		if err != nil {
 			if err == errorsShare.ErrProductNotFound.Error {
 				return c.Status(404).SendString(errorsShare.ErrProductNotFound.Message + " id " + idString)
@@ -42,7 +42,7 @@ func (h *Handler) GetProductBy(c fiber.Ctx) error {
 	name1CString := c.Query("name_1c")
 	if name1CString != "" {
 
-		res, err := h.service.GetProductByName1c(c.Context(), name1CString)
+		res, err := h.service.GetProductByName1c(c, name1CString)
 		if err != nil {
 			if err == errorsShare.ErrProductNotFound.Error {
 				return c.Status(404).SendString(errorsShare.ErrProductNotFound.Message + " name_1c " + name1CString)

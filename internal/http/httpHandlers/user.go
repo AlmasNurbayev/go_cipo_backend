@@ -35,7 +35,7 @@ func (h *Handler) GetUserById(c fiber.Ctx) error {
 			return c.Status(400).SendString(errorsShare.ErrBadRequest.Message)
 		}
 
-		res, err = h.service.GetUserByIdService(c.Context(), id)
+		res, err = h.service.GetUserByIdService(c, id)
 		if err != nil {
 			log.Warn(err.Error())
 			if err == errorsShare.ErrUserNotFound.Error {
@@ -67,7 +67,7 @@ func (h *Handler) GetUserSearch(c fiber.Ctx) error {
 	res := dto.UserResponse{}
 
 	if nameString != "" {
-		res, err = h.service.GetUserByNameService(c.Context(), nameString)
+		res, err = h.service.GetUserByNameService(c, nameString)
 		if err != nil {
 			log.Warn(err.Error())
 			if err == errorsShare.ErrUserNotFound.Error {

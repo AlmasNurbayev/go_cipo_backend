@@ -28,7 +28,7 @@ func (h *Handler) KaspiAddCategory(c fiber.Ctx) error {
 		return c.Status(400).SendString(err.Error())
 	}
 
-	response, err := h.service.KaspiAddCategory(c.Context(), body)
+	response, err := h.service.KaspiAddCategory(c, body)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		if err == errorsShare.ErrKaspiCategoryDuplicate.Error {
@@ -46,7 +46,7 @@ func (h *Handler) KaspiListCategory(c fiber.Ctx) error {
 	op := "HttpHandlers.KaspiListCategory"
 	log := h.log.With(slog.String("op", op))
 
-	response, err := h.service.KaspiListCategory(c.Context())
+	response, err := h.service.KaspiListCategory(c)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
@@ -71,7 +71,7 @@ func (h *Handler) KaspiAddOrganization(c fiber.Ctx) error {
 		return c.Status(400).SendString(err.Error())
 	}
 
-	response, err := h.service.KaspiAddOrganization(c.Context(), body)
+	response, err := h.service.KaspiAddOrganization(c, body)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
@@ -84,7 +84,7 @@ func (h *Handler) KaspiListOrganization(c fiber.Ctx) error {
 	op := "HttpHandlers.KaspiListOrganization"
 	log := h.log.With(slog.String("op", op))
 
-	response, err := h.service.KaspiListOrganization(c.Context())
+	response, err := h.service.KaspiListOrganization(c)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
@@ -136,7 +136,7 @@ func (h *Handler) ListKaspiProducts(c fiber.Ctx) error {
 		params.Take = 20
 	}
 
-	res, err := h.service.ListKaspiProducts(c.Context(), params)
+	res, err := h.service.ListKaspiProducts(c, params)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)

@@ -53,7 +53,7 @@ func (h *Handler) ListProducts(c fiber.Ctx) error {
 		params.Take = 20
 	}
 
-	res, err := h.service.ListProducts(c.Context(), params)
+	res, err := h.service.ListProducts(c, params)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)

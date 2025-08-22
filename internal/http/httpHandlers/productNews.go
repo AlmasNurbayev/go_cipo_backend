@@ -27,7 +27,7 @@ func (h *Handler) ListProductNews(c fiber.Ctx) error {
 		return c.Status(400).SendString(errorsShare.ErrBadRequest.Message)
 	}
 
-	res, err := h.service.ListProductNews(c.Context(), count)
+	res, err := h.service.ListProductNews(c, count)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
