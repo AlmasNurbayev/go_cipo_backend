@@ -3,6 +3,7 @@ package partParsers
 import (
 	"errors"
 	"slices"
+	"strings"
 	"time"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/utils"
@@ -38,7 +39,7 @@ func QntPriceRegistryParser(receiveStruct *xmltypes.OfferType, registrator_id in
 		rootSv := root[j].ЗначенияСвойств.ЗначенияСвойства
 		var size models.SizeEntity
 		for k := range rootSv {
-			if rootSv[k].Ид != "a001d8e3-a3b3-11ed-b0d2-50ebf624c538" {
+			if !strings.Contains(rootSv[k].Наименование, "Размер") {
 				continue
 			}
 			sizeIndex := slices.IndexFunc(sizes, func(item models.SizeEntity) bool {
