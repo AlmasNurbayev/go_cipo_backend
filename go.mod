@@ -1,15 +1,13 @@
 module github.com/AlmasNurbayev/go_cipo_backend
 
-go 1.24.0
-
-toolchain go1.24.6
+go 1.25.0
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/caarlos0/env/v11 v11.3.1
 	github.com/georgysavva/scany/v2 v2.1.3
 	github.com/go-playground/validator/v10 v10.25.0
-	github.com/gofiber/fiber/v3 v3.0.0-beta.5
+	github.com/gofiber/fiber/v3 v3.0.0-rc.1
 	github.com/golang-migrate/migrate/v4 v4.18.2
 	github.com/google/uuid v1.6.0
 	github.com/guregu/null/v5 v5.0.0
@@ -20,7 +18,7 @@ require (
 	github.com/otiai10/copy v1.14.1
 	github.com/prometheus/client_golang v1.21.1
 	github.com/prometheus/common v0.62.0
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.0
 )
 
 require (
@@ -52,7 +50,7 @@ require (
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
-	github.com/tinylib/msgp v1.3.0 // indirect
+	github.com/tinylib/msgp v1.4.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.65.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
