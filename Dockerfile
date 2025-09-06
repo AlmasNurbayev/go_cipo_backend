@@ -1,5 +1,5 @@
 # Используем официальный образ Go
-FROM golang:1.24-alpine AS builder
+FROM golang:1.25-alpine AS builder
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
@@ -20,7 +20,7 @@ RUN go build -o CLEARDB ./cmd/cleardb/main.go
 
 
 # Используем stage 2: минимальный контейнер
-FROM alpine:3.21.3 AS final
+FROM alpine:3.22.1 AS final
 WORKDIR /app/
 
 # Добавляем необходимые зависимости
