@@ -29,6 +29,8 @@ type Config struct {
 		CORS_ALLOW_ORIGINS     []string      `env:"HTTP_CORS_ALLOW_ORIGINS" envSeparator:","` // разделенные запятыми
 		CORS_ALLOW_HEADERS     []string      `env:"HTTP_CORS_ALLOW_HEADERS" envSeparator:","` // разделенные запятыми
 		CORS_ALLOW_CREDENTIALS bool          `env:"HTTP_CORS_ALLOW_CREDENTIALS"`
+		EXCLUDE_VIDS_IN_LIST   []string      `env:"EXCLUDE_VIDS_IN_LIST" envSeparator:","` // разделенные запятыми, исключить эти виды моделей из выдачи productSearch
+		EXCLUDES_SIZES_LEN_MIN int           `env:"EXCLUDES_SIZES_LEN_MIN"`                // исключить из выдачи ProductsFilter размеры с количеством символами больше
 	}
 	Parser struct {
 		PARSER_CLASSIFICATOR_FILE string `env:"PARSER_CLASSIFICATOR_FILE"`

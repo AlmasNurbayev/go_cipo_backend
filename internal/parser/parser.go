@@ -37,7 +37,7 @@ func (p *Parser) Init() {
 	p.Log.With("op", op)
 	p.Log.Info("==== init parser on env: " + p.Cfg.Env)
 	p.Log.Debug("debug message is enabled")
-	postgresStorage, err := postgres.NewStorage(p.Cfg.Dsn, p.Log, p.Cfg.HTTP.HTTP_WRITE_TIMEOUT)
+	postgresStorage, err := postgres.NewStorage(p.Cfg.Dsn, p.Log, p.Cfg.HTTP.HTTP_WRITE_TIMEOUT, p.Cfg)
 	if err != nil {
 		p.Log.Error(err.Error())
 		panic(err)

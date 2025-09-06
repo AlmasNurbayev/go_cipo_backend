@@ -100,3 +100,37 @@ func (s *Storage) GetVidModeliById(ctx context.Context, id int64) (models.VidMod
 	}
 	return data, nil
 }
+
+func (s *Storage) ListVidModeliIdExcludeNames(ctx context.Context, exclude []string) ([]int64, error) {
+	op := "postgres.ListVidModeli"
+	log := s.log.With("op", op)
+
+	var vidsModeli = []models.VidModeliEntity{}
+	var ids = []int64{}
+	query := `SELECT id FROM vid_modeli
+	WHERE name_1c = ANY($1)
+	;`
+	var err error
+	// если есть транзакция, используем ее, иначе стандартный пул
+	if s.Tx != nil {
+		db := *s.Tx
+		err = pgxscan.Select(ctx, db, &vidsModeli, query, exclude)
+	} else {
+		db := s.Db
+		err = pgxscan.Select(ctx, db, &vidsModeli, query, exclude)
+	}
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			return ids, nil
+		}
+		log.Error(err.Error())
+		return ids, errorsShare.ErrInternalError.Error
+	}
+	for _, r := range vidsModeli {
+		ids = append(ids, r.Id)
+	}
+
+	return ids, nil
+}

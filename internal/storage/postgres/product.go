@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"log/slog"
 	"strconv"
 	"strings"
@@ -149,7 +148,16 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 	log := s.log.With("op", op)
 
 	var products = []models.ProductsItemEntity{}
+	var excludeIds = []int64{}
 	sb := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
+
+	if len(s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST) > 0 {
+		var err error
+		excludeIds, err = s.ListVidModeliIdExcludeNames(ctx, s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST)
+		if err != nil {
+			return nil, 0, err
+		}
+	}
 
 	qntDistinct := sb.Select(
 		"qpr.product_id",
@@ -181,6 +189,9 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 	}
 	if len(params.Vid_modeli) != 0 {
 		qntDistinct = qntDistinct.Where(squirrel.Eq{"vid_modeli_id": params.Vid_modeli})
+	} else {
+		// добавить условие, исключить виды моделей пееречисленные в cfg.EXCLUDE_VIDS_IN_LIST
+		qntDistinct = qntDistinct.Where(squirrel.NotEq{"vid_modeli_id": excludeIds})
 	}
 	if params.MinPrice != 0 {
 		qntDistinct = qntDistinct.Where(squirrel.GtOrEq{"sum": params.MinPrice})
@@ -203,49 +214,76 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		qntDistinct = qntDistinct.OrderBy("product_id desc")
 	}
 
-	// TODO - нормально выделить подзапрос SUB и условие WHERE
-	mainQuery := fmt.Sprintf(`    q.product_id,
-    q.product_create_date,
-		q.sum,
-    q.product_group_id,
-    pg.name_1c AS product_group_name,
-    p.name AS product_name,
-    p.artikul AS artikul,
-    p.name AS name,
-    p.description AS description,
-		p.material_podoshva AS material_podoshva,
-		p.material_up AS material_up,
-		p.material_inside AS material_inside,
-		p.sex AS sex,
-		p.kaspi_in_sale AS kaspi_in_sale,
-		p.kaspi_category AS kaspi_category,
-    v.name_1c AS vid_modeli_name,
-    q.vid_modeli_id,
-    q.create_date,
-	(select json_agg(jsonb_build_object('id', im.id, 'full_name', im.full_name,
-	'name', im.name, 'active', im.active, 'main', im.main	
-	)) from image_registry im where im.product_id = q.product_id) as image_registry,
-    (
-        SELECT jsonb_agg(jsonb_build_object('store_id', sub.store_id, 'size', sub.size_name_1c, 'sum', sub.sum, 'qnt', sub.qnt))
-        FROM (
-            SELECT size_name_1c, sum, qnt, array_agg(distinct store_id) as store_id
-            FROM qnt_price_registry
-            WHERE product_id = q.product_id and sum = q.sum and registrator_id = %d
-            group by size_name_1c, sum, qnt, store_id
-        ) sub
-    ) AS qnt_price`, registrator_id)
+	// подзапрос для картинок
+	imagesSub := sb.Select(
+		"json_agg(jsonb_build_object(" +
+			"'id', im.id, " +
+			"'full_name', im.full_name, " +
+			"'name', im.name, " +
+			"'active', im.active, " +
+			"'main', im.main))",
+	).
+		From("image_registry im").
+		Where("im.product_id = q.product_id")
 
-	queryBuilder := sb.Select(mainQuery).FromSelect(qntDistinct, "q").
-		LeftJoin(`product p ON q.product_id = p.id`).
-		LeftJoin(`vid_modeli v ON q.vid_modeli_id = v.id`).
-		LeftJoin(`product_group pg ON q.product_group_id = pg.id`)
+	// подзапрос для qnt_price
+	qntPriceSubInner := sb.Select(
+		"size_name_1c",
+		"sum",
+		"qnt",
+		"array_agg(distinct store_id) as store_id",
+	).
+		From("qnt_price_registry qpr2").
+		Where("qpr2.product_id = q.product_id").
+		Where("qpr2.sum = q.sum").
+		Where(squirrel.Eq{"qpr2.registrator_id": registrator_id}).
+		GroupBy("size_name_1c, sum, qnt")
 
+	qntPriceSub := sb.Select(
+		"jsonb_agg(jsonb_build_object("+
+			"'store_id', sub.store_id, "+
+			"'size', sub.size_name_1c, "+
+			"'sum', sub.sum, "+
+			"'qnt', sub.qnt))",
+	).FromSelect(qntPriceSubInner, "sub")
+
+	// финальный запрос
+	queryBuilder := sb.Select(
+		"q.product_id",
+		"q.product_create_date",
+		"q.sum",
+		"q.product_group_id",
+		"pg.name_1c AS product_group_name",
+		"p.name AS product_name",
+		"p.artikul AS artikul",
+		"p.name AS name",
+		"p.description AS description",
+		"p.material_podoshva",
+		"p.material_up",
+		"p.material_inside",
+		"p.sex",
+		"p.kaspi_in_sale",
+		"p.kaspi_category",
+		"v.name_1c AS vid_modeli_name",
+		"q.vid_modeli_id",
+		"q.create_date",
+	).
+		Column(
+			imagesSub.Prefix("(").Suffix(") as image_registry"),
+		).
+		Column(qntPriceSub.Prefix("(").Suffix(") as qnt_price")).
+		FromSelect(qntDistinct, "q").
+		LeftJoin("product p ON q.product_id = p.id").
+		LeftJoin("vid_modeli v ON q.vid_modeli_id = v.id").
+		LeftJoin("product_group pg ON q.product_group_id = pg.id")
+
+		//query2, args, err2 := queryBuilder.ToSql()
 	query2, args, err2 := queryBuilder.ToSql()
 	if err2 != nil {
 		log.Error(err2.Error())
 		return products, 0, errorsShare.ErrInternalError.Error
 	}
-	//log.Debug(query2)
+	log.Debug(query2)
 
 	err := pgxscan.Select(ctx, s.Db, &products, query2, args...)
 	if err != nil {

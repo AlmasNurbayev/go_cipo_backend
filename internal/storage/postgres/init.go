@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -16,9 +17,10 @@ type Storage struct {
 	Db  *pgxpool.Pool   // экспортная для создания транзакций снаружи
 	log *slog.Logger
 	Tx  *pgx.Tx
+	Cfg *config.Config
 }
 
-func NewStorage(DSN string, log *slog.Logger, timeout time.Duration) (*Storage, error) {
+func NewStorage(DSN string, log *slog.Logger, timeout time.Duration, cfg *config.Config) (*Storage, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	const op = "postgres.NewStorage"
@@ -52,7 +54,7 @@ func NewStorage(DSN string, log *slog.Logger, timeout time.Duration) (*Storage, 
 	// 	return nil, fmt.Errorf("%s: %w", op, err)
 	// }
 
-	return &Storage{Ctx: ctx, Db: db, log: log}, nil
+	return &Storage{Ctx: ctx, Db: db, log: log, Cfg: cfg}, nil
 }
 
 func (s *Storage) Close() {

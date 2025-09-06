@@ -6,6 +6,7 @@ import (
 	"sort"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
 	"github.com/jinzhu/copier"
 )
 
@@ -20,6 +21,17 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err
 	}
+	// фильтруем размеры если задана максимальная длина символов
+	if s.cfg.HTTP.EXCLUDES_SIZES_LEN_MIN > 0 {
+		filtered := make([]models.SizeEntity, 0)
+		for _, v := range sizeEntity {
+			if len(v.Name_1c) <= s.cfg.HTTP.EXCLUDES_SIZES_LEN_MIN {
+				filtered = append(filtered, v)
+			}
+		}
+		sizeEntity = filtered
+	}
+
 	sort.Slice(sizeEntity, func(i, j int) bool {
 		return sizeEntity[i].Name_1c < sizeEntity[j].Name_1c
 	})

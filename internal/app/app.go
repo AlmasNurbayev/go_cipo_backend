@@ -17,7 +17,7 @@ type App struct {
 }
 
 func NewApp(cfg *config.Config, log *slog.Logger) *App {
-	storage, err := postgres.NewStorage(cfg.Dsn, log, cfg.HTTP.HTTP_WRITE_TIMEOUT)
+	storage, err := postgres.NewStorage(cfg.Dsn, log, cfg.HTTP.HTTP_WRITE_TIMEOUT, cfg)
 	if err != nil {
 		log.Error("not init postgres storage")
 		panic(err)

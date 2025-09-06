@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/errorsShare"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
@@ -13,8 +14,18 @@ import (
 func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, count int64) ([]models.ProductNewsEntity, error) {
 	op := "postgres.ListProductNews"
 	log := s.log.With("op", op)
-
 	var products = []models.ProductNewsEntity{}
+
+	var excludeIds = []int64{}
+	fmt.Println(excludeIds)
+	if len(s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST) > 0 {
+		var err error
+		excludeIds, err = s.ListVidModeliIdExcludeNames(ctx, s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST)
+		if err != nil {
+			return products, err
+		}
+	}
+
 	db := s.Db
 
 	query := `SELECT p.id as "product_id", p.name as "product_name",
@@ -46,14 +57,14 @@ func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, cou
 	JOIN (
     SELECT product_id, sum
     FROM qnt_price_registry 
-    WHERE registrator_id = $1 
+    WHERE registrator_id = $1 AND vid_modeli_id <> ALL($3)
     GROUP BY sum, product_id 
     ORDER BY product_id DESC 
     LIMIT $2
 	) qpr ON qpr.product_id = p.id
 	ORDER BY product_id desc;`
 
-	err := pgxscan.Select(ctx, db, &products, query, registrator_id, count)
+	err := pgxscan.Select(ctx, db, &products, query, registrator_id, count, excludeIds)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			// если выкидывается ошибка нет строк, возвращаем пустой массив
