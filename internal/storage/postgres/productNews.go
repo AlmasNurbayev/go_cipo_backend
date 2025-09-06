@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/errorsShare"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
@@ -17,7 +16,7 @@ func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, cou
 	var products = []models.ProductNewsEntity{}
 
 	var excludeIds = []int64{}
-	fmt.Println(excludeIds)
+	//fmt.Println(excludeIds)
 	if len(s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST) > 0 {
 		var err error
 		excludeIds, err = s.ListVidModeliIdExcludeNames(ctx, s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST)

@@ -11,6 +11,8 @@ services:
       - HTTP_WRITE_TIMEOUT=${HTTP_WRITE_TIMEOUT}
       - HTTP_IDLE_TIMEOUT=${HTTP_IDLE_TIMEOUT}
       - HTTP_PREFORK=${HTTP_PREFORK}
+      - EXCLUDE_VIDS_IN_LIST=${EXCLUDE_VIDS_IN_LIST}
+      - EXCLUDES_SIZES_LEN_MIN=${EXCLUDES_SIZES_LEN_MIN}
       - GOMAXPROCS=${GOMAXPROCS}
       - DSN=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@cipo_backend_postgres:5432/${POSTGRES_DB}?sslmode=disable
       - PARSER_CLASSIFICATOR_FILE=${PARSER_CLASSIFICATOR_FILE}
@@ -56,7 +58,7 @@ services:
     volumes:
       - ./pg_conf/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./volume_db/:/var/lib/postgresql/data
-    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]      
+    command: ['postgres', '-c', 'config_file=/etc/postgresql/postgresql.conf']
     networks:
       - cipo_backend_network
 
