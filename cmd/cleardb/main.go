@@ -35,7 +35,7 @@ func main() {
 	Logger.Info("period before clear: " + pastTime.String())
 
 	// подключаем БД без сервиса и DI, т.к. не требуются слои абстракции
-	Storage, err := postgres.NewStorage(Cfg.Dsn, Logger, Cfg.HTTP.HTTP_WRITE_TIMEOUT)
+	Storage, err := postgres.NewStorage(Cfg.Dsn, Logger, Cfg.HTTP.HTTP_WRITE_TIMEOUT, Cfg)
 	if err != nil {
 		Logger.Error(err.Error())
 		os.Exit(1)
