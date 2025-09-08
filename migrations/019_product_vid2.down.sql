@@ -1,0 +1,4 @@
+ALTER TABLE product 
+   DROP COLUMN IF EXISTS product_vid2_id CASCADE;
+
+DROP TABLE IF EXISTS product_vid2 CASCADE;
