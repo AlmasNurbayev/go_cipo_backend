@@ -277,7 +277,8 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		LeftJoin("vid_modeli v ON q.vid_modeli_id = v.id").
 		LeftJoin("product_group pg ON q.product_group_id = pg.id")
 
-		//query2, args, err2 := queryBuilder.ToSql()
+	queryBuilder = queryBuilder.OrderBy("q.product_id desc")
+	//query2, args, err2 := queryBuilder.ToSql()
 	query2, args, err2 := queryBuilder.ToSql()
 	if err2 != nil {
 		log.Error(err2.Error())
