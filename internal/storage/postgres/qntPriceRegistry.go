@@ -11,7 +11,6 @@ import (
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
 	"github.com/Masterminds/squirrel"
 	"github.com/georgysavva/scany/v2/pgxscan"
-	"github.com/k0kubun/pp"
 )
 
 func (s *Storage) CreateQntPriceRegistry(ctx context.Context, data models.QntPriceRegistryEntity) (int64, error) {
@@ -178,7 +177,7 @@ func (s *Storage) ListProductsOnlyQnt(ctx context.Context, registrator_id int64)
 		log.Error(err.Error())
 		return res, errorsShare.ErrInternalError.Error
 	}
-	pp.Println(res)
+	//pp.Println(res)
 
 	return res, nil
 }
