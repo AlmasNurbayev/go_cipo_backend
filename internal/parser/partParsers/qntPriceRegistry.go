@@ -75,6 +75,7 @@ func QntPriceRegistryParser(receiveStruct *xmltypes.OfferType, registrator_id in
 		// получаем ссылку на вид цены и цену
 		rootPriceVid := root[j].Цены.Цена
 		var price float32
+		var priceZakup float32
 		var priceVid models.PriceVidEntity
 		for k := range rootPriceVid {
 			priceIndex := slices.IndexFunc(priceVids, func(item models.PriceVidEntity) bool {
@@ -84,6 +85,15 @@ func QntPriceRegistryParser(receiveStruct *xmltypes.OfferType, registrator_id in
 			if priceIndex != -1 {
 				priceVid = priceVids[priceIndex]
 				price = rootPriceVid[k].ЦенаЗаЕдиницу
+			}
+			priceIndexZakup := slices.IndexFunc(priceVids, func(item models.PriceVidEntity) bool {
+				// если тип цены совпадает и он активен
+				return item.Id_1c == rootPriceVid[k].ИдТипаЦены && item.Is_zakup
+			})
+			if priceIndexZakup != -1 {
+				//priceVidZakup = priceVids[priceIndex]
+				priceZakup = utils.RoundFloat32(rootPriceVid[k].ЦенаЗаЕдиницу)
+				//fmt.Println("priceZakup=", priceZakup, " for product=", product.Name)
 			}
 		}
 		if priceVid.Id == 0 {
@@ -102,6 +112,7 @@ func QntPriceRegistryParser(receiveStruct *xmltypes.OfferType, registrator_id in
 			Operation_date:      operation_date,
 			Qnt:                 qnt,
 			Sum:                 price,
+			Sum_zakup:           priceZakup,
 			Store_id:            store.Id,
 			Price_vid_id:        priceVid.Id,
 			Size_id:             size.Id,

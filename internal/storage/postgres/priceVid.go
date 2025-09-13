@@ -39,7 +39,7 @@ func (s *Storage) UpdatePriceVid(ctx context.Context, data models.PriceVidEntity
 	log := s.log.With(slog.String("op", op))
 
 	query := `UPDATE price_vid SET
-	id_1c = $1, name_1c = $2, registrator_id = $3, active = $4, active_change_date = $5 
+	id_1c = $1, name_1c = $2, registrator_id = $3, active = $4,  active_change_date = $5 
 		WHERE id_1c = $6 RETURNING *;`
 	db := *s.Tx
 
@@ -58,7 +58,7 @@ func (s *Storage) ListPriceVid(ctx context.Context) ([]models.PriceVidEntity, er
 	op := "postgres.ListPriceVid"
 	log := s.log.With(slog.String("op", op))
 
-	query := `SELECT id, id_1c, name_1c, registrator_id, active, 
+	query := `SELECT id, id_1c, name_1c, registrator_id, active, is_zakup,
 	active_change_date FROM price_vid;`
 	db := *s.Tx
 

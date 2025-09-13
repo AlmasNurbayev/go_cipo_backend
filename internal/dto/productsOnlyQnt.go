@@ -26,5 +26,6 @@ type ProductsOnlyQntItem struct {
 	Base_ed             string      `json:"base_ed"`
 	Product_create_date time.Time   `json:"product_create_date"`
 	Sum                 float32     `json:"sum"`
+	Sum_zakup           float32     `json:"sum_zakup"`
 	Qnt                 int64       `json:"qnt"`
 }

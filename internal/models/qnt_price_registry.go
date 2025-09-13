@@ -10,6 +10,7 @@ type QntPriceRegistryEntity struct {
 	Id int64 `json:"id" db:"id"`
 
 	Sum              float32    `json:"sum" db:"sum"`
+	Sum_zakup        float32    `json:"sum_zakup" db:"sum_zakup"`
 	Qnt              float32    `json:"qnt" db:"qnt"`
 	Operation_date   time.Time  `json:"operation_date" db:"operation_date"`
 	Discount_percent null.Float `json:"discount_percent" db:"discount_percent"`

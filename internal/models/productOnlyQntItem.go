@@ -21,5 +21,6 @@ type ProductsOnlyQntEntity struct {
 	Base_ed             string      `json:"base_ed" db:"base_ed"`
 	Product_create_date time.Time   `json:"product_create_date" db:"product_create_date"`
 	Sum                 float32     `json:"sum" db:"sum"`
+	Sum_zakup           float32     `json:"sum_zakup" db:"sum_zakup"`
 	Qnt                 int64       `json:"qnt" db:"qnt"`
 }
