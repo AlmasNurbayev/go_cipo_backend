@@ -22,6 +22,7 @@ type handlersMainProvider interface {
 	ListNews(c fiber.Ctx) error
 
 	ListProducts(c fiber.Ctx) error
+	GetProductsOnlyQnt(c fiber.Ctx) error
 	//Tracing(c fiber.Ctx) error
 }
 
@@ -66,5 +67,8 @@ func RegisterMainRoutes(app *fiber.App, handler handlersMainProvider, log *slog.
 
 	log.Info("GET /api/products/")
 	api.Get("/products/", handler.ListProducts)
+
+	log.Info("GET /api/productsOnlyQnt")
+	api.Get("/productsOnlyQnt/", handler.GetProductsOnlyQnt)
 
 }

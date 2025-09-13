@@ -1,0 +1,2 @@
+ALTER TABLE product
+ALTER COLUMN product_vid_id SET NOT NULL;

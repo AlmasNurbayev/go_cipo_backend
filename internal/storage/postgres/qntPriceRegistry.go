@@ -2,11 +2,16 @@ package postgres
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"log/slog"
 	"time"
 
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/errorsShare"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
+	"github.com/Masterminds/squirrel"
 	"github.com/georgysavva/scany/v2/pgxscan"
+	"github.com/k0kubun/pp"
 )
 
 func (s *Storage) CreateQntPriceRegistry(ctx context.Context, data models.QntPriceRegistryEntity) (int64, error) {
@@ -16,9 +21,9 @@ func (s *Storage) CreateQntPriceRegistry(ctx context.Context, data models.QntPri
 	query := `INSERT INTO qnt_price_registry
 	(registrator_id, sum, qnt, operation_date, discount_percent, 
 	discount_begin, discount_end, store_id, product_id, price_vid_id, size_id, 
-	product_group_id, vid_modeli_id, size_name_1c, product_name, product_create_date) 
+	product_group_id, vid_modeli_id, size_name_1c, product_name, product_create_date, nom_vid) 
 		VALUES 
-		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) 
+		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) 
 		RETURNING id;`
 	db := *s.Tx
 
@@ -27,7 +32,7 @@ func (s *Storage) CreateQntPriceRegistry(ctx context.Context, data models.QntPri
 		data.Discount_percent, data.Discount_begin, data.Discount_end,
 		data.Store_id, data.Product_id, data.Price_vid_id, data.Size_id,
 		data.Product_group_id, data.Vid_modeli_id, data.Size_name_1c,
-		data.Product_name, data.Product_create_date).Scan(
+		data.Product_name, data.Product_create_date, data.Nom_vid).Scan(
 		&data.Id)
 	if err != nil {
 		log.Error("error: ", slog.String("err", err.Error()))
@@ -123,5 +128,57 @@ func (s *Storage) GetQntPriceRegistryGroupByProductId(ctx context.Context, produ
 		log.Error("error: ", slog.String("err", err.Error()))
 		return nil, err
 	}
+	return res, nil
+}
+
+func (s *Storage) ListProductsOnlyQnt(ctx context.Context, registrator_id int64) ([]models.ProductsOnlyQntEntity, error) {
+	op := "Service.ListProductsOnlyQnt"
+	log := s.log.With("op", op)
+
+	var res []models.ProductsOnlyQntEntity
+
+	sb := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
+	query := sb.Select(
+		"qpr.product_id",
+		"qpr.product_name",
+		"qpr.product_create_date",
+		"qpr.nom_vid",
+		"qpr.sum",
+		"qpr.qnt",
+		"qpr.store_id",
+		"qpr.size_id",
+		"qpr.vid_modeli_id",
+		"qpr.product_group_id",
+		"pg.name_1c AS product_group_name",
+		"st.name_1c AS store_name",
+		"vm.name_1c AS vid_modeli_name",
+		"qpr.size_name_1c AS size_name",
+		"pr.base_ed AS base_ed",
+	).
+		From("qnt_price_registry qpr").
+		LeftJoin("store st ON qpr.store_id = st.id").
+		LeftJoin("vid_modeli vm ON qpr.vid_modeli_id = vm.id").
+		LeftJoin("product_group pg ON qpr.product_group_id = pg.id").
+		LeftJoin("product pr ON qpr.product_id = pr.id").
+		Where(squirrel.Eq{"qpr.registrator_id": registrator_id}).
+		Limit(1025)
+
+	queryText, args, err := query.ToSql()
+	if err != nil {
+		log.Error(err.Error())
+		return res, errorsShare.ErrInternalError.Error
+	}
+
+	err = pgxscan.Select(ctx, s.Db, &res, queryText, args...)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			return res, nil
+		}
+		log.Error(err.Error())
+		return res, errorsShare.ErrInternalError.Error
+	}
+	pp.Println(res)
+
 	return res, nil
 }

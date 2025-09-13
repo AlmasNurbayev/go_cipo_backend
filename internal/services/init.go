@@ -47,11 +47,13 @@ type classifierStorage interface {
 	ListBrend(ctx context.Context) ([]models.BrendEntity, error)
 	GetProductGroupById(ctx context.Context, id int64) (models.ProductsGroupEntity, error)
 	GetVidModeliById(ctx context.Context, id int64) (models.VidModeliEntity, error)
+	ListProductNomvids(ctx context.Context) ([]string, error)
 }
 
 type qntPriceStorage interface {
 	GetQntPriceRegistryByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntityByProduct, error)
 	GetQntPriceRegistryGroupByProductId(ctx context.Context, product_id int64, registrator_id int64) ([]models.QntPriceRegistryEntityGroupByProduct, error)
+	ListProductsOnlyQnt(ctx context.Context, registrator_id int64) ([]models.ProductsOnlyQntEntity, error)
 }
 
 type productStorage interface {

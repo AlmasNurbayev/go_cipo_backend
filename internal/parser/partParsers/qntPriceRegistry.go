@@ -97,6 +97,7 @@ func QntPriceRegistryParser(receiveStruct *xmltypes.OfferType, registrator_id in
 			Product_name:        product.Name,
 			Product_group_id:    product.Product_group_id,
 			Vid_modeli_id:       product.Vid_modeli_id.Int64,
+			Nom_vid:             product.Nom_vid,
 			Product_create_date: null.TimeFrom(product.Create_date),
 			Operation_date:      operation_date,
 			Qnt:                 qnt,

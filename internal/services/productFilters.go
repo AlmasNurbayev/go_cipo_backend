@@ -66,6 +66,12 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		return productFilterDto, err
 	}
 
+	nomVids, err := s.classifierStorage.ListProductNomvids(ctx)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productFilterDto, err
+	}
+
 	err = copier.Copy(&productFilterDto.Size, &sizeEntity)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
@@ -90,6 +96,12 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 	}
 
 	err = copier.Copy(&productFilterDto.Vid_modeli, &vidModeliEntity)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return productFilterDto, err
+	}
+
+	err = copier.Copy(&productFilterDto.Nom_vid, &nomVids)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err

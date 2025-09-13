@@ -14,7 +14,7 @@ type ProductEntity struct {
 
 	Registrator_id   int64      `json:"registrator_id" db:"registrator_id"`
 	Product_group_id int64      `json:"product_group_id" db:"product_group_id"`
-	Product_vid_id   int64      `json:"product_vid_id" db:"product_vid_id"`
+	Product_vid_id   null.Int64 `json:"product_vid_id" db:"product_vid_id"`
 	Vid_modeli_id    null.Int64 `json:"vid_modeli_id" db:"vid_modeli_id"`
 	Country_id       null.Int64 `json:"country_id" db:"country_id"`
 	Brend_id         null.Int64 `json:"brend_id" db:"brend_id"`
@@ -31,6 +31,7 @@ type ProductEntity struct {
 	Public_web        bool        `json:"public_web" db:"public_web"`
 	Kaspi_category    null.String `json:"kaspi_category" db:"kaspi_category"`
 	Kaspi_in_sale     bool        `json:"kaspi_in_sale" db:"kaspi_in_sale"`
+	Nom_vid           null.String `json:"nom_vid" db:"nom_vid"`
 
 	Changed_date time.Time `json:"changed_date" db:"changed_date"`
 	Create_date  time.Time `json:"create_date" db:"create_date"`
@@ -44,7 +45,7 @@ type ProductByIdEntity struct {
 
 	Registrator_id   int64      `json:"registrator_id" db:"registrator_id"`
 	Product_group_id int64      `json:"product_group_id" db:"product_group_id"`
-	Product_vid_id   int64      `json:"product_vid_id" db:"product_vid_id"`
+	Product_vid_id   null.Int64 `json:"product_vid_id" db:"product_vid_id"`
 	Vid_modeli_id    null.Int64 `json:"vid_modeli_id" db:"vid_modeli_id"`
 	Country_id       null.Int64 `json:"country_id" db:"country_id"`
 	Brend_id         null.Int64 `json:"brend_id" db:"brend_id"`
@@ -61,6 +62,7 @@ type ProductByIdEntity struct {
 	Public_web        bool        `json:"public_web" db:"public_web"`
 	Kaspi_category    null.String `json:"kaspi_category" db:"kaspi_category"`
 	Kaspi_in_sale     bool        `json:"kaspi_in_sale" db:"kaspi_in_sale"`
+	Nom_vid           null.String `json:"nom_vid" db:"nom_vid"`
 
 	Changed_date time.Time `json:"changed_date" db:"changed_date"`
 	Create_date  time.Time `json:"create_date" db:"create_date"`

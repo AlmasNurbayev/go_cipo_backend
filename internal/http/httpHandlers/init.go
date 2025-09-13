@@ -18,6 +18,7 @@ type servicesProvider interface {
 	GetProductById(ctx context.Context, id int64) (dto.ProductByIdResponse, error)
 	GetProductByName1c(ctx context.Context, name_1c string) (dto.ProductByIdResponse, error)
 	ListProductNews(ctx context.Context, count int64) ([]dto.ProductNewsResponse, error)
+	GetProductsOnlyQnt(ctx context.Context) (dto.ProductsOnlyQntResponse, error)
 
 	GetNewsById(ctx context.Context, id int64) (dto.NewsIDItemResponse, error)
 	ListNews(ctx context.Context, count int64) ([]dto.NewsItemResponse, error)

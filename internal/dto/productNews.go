@@ -22,6 +22,7 @@ type ProductNewsResponse struct {
 	Product_group_name  string      `json:"product_group_name"`
 	Vid_modeli_name     string      `json:"vid_modeli_name"`
 	Vid_modeli_id       null.Int64  `json:"vid_modeli_id"`
+	Nom_vid             null.String `json:"nom_vid"`
 	Image_registry      []imR       `json:"image_registry"`
 	Image_active_path   string      `json:"image_active_path"`
 }

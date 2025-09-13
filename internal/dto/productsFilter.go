@@ -6,6 +6,7 @@ type ProductsFilterResponse struct {
 	Vid_modeli    []idName1c `json:"vid_modeli"`
 	Brend         []idName1c `json:"brend"`
 	Store         []idName1c `json:"store"`
+	Nom_vid       []string   `json:"nom_vid"`
 }
 
 type idName1c struct {

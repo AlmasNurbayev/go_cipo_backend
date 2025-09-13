@@ -21,7 +21,7 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 	for i := 0; i < len(root); i++ {
 
 		product_folder := null.StringFrom("")
-		var product_vid_id int64
+		var product_vid_id null.Int64
 		var description null.String
 		var product_desc struct {
 			Material_inside   null.String
@@ -36,6 +36,7 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 			Kaspi_in_sale     bool
 		}
 		var base_ed string
+		var nom_vid null.String
 
 		if root[i].Группы.Ид != "" {
 			product_folder = null.StringFrom(root[i].Группы.Ид)
@@ -51,12 +52,13 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 		root_rekv := root[i].ЗначенияРеквизитов.ЗначениеРеквизита
 		for j := 0; j < len(root_rekv); j++ {
 			if root_rekv[j].Наименование == "ВидНоменклатуры" {
-				product_vid_index := slices.IndexFunc(existsProductVids, func(item models.ProductVidEntity) bool {
-					return item.Name_1c == root_rekv[j].Значение
-				})
-				if product_vid_index != -1 {
-					product_vid_id = existsProductVids[product_vid_index].Id
-				}
+				nom_vid = null.StringFrom(root_rekv[j].Значение)
+				// product_vid_index := slices.IndexFunc(existsProductVids, func(item models.ProductVidEntity) bool {
+				// 	return item.Name_1c == root_rekv[j].Значение
+				// })
+				// if product_vid_index != -1 {
+				// 	product_vid_id = existsProductVids[product_vid_index].Id
+				// }
 			}
 		}
 
@@ -143,6 +145,7 @@ func ProductsParser(mainStruct *xmltypes.ImportType, registrator_id int64,
 			Main_color:        product_desc.Main_color,
 			Public_web:        product_desc.public_web,
 			Vid_modeli_id:     product_desc.VidModeli_id,
+			Nom_vid:           nom_vid,
 			Kaspi_category:    product_desc.Kaspi_category,
 			Kaspi_in_sale:     product_desc.Kaspi_in_sale,
 		}

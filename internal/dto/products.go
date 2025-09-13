@@ -42,6 +42,7 @@ type ProductsItemResponse struct {
 	Product_group_name  string          `json:"product_group_name"`
 	Vid_modeli_name     null.String     `json:"vid_modeli_name"`
 	Vid_modeli_id       int             `json:"vid_modeli_id"`
+	Nom_vid             null.String     `json:"nom_vid"`
 	Image_registry      []imageRegistry `json:"image_registry"`
 	Image_active_path   string          `json:"image_active_path"`
 	Create_date         time.Time       `json:"create_date"`

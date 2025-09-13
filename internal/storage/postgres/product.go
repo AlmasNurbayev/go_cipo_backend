@@ -42,9 +42,9 @@ func (s *Storage) CreateProduct(ctx context.Context, data models.ProductEntity) 
 	(id_1c, name_1c, registrator_id, name, product_group_id, product_vid_id,
 		 vid_modeli_id, artikul, base_ed, description, material_inside, 
 		 material_podoshva, material_up, sex, product_folder, main_color, public_web,
-		 kaspi_category, kaspi_in_sale) 
+		 kaspi_category, kaspi_in_sale, nom_vid) 
 		VALUES 
-		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) 
+		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) 
 		RETURNING id;`
 	db := *s.Tx
 
@@ -53,7 +53,7 @@ func (s *Storage) CreateProduct(ctx context.Context, data models.ProductEntity) 
 		data.Product_vid_id, data.Vid_modeli_id, data.Artikul, data.Base_ed, data.Description,
 		data.Material_inside, data.Material_podoshva, data.Material_up, data.Sex,
 		data.Product_folder, data.Main_color, data.Public_web, data.Kaspi_category,
-		data.Kaspi_in_sale).Scan(
+		data.Kaspi_in_sale, data.Nom_vid).Scan(
 		&data.Id)
 	if err != nil {
 		log.Error("error: ", slog.String("err", err.Error()))
@@ -72,8 +72,8 @@ func (s *Storage) UpdateProductById1c(ctx context.Context, data models.ProductEn
 	artikul = $8, base_ed = $9, description = $10, material_inside = $11, 
 	material_podoshva = $12, material_up = $13, sex = $14, 
 	product_folder = $15, main_color = $16, public_web = $17,
-	kaspi_category = $18, kaspi_in_sale = $19
-		WHERE id_1c = $20 RETURNING *;`
+	kaspi_category = $18, kaspi_in_sale = $19, nom_vid = $20
+		WHERE id_1c = $21 RETURNING *;`
 	db := *s.Tx
 
 	err := pgxscan.Get(ctx, db, &data, query,
@@ -81,7 +81,7 @@ func (s *Storage) UpdateProductById1c(ctx context.Context, data models.ProductEn
 		data.Product_vid_id, data.Vid_modeli_id, data.Artikul, data.Base_ed, data.Description,
 		data.Material_inside, data.Material_podoshva, data.Material_up, data.Sex,
 		data.Product_folder, data.Main_color, data.Public_web, data.Kaspi_category,
-		data.Kaspi_in_sale, data.Id_1c)
+		data.Kaspi_in_sale, data.Nom_vid, data.Id_1c)
 	if err != nil {
 		log.Error("error: ", slog.String("err", err.Error()))
 		return err
@@ -166,6 +166,7 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		"qpr.vid_modeli_id",
 		"qpr.product_group_id",
 		"qpr.create_date",
+		"qpr.nom_vid",
 	).
 		From("qnt_price_registry qpr").
 		Where(squirrel.Eq{"qpr.registrator_id": registrator_id}).
@@ -264,6 +265,7 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		"p.sex",
 		"p.kaspi_in_sale",
 		"p.kaspi_category",
+		"p.nom_vid",
 		"v.name_1c AS vid_modeli_name",
 		"q.vid_modeli_id",
 		"q.create_date",
@@ -330,4 +332,21 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 	fullCount := len(productsCount)
 
 	return products, fullCount, nil
+}
+
+func (s *Storage) ListProductNomvids(ctx context.Context) ([]string, error) {
+	op := "postgres.ListProductNomvids"
+	log := s.log.With("op", op)
+	var nomvids = []string{}
+	query := `SELECT distinct nom_vid FROM product;`
+	err := pgxscan.Select(ctx, s.Db, &nomvids, query)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			return nomvids, nil
+		}
+		log.Error(err.Error())
+		return nomvids, errorsShare.ErrInternalError.Error
+	}
+	return nomvids, nil
 }

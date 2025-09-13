@@ -33,6 +33,7 @@ func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, cou
 	p.material_inside as "material_inside", p.material_podoshva as "material_podoshva", 
 	p.sex as "sex", 
 	p.vid_modeli_id as "vid_modeli_id",
+	p.nom_vid as "nom_vid",
 	vid.name_1c as "vid_modeli_name", 
 	pg.name_1c as "product_group_name",
 	qpr.sum as "sum",

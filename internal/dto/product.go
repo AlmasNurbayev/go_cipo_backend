@@ -29,6 +29,7 @@ type ProductByIdResponse struct {
 	Product_group_id  int64       `json:"product_group_id"`
 	Product_vid_id    int64       `json:"product_vid_id"`
 	Vid_modeli_id     null.Int64  `json:"vid_modeli_id"`
+	Nom_vid           null.String `json:"nom_vid"`
 	Registrator_id    int64       `json:"registrator_id"`
 
 	Changed_date null.Time `json:"changed_date" db:"changed_date"`
