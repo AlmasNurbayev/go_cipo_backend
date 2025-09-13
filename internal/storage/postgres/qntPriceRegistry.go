@@ -159,8 +159,7 @@ func (s *Storage) ListProductsOnlyQnt(ctx context.Context, registrator_id int64)
 		LeftJoin("vid_modeli vm ON qpr.vid_modeli_id = vm.id").
 		LeftJoin("product_group pg ON qpr.product_group_id = pg.id").
 		LeftJoin("product pr ON qpr.product_id = pr.id").
-		Where(squirrel.Eq{"qpr.registrator_id": registrator_id}).
-		Limit(1025)
+		Where(squirrel.Eq{"qpr.registrator_id": registrator_id})
 
 	queryText, args, err := query.ToSql()
 	if err != nil {
