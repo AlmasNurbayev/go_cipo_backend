@@ -12,7 +12,6 @@ type ProductsItemEntity struct {
 	Sum                 float32   `json:"sum" db:"sum"`
 	Product_create_date time.Time `json:"product_create_date" db:"product_create_date"`
 
-	//	Qnt_price           qnt_price               `json:"qnt_price" db:"qnt_price"`
 	Name               string                `json:"name" db:"name"`
 	Artikul            string                `json:"artikul" db:"artikul"`
 	Description        null.String           `json:"description" db:"description"`
@@ -34,4 +33,19 @@ type ProductsItemEntity struct {
 	Kaspi_in_sale  bool        `db:"kaspi_in_sale"`
 	Kaspi_category null.String `db:"kaspi_category"`
 	Main_color     null.String `db:"main_color"`
+}
+
+type imageRegistryEntity struct {
+	Id        int64  `json:"id" db:"id"`
+	Name      string `json:"name" db:"name"`
+	Active    bool   `json:"active" db:"active"`
+	Main      bool   `json:"main" db:"main"`
+	Full_name string `json:"full_name" db:"full_name"`
+}
+
+type qnt_price struct {
+	Size     string  `json:"size" db:"size"`
+	Sum      float32 `json:"sum" db:"sum"`
+	Qnt      float32 `json:"qnt" db:"qnt"`
+	Store_id []int64 `json:"store_id" db:"store_id"`
 }

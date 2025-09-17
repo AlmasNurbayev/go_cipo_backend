@@ -36,33 +36,32 @@ func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, cou
 	p.nom_vid as "nom_vid",
 	vid.name_1c as "vid_modeli_name", 
 	pg.name_1c as "product_group_name",
-	qpr.sum as "sum",
-	(select json_agg(jsonb_build_object('id', im.id, 'full_name', im.full_name,
-	'name', im.name, 'active', im.active, 'main', im.main	
-	)) from image_registry im where im.product_id = p.id) as image_registry,
-	(select json_agg(jsonb_build_object('size', agg.size_name_1c, 'sum', agg.sum,
-	'qnt', agg.qnt, 'store_id', agg.store_id)) FROM (
+	imr.full_name as "image_active_path",
+	(select json_agg(jsonb_build_object('size', agg.size_name_1c, 'sum', agg.sum)) FROM (
 		SELECT 
-		json_agg (distinct iq.store_id) as store_id,
 		iq.size_name_1c,
-		SUM(iq.sum) AS sum,
-		SUM(iq.qnt) AS qnt
+		SUM(iq.sum) AS sum
 		FROM qnt_price_registry iq
-		WHERE iq.product_id = p.id
-		GROUP BY iq.store_id, iq.size_name_1c
+		WHERE iq.product_id = p.id and iq.registrator_id = $1
+		GROUP BY iq.size_name_1c
 	) agg) as qnt_price  
 	FROM product p
 	LEFT JOIN vid_modeli vid ON vid_modeli_id = vid.id
 	LEFT JOIN product_group pg ON product_group_id = pg.id
-	JOIN (
-    SELECT product_id, sum
-    FROM qnt_price_registry 
-    WHERE registrator_id = $1 AND vid_modeli_id <> ALL($3)
-    GROUP BY sum, product_id 
-    ORDER BY product_id DESC 
-    LIMIT $2
-	) qpr ON qpr.product_id = p.id
-	ORDER BY product_id desc;`
+	LEFT JOIN ( SELECT DISTINCT ON (product_id) *
+	    FROM image_registry
+	    ORDER BY product_id, main DESC, id) imr ON imr.product_id = p.id
+	WHERE 
+		vid.id <> ALL($3)
+		AND EXISTS (
+				SELECT 1
+				FROM qnt_price_registry iq
+				WHERE iq.qnt > 0
+					AND iq.product_id = p.id
+					AND iq.registrator_id = $1)
+    AND imr.full_name <> ''
+	ORDER BY product_id desc
+	LIMIT $2;`
 
 	err := pgxscan.Select(ctx, db, &products, query, registrator_id, count, excludeIds)
 	if err != nil {
@@ -72,18 +71,6 @@ func (s *Storage) ListProductNews(ctx context.Context, registrator_id int64, cou
 		}
 		log.Error(err.Error())
 		return products, errorsShare.ErrInternalError.Error
-	}
-
-	for index, value := range products {
-		if value.Image_active_path != "" {
-			continue
-		}
-		for _, image := range value.Image_registry {
-			if image.Main {
-				products[index].Image_active_path = image.Full_name
-				break
-			}
-		}
 	}
 
 	return products, nil
