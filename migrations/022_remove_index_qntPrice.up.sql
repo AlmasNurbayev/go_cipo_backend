@@ -1,0 +1,1 @@
+DROP INDEX CONCURRENTLY qnt_price_registry_nom_vid_idx2;
