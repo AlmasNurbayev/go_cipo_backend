@@ -26,6 +26,7 @@ func (h *Handler) ListProducts(c fiber.Ctx) error {
 
 	params.Take = utils.String2Int(queryMap["take"])
 	params.Skip = utils.String2Int(queryMap["skip"])
+	params.MinQnt = utils.String2Int(queryMap["minQnt"])
 	params.MinPrice = utils.String2Float32(queryMap["minPrice"])
 	params.MaxPrice = utils.String2Float32(queryMap["maxPrice"])
 	params.Product_group = utils.String2ArrayInt64(queryMap["product_group"], ",")

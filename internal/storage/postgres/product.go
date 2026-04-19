@@ -203,6 +203,9 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 	if params.Search_name != "" {
 		qntDistinct = qntDistinct.Where(squirrel.ILike{"product_name": "%" + params.Search_name + "%"})
 	}
+	if params.MinQnt > 1 {
+		qntDistinct = qntDistinct.Where(squirrel.GtOrEq{"qnt": params.MinQnt})
+	}
 	if params.Sort != "" {
 		sortSlice := strings.Split(params.Sort, "-")
 		log.Debug("sort", slog.Any("sortSlice", sortSlice))
@@ -239,6 +242,9 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		Where("qpr2.sum = q.sum").
 		Where(squirrel.Eq{"qpr2.registrator_id": registrator_id}).
 		GroupBy("size_name_1c, sum, qnt")
+	if params.MinQnt != 0 {
+		qntPriceSubInner = qntPriceSubInner.Where(squirrel.GtOrEq{"qnt": params.MinQnt})
+	}
 
 	qntPriceSub := sb.Select(
 		"jsonb_agg(jsonb_build_object("+

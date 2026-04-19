@@ -8,8 +8,9 @@ import (
 
 type ProductsQueryRequest struct {
 	Search_name   string  `form:"search_name" binding:"omitempty" example:"name" query:"search_name" validate:"omitempty,gte=3"`
-	MinPrice      float32 `form:"min_price" binding:"omitempty" example:"100" query:"minPrice" validate:"omitempty,min=0"`
-	MaxPrice      float32 `form:"max_price" binding:"omitempty" example:"1000" query:"maxPrice" validate:"omitempty,min=0"`
+	MinPrice      float32 `form:"minPrice" binding:"omitempty" example:"100" query:"minPrice" validate:"omitempty,min=0"`
+	MaxPrice      float32 `form:"maxPrice" binding:"omitempty" example:"1000" query:"maxPrice" validate:"omitempty,min=0"`
+	MinQnt        int     `form:"minQnt" binding:"omitempty" example:"1" query:"minQnt" validate:"omitempty,min=1"`
 	Sort          string  `form:"sort" binding:"omitempty" example:"sum-desc" query:"Sort"`
 	Size          []int64 `form:"size" binding:"omitempty" example:"31" query:"size"`
 	Vid_modeli    []int64 `form:"vid_modeli" binding:"omitempty" example:"1" query:"vid_modeli"`
