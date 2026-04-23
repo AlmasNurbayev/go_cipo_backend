@@ -29,13 +29,13 @@ func New(version string) *ParserML {
 }
 
 func (p *ParserML) Init() {
-	op := "parser.Init"
+	op := "parserML.Init"
 
 	p.Version = "v0.1.0"
 	p.Cfg = config.MustLoad()
 	p.Log = logger.InitLogger(p.Cfg.Env, nil)
 	p.Log.With("op", op)
-	p.Log.Info("==== init parser on env: " + p.Cfg.Env)
+	p.Log.Info("==== init parserML on env: " + p.Cfg.Env)
 	p.Log.Debug("debug message is enabled")
 	postgresStorage, err := postgres.NewStorage(p.Cfg.Dsn, p.Log, p.Cfg.HTTP.HTTP_WRITE_TIMEOUT, p.Cfg)
 	if err != nil {
