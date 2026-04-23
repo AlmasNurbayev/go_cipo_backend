@@ -1,14 +1,12 @@
 package dto
 
-import "time"
-
 type StockJSON struct {
-	ExportDate  time.Time `json:"ExportDate"`
-	ExportPath  string    `json:"ExportPath"`
-	BasePrefix  string    `json:"BasePrefix"`
-	NameLog     string    `json:"NameLog"`
-	TotalQnt    int64     `json:"TotalQnt"`
-	DurationSec int64     `json:"DurationSec"`
+	ExportDate  string `json:"ExportDate"`
+	ExportPath  string `json:"ExportPath"`
+	BasePrefix  string `json:"BasePrefix"`
+	NameLog     string `json:"NameLog"`
+	TotalQnt    int64  `json:"TotalQnt"`
+	DurationSec int64  `json:"DurationSec"`
 	Qnt         []struct {
 		NomCode              string               `json:"NomCode"`
 		NomGUID              string               `json:"NomGUID"`
@@ -28,7 +26,7 @@ type StockJSON struct {
 	}
 }
 
-type AdditionalProperty []struct {
+type AdditionalProperty struct {
 	NameProperty     string `json:"NameProperty"`
 	GUIDProperty     string `json:"GUIDProperty"`
 	StrValueProperty string `json:"StrValueProperty"`
