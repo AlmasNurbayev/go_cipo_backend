@@ -4,8 +4,8 @@ import (
 	"log/slog"
 	"strconv"
 
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/partParsers"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/partParsers"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
 func (s *ParserService) QntPriveRegistryService(mainStruct *xmltypes.OfferType,

@@ -4,8 +4,8 @@ import (
 	"log/slog"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/partParsers"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/partParsers"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
 func (s *ParserService) ImageRegistryService(mainStruct *xmltypes.ImportType, registrator_id int64, newPath string) error {

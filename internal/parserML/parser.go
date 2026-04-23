@@ -1,4 +1,4 @@
-package parser
+package parserML
 
 import (
 	"context"
@@ -8,13 +8,13 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/logger"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/moved"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/parserService"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/moved"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/parserService"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/storage/postgres"
 )
 
-type Parser struct {
+type ParserML struct {
 	Version string
 	Cfg     *config.Config
 	storage *postgres.Storage
@@ -22,13 +22,13 @@ type Parser struct {
 	service *parserService.ParserService
 }
 
-func New(version string) *Parser {
-	return &Parser{
+func New(version string) *ParserML {
+	return &ParserML{
 		Version: version,
 	}
 }
 
-func (p *Parser) Init() {
+func (p *ParserML) Init() {
 	op := "parser.Init"
 
 	p.Version = "v0.1.0"
@@ -45,8 +45,8 @@ func (p *Parser) Init() {
 	p.storage = postgresStorage
 }
 
-func (p *Parser) Run() {
-	op := "parser.Run"
+func (p *ParserML) Run() {
+	op := "parserML.Run"
 	p.Log.With("op", op).Info("start parser")
 
 	movedFiles, err := moved.MovedInputFiles(p.Cfg, p.Log)

@@ -1,4 +1,4 @@
-package parser
+package parserML
 
 import (
 	"context"
@@ -6,11 +6,11 @@ import (
 
 	"log/slog"
 
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
-func (p *Parser) ImportParser(ctx context.Context, mainStruct *xmltypes.ImportType, filePath string, newPath string) error {
-	op := "parser.ImportParser"
+func (p *ParserML) ImportParser(ctx context.Context, mainStruct *xmltypes.ImportType, filePath string, newPath string) error {
+	op := "parserML.ImportParser"
 	p.Log = p.Log.With(slog.String("op", op))
 	// json, err := utils.PrintAsJSON(mainStruct)
 	// if err != nil {

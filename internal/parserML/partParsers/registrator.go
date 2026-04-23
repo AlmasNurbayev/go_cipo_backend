@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
 // ищет в структуре вложенную структуру "Классификатор", "Каталог" и возвращат ее поля

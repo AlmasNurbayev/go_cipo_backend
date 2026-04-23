@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/partParsers"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/partParsers"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
 func (s *ParserService) PriceVidService(mainStruct *xmltypes.OfferType,

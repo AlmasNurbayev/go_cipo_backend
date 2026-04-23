@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
 func PriceVidParser(receiveStruct *xmltypes.OfferType, registrator_id int64) []models.PriceVidEntity {

@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 	"github.com/guregu/null/v5"
 )
 

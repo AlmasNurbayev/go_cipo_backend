@@ -2,7 +2,7 @@ package partParsers
 
 import (
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
 func ProductGroupsParser(receiveStruct *xmltypes.ImportType,

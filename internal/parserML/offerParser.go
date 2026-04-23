@@ -1,13 +1,13 @@
-package parser
+package parserML
 
 import (
 	"log/slog"
 	"strconv"
 
-	"github.com/AlmasNurbayev/go_cipo_backend/internal/parser/xmltypes"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserML/xmltypes"
 )
 
-func (p *Parser) OfferParser(mainStruct *xmltypes.OfferType, filePath string, newPath string) error {
+func (p *ParserML) OfferParser(mainStruct *xmltypes.OfferType, filePath string, newPath string) error {
 	// json, err := utils.PrintAsJSON(mainStruct)
 	// if err != nil {
 	// 	return err
