@@ -1,4 +1,4 @@
-package parserjson
+package main
 
 import "github.com/AlmasNurbayev/go_cipo_backend/internal/parserJSON"
 

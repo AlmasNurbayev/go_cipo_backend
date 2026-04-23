@@ -26,8 +26,11 @@ build:
 run:
 	go run cmd/server/main.go
 
-parser:
-	go run cmd/parser/main.go
+parserML:
+	go run cmd/parserML/main.go
+
+parserJSON:
+	go run cmd/parserJSON/main.go
 
 test:
 	go test -v -count=1 ./...
