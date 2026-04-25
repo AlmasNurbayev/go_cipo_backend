@@ -29,8 +29,8 @@ func MovedFTPFiles(cfg *config.Config, log *slog.Logger) (string, error) {
 		return "", err
 	}
 	if latestZip == "" {
-		log.Error("Error zip file not found:", slog.String("error", err.Error()))
-		return "", err
+		log.Error("Error zip file not found")
+		return "", fmt.Errorf("zip file not found")
 	}
 
 	log.Info("Found latest zip file: ", slog.String("latestZip", latestZip))
@@ -43,12 +43,13 @@ func MovedFTPFiles(cfg *config.Config, log *slog.Logger) (string, error) {
 	}
 	log.Info("Unzip successfully")
 
+	// TODO отключено
 	// 3. Удаляем исходный архив после успешной распаковки
-	err = os.Remove(latestZip)
-	if err != nil {
-		log.Warn("Error removing zip file:", slog.String("error", err.Error()))
-	}
-	log.Info("Zip file removed successfully: ", slog.String("zipPath", latestZip))
+	//	err = os.Remove(latestZip)
+	//	if err != nil {
+	//		log.Warn("Error removing zip file:", slog.String("error", err.Error()))
+	//	}
+	//	log.Info("Zip file removed successfully: ", slog.String("zipPath", latestZip))
 
 	return jsonPath, nil
 }

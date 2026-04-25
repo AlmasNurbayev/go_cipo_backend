@@ -25,6 +25,7 @@ type QntPriceRegistryEntity struct {
 	Product_group_id int64       `json:"product_group_id" db:"product_group_id"`
 	Vid_modeli_id    int64       `json:"vid_modeli_id" db:"vid_modeli_id"`
 	Nom_vid          null.String `json:"nom_vid" db:"nom_vid"`
+	Barcode          null.String `json:"barcode" db:"barcode"`
 
 	Size_name_1c        null.String `json:"size_name_1c" db:"size_name_1c"`
 	Product_name        string      `json:"product_name" db:"product_name"`

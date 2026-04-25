@@ -1,15 +1,17 @@
 package parserJSON
 
 import (
+	"context"
 	"encoding/json"
 	"log/slog"
 	"os"
+	"strconv"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/lib/logger"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/parserJSON/partParsers"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/storage/postgres"
-	"github.com/kr/pretty"
 )
 
 type ParserJSON struct {
@@ -47,6 +49,8 @@ func (p *ParserJSON) Run() {
 	op := "parserJSON.Run"
 	p.Log.With("op", op).Info("start parserJSON")
 
+	defer p.storage.Close()
+
 	jsonPath, err := MovedFTPFiles(p.Cfg, p.Log)
 	if err != nil {
 		p.Log.Error("error moved FTP files: ", slog.String("error", err.Error()))
@@ -69,11 +73,74 @@ func (p *ParserJSON) Run() {
 	}
 	p.Log.Info("Unmarshal JSON successfully")
 
-	err = parserClass(result)
+	ctx, cancel := context.WithTimeout(context.Background(), p.Cfg.HTTP.HTTP_WRITE_TIMEOUT)
+	defer cancel()
+	pgxTransaction, err := p.storage.Db.Begin(ctx)
 	if err != nil {
-		p.Log.Error("error parser class: ", slog.String("error", err.Error()))
+		p.Log.Error("Not created transaction:", slog.String("err", err.Error()))
+		p.Log.Info("==== Parser ERROR finished")
+		os.Exit(1)
+	}
+	p.storage.Tx = &pgxTransaction
+
+	defer func() {
+		if pgxTransaction != nil {
+			_ = pgxTransaction.Rollback(context.Background())
+		}
+	}()
+
+	registrator_id, err := partParsers.ParserRegistrator(p.Cfg, p.Log, p.storage, result, jsonPath)
+	if err != nil {
+		p.Log.Error("error parser registrator: ", slog.String("error", err.Error()))
+		return
+	}
+	err = partParsers.ParserProductGroups(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser product groups: ", slog.String("error", err.Error()))
+		return
+	}
+	err = partParsers.ParserProductVids(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser product vids: ", slog.String("error", err.Error()))
+		return
+	}
+	err = partParsers.ParserVidModeli(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser vid modeli: ", slog.String("error", err.Error()))
 		return
 	}
 
-	pretty.Log("unmarshal result: ", result)
+	err = partParsers.ParserStore(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser store: ", slog.String("error", err.Error()))
+		return
+	}
+
+	err = partParsers.ParserSize(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser size: ", slog.String("error", err.Error()))
+		return
+	}
+
+	err = partParsers.ParserBrend(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser brend: ", slog.String("error", err.Error()))
+		return
+	}
+
+	err = partParsers.ParserProduct(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser product: ", slog.String("error", err.Error()))
+		return
+	}
+
+	// Commit transaction
+	err = pgxTransaction.Commit(context.Background())
+	if err != nil {
+		p.Log.Error("error commit transaction: ", slog.String("error", err.Error()))
+		return
+	}
+	p.Log.Info("Commit transaction done")
+
+	p.Log.Info("parserJSON successfully", slog.String("registrator_id", strconv.FormatInt(registrator_id, 10)))
 }
