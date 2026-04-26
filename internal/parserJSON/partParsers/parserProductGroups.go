@@ -27,7 +27,7 @@ func ParserProductGroups(Log *slog.Logger, ctx context.Context, storage storageC
 		log.Error("Error selecting product_groups:", slog.String("err", err.Error()))
 		return err
 	}
-	log.Debug("exist product_groups: " + strconv.Itoa(len(existsProductGroups)))
+	Log.Debug("exist product_groups: " + strconv.Itoa(len(existsProductGroups)))
 
 	existsMap := make(map[string]models.ProductsGroupEntity)
 	for _, e := range existsProductGroups {
@@ -54,9 +54,9 @@ func ParserProductGroups(Log *slog.Logger, ctx context.Context, storage storageC
 		}
 	}
 
-	log.Debug("ProductGroup parsing: ", slog.Int("count", len(NewProductGroups)))
-	log.Debug("Duplicated and updated ProductGroup: ", slog.Int("count", len(toUpdate)))
-	log.Info("Created new ProductGroup: ", slog.Int("count", len(toCreate)))
+	Log.Debug("ProductGroup parsing: ", slog.Int("count", len(NewProductGroups)))
+	Log.Debug("Duplicated and updated ProductGroup: ", slog.Int("count", len(toUpdate)))
+	Log.Info("Created new ProductGroup: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

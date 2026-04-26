@@ -32,6 +32,7 @@ type AdditionalProperty struct {
 	NameProperty     string `json:"NameProperty"`
 	GUIDProperty     string `json:"GUIDProperty"`
 	StrValueProperty string `json:"StrValueProperty"`
+	GUIDValue        string `json:"GUIDValue"`
 }
 
 type AdditionalRekv struct {

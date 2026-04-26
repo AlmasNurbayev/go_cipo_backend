@@ -7,7 +7,6 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/gofiber/fiber/v3/log"
 )
 
 type storageB interface {
@@ -54,9 +53,9 @@ func ParserBrend(Log *slog.Logger, ctx context.Context, storage storageB, data d
 		}
 	}
 
-	log.Debug("Brend parsing: ", slog.Int("count", len(NewBrends)))
-	log.Debug("Duplicated and updated Brends: ", slog.Int("count", len(toUpdate)))
-	log.Info("Created new Brends: ", slog.Int("count", len(toCreate)))
+	Log.Debug("Brend parsing: ", slog.Int("count", len(NewBrends)))
+	Log.Debug("Duplicated and updated Brends: ", slog.Int("count", len(toUpdate)))
+	Log.Info("Created new Brends: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

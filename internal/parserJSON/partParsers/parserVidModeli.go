@@ -8,7 +8,6 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/gofiber/fiber/v3/log"
 )
 
 type storageVM interface {
@@ -55,9 +54,9 @@ func ParserVidModeli(Log *slog.Logger, ctx context.Context, storage storageVM, d
 		}
 	}
 
-	log.Debug("VidModeli parsing: ", slog.Int("count", len(NewVidModelis)))
-	log.Debug("Duplicated and updated VidModeli: ", slog.Int("count", len(toUpdate)))
-	log.Info("Created new VidModeli: ", slog.Int("count", len(toCreate)))
+	Log.Debug("VidModeli parsing: ", slog.Int("count", len(NewVidModelis)))
+	Log.Debug("Duplicated and updated VidModeli: ", slog.Int("count", len(toUpdate)))
+	Log.Info("Created new VidModeli: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }
@@ -75,13 +74,13 @@ func UniqueVidModeli(data dto.StockJSON,
 			if !strings.Contains(item.NameProperty, "ВидМодели") {
 				continue
 			}
-			if item.GUIDProperty == "" {
+			if item.GUIDValue == "" {
 				continue
 			}
-			if _, exists := tempMap[item.GUIDProperty]; !exists {
-				tempMap[item.GUIDProperty] = item.GUIDProperty
+			if _, exists := tempMap[item.GUIDValue]; !exists {
+				tempMap[item.GUIDValue] = item.GUIDValue
 				vidModelis = append(vidModelis, models.VidModeliEntity{
-					Id_1c:          item.GUIDProperty,
+					Id_1c:          item.GUIDValue,
 					Name_1c:        item.StrValueProperty,
 					Registrator_id: registrator_id,
 				})

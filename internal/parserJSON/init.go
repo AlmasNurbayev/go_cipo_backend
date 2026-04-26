@@ -56,7 +56,7 @@ func (p *ParserJSON) Run() {
 		p.Log.Error("error moved FTP files: ", slog.String("error", err.Error()))
 		return
 	}
-	p.Log.Info("Moved FTP files successfully: ", slog.String("jsonPath", jsonPath))
+	p.Log.Info("Moved JSON file successfully: ", slog.String("jsonPath", jsonPath))
 
 	data, err := os.ReadFile(jsonPath)
 	if err != nil {
@@ -134,6 +134,16 @@ func (p *ParserJSON) Run() {
 		return
 	}
 
+	assetsPath := "assets/product_images"
+	if p.Cfg.Parser.PARSER_ASSETS_PATH != "" {
+		assetsPath = p.Cfg.Parser.PARSER_ASSETS_PATH + "/product_images"
+	}
+	err = partParsers.ImageRegistryParser(ctx, p.storage, p.Log, result, registrator_id, assetsPath)
+	if err != nil {
+		p.Log.Error("error parser image registry: ", slog.String("error", err.Error()))
+		return
+	}
+
 	// Commit transaction
 	err = pgxTransaction.Commit(context.Background())
 	if err != nil {
@@ -142,5 +152,5 @@ func (p *ParserJSON) Run() {
 	}
 	p.Log.Info("Commit transaction done")
 
-	p.Log.Info("parserJSON successfully", slog.String("registrator_id", strconv.FormatInt(registrator_id, 10)))
+	p.Log.Info("parserJSON success finished", slog.String("registrator_id", strconv.FormatInt(registrator_id, 10)))
 }

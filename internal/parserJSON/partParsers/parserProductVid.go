@@ -7,7 +7,6 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/gofiber/fiber/v3/log"
 )
 
 type storageV interface {
@@ -54,9 +53,9 @@ func ParserProductVids(Log *slog.Logger, ctx context.Context, storage storageV, 
 		}
 	}
 
-	log.Debug("ProductVid parsing: ", slog.Int("count", len(NewProductVids)))
-	log.Debug("Duplicated and updated ProductVid: ", slog.Int("count", len(toUpdate)))
-	log.Info("Created new ProductVid: ", slog.Int("count", len(toCreate)))
+	Log.Debug("ProductVid parsing: ", slog.Int("count", len(NewProductVids)))
+	Log.Debug("Duplicated and updated ProductVid: ", slog.Int("count", len(toUpdate)))
+	Log.Info("Created new ProductVid: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

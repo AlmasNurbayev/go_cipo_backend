@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
+	cp "github.com/otiai10/copy"
 )
 
 // находим в папке Input ZIP-архив, перемещаем в папку input json и картинки
@@ -42,6 +43,18 @@ func MovedFTPFiles(cfg *config.Config, log *slog.Logger) (string, error) {
 		return "", err
 	}
 	log.Info("Unzip successfully")
+
+	// 3. Перемещаем картинки в assets/product_images
+	assets_path := "assets"
+	if cfg.Parser.PARSER_ASSETS_PATH != "" {
+		assets_path = cfg.Parser.PARSER_ASSETS_PATH
+	}
+	err = copyImages(inputPath+"/images", assets_path+"/product_images", log)
+	if err != nil {
+		log.Error("Error moving images:", slog.String("error", err.Error()))
+		return "", err
+	}
+	log.Info("Images moved successfully")
 
 	// TODO отключено
 	// 3. Удаляем исходный архив после успешной распаковки
@@ -153,4 +166,23 @@ func unzipAndFindJSON(src, dest string) (string, error) {
 	}
 
 	return foundJSONPath, nil
+}
+
+func copyImages(oldPath, newPath string, log *slog.Logger) error {
+	op := "moved.CopyImages"
+	log = log.With(slog.String("op", op))
+
+	_, err := os.Stat(oldPath)
+	if err != nil {
+		log.Error(oldPath + " does not exist")
+		return err
+	}
+	err = cp.Copy(oldPath, newPath)
+	if err != nil {
+		log.Error(err.Error())
+		return err
+	} else {
+		log.Info(oldPath + " exists and copied successfully to " + newPath)
+	}
+	return nil
 }

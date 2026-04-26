@@ -7,7 +7,6 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/gofiber/fiber/v3/log"
 )
 
 type storageSize interface {
@@ -54,9 +53,9 @@ func ParserSize(Log *slog.Logger, ctx context.Context, storage storageSize, data
 		}
 	}
 
-	log.Debug("Sizes parsing: ", slog.Int("count", len(NewSizes)))
-	log.Debug("Duplicated and updated Sizes: ", slog.Int("count", len(toUpdate)))
-	log.Info("Created new Sizes: ", slog.Int("count", len(toCreate)))
+	Log.Debug("Sizes parsing: ", slog.Int("count", len(NewSizes)))
+	Log.Debug("Duplicated and updated Sizes: ", slog.Int("count", len(toUpdate)))
+	Log.Info("Created new Sizes: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

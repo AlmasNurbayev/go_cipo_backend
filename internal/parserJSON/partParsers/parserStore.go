@@ -7,7 +7,6 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
-	"github.com/gofiber/fiber/v3/log"
 )
 
 type StorageS interface {
@@ -54,9 +53,9 @@ func ParserStore(Log *slog.Logger, ctx context.Context, storage StorageS, data d
 		}
 	}
 
-	log.Debug("Store parsing: ", slog.Int("count", len(NewStores)))
-	log.Debug("Duplicated and updated Store: ", slog.Int("count", len(toUpdate)))
-	log.Info("Created new Store: ", slog.Int("count", len(toCreate)))
+	Log.Debug("Store parsing: ", slog.Int("count", len(NewStores)))
+	Log.Debug("Duplicated and updated Store: ", slog.Int("count", len(toUpdate)))
+	Log.Info("Created new Store: ", slog.Int("count", len(toCreate)))
 
 	return nil
 }

@@ -4,11 +4,14 @@ import (
 	"context"
 	"errors"
 	"log/slog"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
 	"github.com/guregu/null/v5"
-	"github.com/kr/pretty"
 )
 
 type StorageP interface {
@@ -36,7 +39,7 @@ func ParserProduct(Log *slog.Logger, ctx context.Context, storage StorageP, data
 		log.Error(err.Error())
 		return err
 	}
-	vidsMideli, err := storage.ListVidModeli(ctx)
+	vidsModeli, err := storage.ListVidModeli(ctx)
 	if err != nil {
 		log.Error(err.Error())
 		return err
@@ -47,6 +50,12 @@ func ParserProduct(Log *slog.Logger, ctx context.Context, storage StorageP, data
 		return err
 	}
 	brends, err := storage.ListBrend(ctx)
+	if err != nil {
+		log.Error(err.Error())
+		return err
+	}
+
+	currentProducts, err := storage.ListProduct(ctx)
 	if err != nil {
 		log.Error(err.Error())
 		return err
@@ -102,82 +111,64 @@ func ParserProduct(Log *slog.Logger, ctx context.Context, storage StorageP, data
 			}
 		}
 
-		//for _, root_prop := range item.AdditionalProperties {
-		//if strings.Contains(root_prop.NameProperty, "ВидНоменклатуры") {
-		//nom_vid = null.StringFrom(root_prop.StrValueProperty)
-		// product_vid_index := slices.IndexFunc(existsProductVids, func(item models.ProductVidEntity) bool {
-		// 	return item.Name_1c == root_rekv[j].Значение
-		// })
-		// if product_vid_index != -1 {
-		// 	product_vid_id = existsProductVids[product_vid_index].Id
-		// }
-		//}
-		//}
+		for _, mappingItem := range productDescMappings {
+			for _, root_prop := range item.AdditionalProperties {
+				// здесь ищем не по ID свойства в productDescMapping, а просто по наименованию свойства
+				if strings.Contains(root_prop.NameProperty, "ВидМодели") {
+					idx := slices.IndexFunc(vidsModeli, func(e models.VidModeliEntity) bool {
+						return e.Id_1c == root_prop.GUIDValue
+					})
+					if idx != -1 {
+						product_desc.VidModeli_id = null.IntFrom(vidsModeli[idx].Id)
+					}
+				}
+				// далее обязательно нужно соответствие ГУИД из productDescMapping
+				if mappingItem.Id_1c != root_prop.GUIDProperty {
+					continue
+				}
+				if mappingItem.Field == "material_podoshva" {
+					product_desc.Material_podoshva = null.StringFrom(root_prop.StrValueProperty)
+				}
+				if mappingItem.Field == "material_inside" {
+					product_desc.Material_inside = null.StringFrom(root_prop.StrValueProperty)
+				}
+				if mappingItem.Field == "material_up" {
+					product_desc.Material_up = null.StringFrom(root_prop.StrValueProperty)
+				}
+				if mappingItem.Field == "main_color" {
+					product_desc.Main_color = null.StringFrom(root_prop.StrValueProperty)
+				}
+				if mappingItem.Field == "kaspi_category" {
+					product_desc.Kaspi_category = null.StringFrom(root_prop.StrValueProperty)
+				}
+				if mappingItem.Field == "kaspi_in_sale" {
+					if root_prop.StrValueProperty == "Да" {
+						product_desc.Kaspi_in_sale = true
+					} else {
+						product_desc.Kaspi_in_sale = false
+					}
+				}
+				if mappingItem.Field == "sex" {
+					intSex, err := strconv.Atoi(root_prop.StrValueProperty)
+					if err == nil {
+						product_desc.Sex = null.Int16From(int16(intSex))
+					}
+				}
+			}
+		}
 
-		// 	root_svoistv := root[i].ЗначенияСвойств.ЗначенияСвойства
-
-		// 	// разбираем перечень свойств сопоставляя со справочником Product_desc
-		// 	for k := 0; k < len(root_svoistv); k++ {
-		// 		for _, val := range existsProductDescMappings {
-		// 			if val.Id_1c == root_svoistv[k].Ид {
-		// 				if val.Field == "kaspi_category" {
-		// 					product_desc.Kaspi_category = null.StringFrom(root_svoistv[k].Значение)
-		// 				}
-		// 				if val.Field == "kaspi_in_sale" {
-		// 					if root_svoistv[k].Значение == "Да" {
-		// 						product_desc.Kaspi_in_sale = true
-		// 					} else {
-		// 						product_desc.Kaspi_in_sale = false
-		// 					}
-		// 				}
-		// 				if val.Field == "material_podoshva" {
-		// 					product_desc.Material_podoshva = null.StringFrom(root_svoistv[k].Значение)
-		// 				}
-		// 				if val.Field == "material_inside" {
-		// 					product_desc.Material_inside = null.StringFrom(root_svoistv[k].Значение)
-		// 				}
-		// 				if val.Field == "material_up" {
-		// 					product_desc.Material_up = null.StringFrom(root_svoistv[k].Значение)
-		// 				}
-		// 				if val.Field == "main_color" {
-		// 					product_desc.Main_color = null.StringFrom(root_svoistv[k].Значение)
-		// 				}
-		// 				if val.Field == "public_web" {
-		// 					if root_svoistv[k].Значение == "Да" {
-		// 						product_desc.public_web = true
-		// 					} else {
-		// 						product_desc.public_web = false
-		// 					}
-		// 				}
-		// 				if val.Field == "sex" {
-		// 					intSex, err := strconv.Atoi(root_svoistv[k].Значение)
-		// 					product_desc.Sex = null.Int16From(int16(intSex))
-		// 					if err != nil {
-		// 						product_desc.Sex = null.Int16From(0)
-		// 					}
-		// 				}
-		// 				if val.Field == "product_group" {
-		// 					// в справочнике Product_desc ищем какое id_1c имеет свойство "ТоварнаяГруппа"
-		// 					product_group_index := slices.IndexFunc(existsProductGroups, func(item models.ProductsGroupEntity) bool {
-		// 						return item.Id_1c == root_svoistv[k].Значение
-		// 					})
-		// 					if product_group_index != -1 {
-		// 						product_desc.Product_group_id = existsProductGroups[product_group_index].Id
-		// 						//product_desc.Product_group_id.Valid = true
-		// 					}
-		// 				}
-		// 				if val.Field == "vidModeli" {
-		// 					// в справочнике Product_desc ищем какое id_1c имеет свойство "Виды"
-		// 					vid_index := slices.IndexFunc(existsVidsModeli, func(item models.VidModeliEntity) bool {
-		// 						return item.Id_1c == root_svoistv[k].Значение
-		// 					})
-		// 					if vid_index != -1 {
-		// 						product_desc.VidModeli_id = null.IntFrom(existsVidsModeli[vid_index].Id)
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	}
+		for _, item_rekv := range item.AdditionalRekvizits {
+			if item_rekv.StrValueRekv == "" {
+				continue
+			}
+			if strings.Contains(item_rekv.NameRekv, "ВыгружатьВеб") {
+				if item_rekv.StrValueRekv == "Да" {
+					product_desc.public_web = true
+				} else {
+					product_desc.public_web = false
+				}
+			}
+		}
 
 		if product_group_id == 0 {
 			log.Debug(item.NomArticle)
@@ -216,12 +207,55 @@ func ParserProduct(Log *slog.Logger, ctx context.Context, storage StorageP, data
 		}
 		products = append(products, newProduct)
 	}
-	// save products
 
-	pretty.Println("productGroups:", productGroups)
-	pretty.Println("productVids:", productVids)
-	pretty.Println("vidsMideli:", vidsMideli)
-	pretty.Println("productDescMappings:", productDescMappings)
-	pretty.Println("products:", products[10])
+	//pretty.Println("products:", products[0])
+	//return nil
+
+	// сортируем по части символов поля id_1c, для хронологии
+	sort.Slice(products, func(i, j int) bool {
+		//log.Debug(NewProducts[i].Id_1c[14:23])
+		return products[i].Id_1c[14:23] < products[j].Id_1c[14:23]
+	})
+
+	existsMap := make(map[string]models.ProductEntity)
+	for _, e := range currentProducts {
+		existsMap[e.Id_1c] = e
+	}
+
+	var toCreate, toUpdate []models.ProductEntity
+
+	for _, n := range products {
+		if _, exists := existsMap[n.Id_1c]; exists {
+			// Элемент есть → Обновляем (если изменился)
+			toUpdate = append(toUpdate, n)
+			err := storage.UpdateProductById1c(ctx, n)
+			if err != nil {
+				log.Error(err.Error())
+				return err
+			}
+		} else {
+			toCreate = append(toCreate, n)
+			_, err := storage.CreateProduct(ctx, n)
+			// json, err2 := utils.PrintAsJSON(n)
+			// if err2 != nil {
+			// 	return err
+			// }
+			// log.Info(string(*json))
+			if err != nil {
+				log.Error(err.Error())
+				return err
+			}
+		}
+	}
+
+	log.Info("products parsing: ", slog.Int("count", len(products)))
+	log.Info("== Duplicated and updated products: ", slog.Int("count", len(toUpdate)))
+	log.Info("== Created new products: ", slog.Int("count", len(toCreate)))
+
+	// pretty.Println("productGroups:", productGroups)
+	// pretty.Println("productVids:", productVids)
+	// pretty.Println("vidsMideli:", vidsMideli)
+	// pretty.Println("productDescMappings:", productDescMappings)
+	// pretty.Println("products:", products[0])
 	return nil
 }
