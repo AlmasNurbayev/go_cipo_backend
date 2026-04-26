@@ -14,7 +14,8 @@ COPY . .
 # Собираем приложение
 RUN go build -o SERVER ./cmd/server/main.go
 RUN go build -o MIGRATOR ./cmd/migrator/main.go
-RUN go build -o PARSER ./cmd/parser/main.go
+RUN go build -o PARSERML ./cmd/parserML/main.go
+RUN go build -o PARSERJSON ./cmd/parserJSON/main.go
 RUN go build -o SEEDER ./cmd/seeder/main.go
 RUN go build -o CLEARDB ./cmd/cleardb/main.go
 
