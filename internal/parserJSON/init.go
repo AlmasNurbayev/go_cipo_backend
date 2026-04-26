@@ -82,10 +82,12 @@ func (p *ParserJSON) Run() {
 		os.Exit(1)
 	}
 	p.storage.Tx = &pgxTransaction
+	var is_commited bool = false
 
 	defer func() {
-		if pgxTransaction != nil {
+		if pgxTransaction != nil && !is_commited {
 			_ = pgxTransaction.Rollback(context.Background())
+			p.Log.Warn("Try Rollback transaction")
 		}
 	}()
 
@@ -144,12 +146,19 @@ func (p *ParserJSON) Run() {
 		return
 	}
 
+	err = partParsers.ParserQnt(p.Log, ctx, p.storage, result, registrator_id)
+	if err != nil {
+		p.Log.Error("error parser qnt: ", slog.String("error", err.Error()))
+		return
+	}
+
 	// Commit transaction
 	err = pgxTransaction.Commit(context.Background())
 	if err != nil {
 		p.Log.Error("error commit transaction: ", slog.String("error", err.Error()))
 		return
 	}
+	is_commited = true
 	p.Log.Info("Commit transaction done")
 
 	p.Log.Info("parserJSON success finished", slog.String("registrator_id", strconv.FormatInt(registrator_id, 10)))

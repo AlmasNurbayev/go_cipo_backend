@@ -41,9 +41,8 @@ type Config struct {
 		PARSER_INPUT_PATH         string `env:"PARSER_INPUT_PATH"`
 	}
 	ParserJSON struct {
-		PARSER_FTP_PATH          string `env:"PARSER_FTP_PATH"`
-		PARSER_FILE_PREFIX       string `env:"PARSER_FILE_PREFIX"`
-		PARSER_JSON_IMAGE_FOLDER string `env:"PARSER_JSON_IMAGE_FOLDER"`
+		PARSER_FTP_PATH    string `env:"PARSER_FTP_PATH"`
+		PARSER_FILE_PREFIX string `env:"PARSER_FILE_PREFIX"`
 	}
 	Auth struct {
 		TokenTTL    time.Duration `env:"TOKEN_TTL"`

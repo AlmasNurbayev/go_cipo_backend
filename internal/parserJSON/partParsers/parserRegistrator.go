@@ -31,8 +31,9 @@ func ParserRegistrator(Cfg *config.Config, Log *slog.Logger, storage storageR, d
 	registratorStruct.Ver_schema = data.BasePrefix
 	registratorStruct.Only_change = false
 
+	location := time.Local
 	layout := "2006-01-02T15:04:05"
-	date, err := time.Parse(layout, data.ExportDate)
+	date, err := time.ParseInLocation(layout, data.ExportDate, location)
 	if err != nil {
 		Log.Error("Error parsing time:", slog.String("err", err.Error()))
 		return 0, err

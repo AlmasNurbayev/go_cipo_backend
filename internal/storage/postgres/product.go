@@ -147,6 +147,8 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 	op := "postgres.ListProducts"
 	log := s.log.With("op", op)
 
+	log.Debug("registrator_id", slog.Int("registrator_id", int(registrator_id)))
+
 	var products = []models.ProductsItemEntity{}
 	var excludeIds = []int64{}
 	sb := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)

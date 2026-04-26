@@ -51,10 +51,11 @@ func MovedFTPFiles(cfg *config.Config, log *slog.Logger) (string, error) {
 	}
 	err = copyImages(inputPath+"/images", assets_path+"/product_images", log)
 	if err != nil {
-		log.Error("Error moving images:", slog.String("error", err.Error()))
-		return "", err
+		log.Warn("Error moving images:", slog.String("error", err.Error()))
+		//продолжаем работать без картинок
+	} else {
+		log.Info("Images moved successfully")
 	}
-	log.Info("Images moved successfully")
 
 	// TODO отключено
 	// 3. Удаляем исходный архив после успешной распаковки

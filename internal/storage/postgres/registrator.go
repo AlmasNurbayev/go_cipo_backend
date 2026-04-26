@@ -59,7 +59,7 @@ func (s *Storage) GetLastOfferRegistrator(ctx context.Context) (models.Registrat
 
 	query := `SELECT id, operation_date, name_folder, name_file, user_id, date_schema,
 		id_catalog, id_class, name_catalog, name_class, ver_schema, only_change 
-		FROM registrator WHERE name_file LIKE '%offer%' ORDER BY id desc LIMIT 1`
+		FROM registrator ORDER BY id desc LIMIT 1`
 	db := s.Db
 
 	var registrator models.RegistratorEntity

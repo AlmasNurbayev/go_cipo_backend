@@ -21,9 +21,9 @@ func (s *Storage) CreateQntPriceRegistry(ctx context.Context, data models.QntPri
 	(registrator_id, sum, qnt, operation_date, discount_percent, 
 	discount_begin, discount_end, store_id, product_id, price_vid_id, size_id, 
 	product_group_id, vid_modeli_id, size_name_1c, product_name, product_create_date, 
-	nom_vid, sum_zakup) 
+	nom_vid, sum_zakup, barcode) 
 		VALUES 
-		($1, ROUND($2::numeric, 2), $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, ROUND($18::numeric, 2)) 
+		($1, ROUND($2::numeric, 2), $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, ROUND($18::numeric, 2), $19)
 		RETURNING id;`
 	db := *s.Tx
 
@@ -32,7 +32,8 @@ func (s *Storage) CreateQntPriceRegistry(ctx context.Context, data models.QntPri
 		data.Discount_percent, data.Discount_begin, data.Discount_end,
 		data.Store_id, data.Product_id, data.Price_vid_id, data.Size_id,
 		data.Product_group_id, data.Vid_modeli_id, data.Size_name_1c,
-		data.Product_name, data.Product_create_date, data.Nom_vid, data.Sum_zakup).Scan(
+		data.Product_name, data.Product_create_date, data.Nom_vid, data.Sum_zakup,
+		data.Barcode).Scan(
 		&data.Id)
 	if err != nil {
 		log.Error("error: ", slog.String("err", err.Error()))
@@ -148,6 +149,7 @@ func (s *Storage) ListProductsOnlyQnt(ctx context.Context, registrator_id int64)
 		"qpr.qnt",
 		"qpr.store_id",
 		"qpr.size_id",
+		"qpr.barcode",
 		"qpr.vid_modeli_id",
 		"qpr.product_group_id",
 		"pg.name_1c AS product_group_name",
