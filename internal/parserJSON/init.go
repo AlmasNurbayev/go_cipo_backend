@@ -82,7 +82,7 @@ func (p *ParserJSON) Run() {
 		os.Exit(1)
 	}
 	p.storage.Tx = &pgxTransaction
-	var is_commited bool = false
+	is_commited := false
 
 	defer func() {
 		if pgxTransaction != nil && !is_commited {

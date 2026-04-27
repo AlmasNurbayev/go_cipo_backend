@@ -103,7 +103,9 @@ func unzipAndFindJSON(src, dest string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer r.Close()
+	defer func() {
+		_ = r.Close()
+	}()
 
 	var foundJSONPath string
 	jsonCount := 0
@@ -130,7 +132,7 @@ func unzipAndFindJSON(src, dest string) (string, error) {
 
 		// Распаковка
 		if f.FileInfo().IsDir() {
-			os.MkdirAll(fpath, os.ModePerm)
+			_ = os.MkdirAll(fpath, os.ModePerm)
 			continue
 		}
 
@@ -145,13 +147,13 @@ func unzipAndFindJSON(src, dest string) (string, error) {
 
 		rc, err := f.Open()
 		if err != nil {
-			outFile.Close()
+			_ = outFile.Close()
 			return "", err
 		}
 
 		_, err = io.Copy(outFile, rc)
-		outFile.Close()
-		rc.Close()
+		_ = outFile.Close()
+		_ = rc.Close()
 
 		if err != nil {
 			return "", err
