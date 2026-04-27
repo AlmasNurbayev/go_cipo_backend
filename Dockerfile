@@ -35,7 +35,8 @@ COPY --from=builder /app/migrations ./migrations
 COPY --from=builder /app/seeds ./seeds
 COPY --from=builder /app/SERVER .
 COPY --from=builder /app/MIGRATOR .
-COPY --from=builder /app/PARSER .
+COPY --from=builder /app/PARSERML .
+COPY --from=builder /app/PARSERJSON .
 COPY --from=builder /app/SEEDER .
 COPY --from=builder /app/CLEARDB .
 
