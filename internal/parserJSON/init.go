@@ -49,11 +49,21 @@ func (p *ParserJSON) Run() {
 	op := "parserJSON.Run"
 	p.Log.With("op", op).Info("start parserJSON")
 
+	hasError := false
+	defer func() {
+		if hasError {
+			p.Log.Info("==== parserJSON Error finished")
+		} else {
+			p.Log.Info("==== parserJSON success finished")
+		}
+	}()
+
 	defer p.storage.Close()
 
 	jsonPath, err := MovedFTPFiles(p.Cfg, p.Log)
 	if err != nil {
 		p.Log.Error("error moved FTP files: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 	p.Log.Info("Moved JSON file successfully: ", slog.String("jsonPath", jsonPath))
@@ -61,6 +71,7 @@ func (p *ParserJSON) Run() {
 	data, err := os.ReadFile(jsonPath)
 	if err != nil {
 		p.Log.Error("error read file: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
@@ -69,6 +80,7 @@ func (p *ParserJSON) Run() {
 	err = json.Unmarshal(data, &result)
 	if err != nil {
 		p.Log.Error("error unmarshal JSON: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 	p.Log.Info("Unmarshal JSON successfully")
@@ -78,7 +90,7 @@ func (p *ParserJSON) Run() {
 	pgxTransaction, err := p.storage.Db.Begin(ctx)
 	if err != nil {
 		p.Log.Error("Not created transaction:", slog.String("err", err.Error()))
-		p.Log.Info("==== Parser ERROR finished")
+		hasError = true
 		os.Exit(1)
 	}
 	p.storage.Tx = &pgxTransaction
@@ -94,45 +106,53 @@ func (p *ParserJSON) Run() {
 	registrator_id, err := partParsers.ParserRegistrator(p.Cfg, p.Log, p.storage, result, jsonPath)
 	if err != nil {
 		p.Log.Error("error parser registrator: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 	err = partParsers.ParserProductGroups(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser product groups: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 	err = partParsers.ParserProductVids(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser product vids: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 	err = partParsers.ParserVidModeli(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser vid modeli: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
 	err = partParsers.ParserStore(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser store: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
 	err = partParsers.ParserSize(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser size: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
 	err = partParsers.ParserBrend(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser brend: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
 	err = partParsers.ParserProduct(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser product: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
@@ -143,12 +163,14 @@ func (p *ParserJSON) Run() {
 	err = partParsers.ImageRegistryParser(ctx, p.storage, p.Log, result, registrator_id, assetsPath)
 	if err != nil {
 		p.Log.Error("error parser image registry: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
 	err = partParsers.ParserQnt(p.Log, ctx, p.storage, result, registrator_id)
 	if err != nil {
 		p.Log.Error("error parser qnt: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 
@@ -156,10 +178,9 @@ func (p *ParserJSON) Run() {
 	err = pgxTransaction.Commit(context.Background())
 	if err != nil {
 		p.Log.Error("error commit transaction: ", slog.String("error", err.Error()))
+		hasError = true
 		return
 	}
 	is_commited = true
-	p.Log.Info("Commit transaction done")
-
-	p.Log.Info("parserJSON success finished", slog.String("registrator_id", strconv.FormatInt(registrator_id, 10)))
+	p.Log.Info("Commit transaction done", slog.String("registrator_id", strconv.FormatInt(registrator_id, 10)))
 }

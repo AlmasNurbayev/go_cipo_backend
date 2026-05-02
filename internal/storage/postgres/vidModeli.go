@@ -39,15 +39,33 @@ func (s *Storage) ListVidModeli(ctx context.Context) ([]models.VidModeliEntity, 
 	log := s.log.With("op", op)
 
 	var vidsModeli = []models.VidModeliEntity{}
-	query := `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli;`
+
+	// получаем ID для исключения из конфига
+	var excludeIds = []int64{}
+	if s.Cfg != nil && len(s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST) > 0 {
+		var err error
+		excludeIds, err = s.ListVidModeliIdExcludeNames(ctx, s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST)
+		if err != nil {
+			log.Error("error get exclude ids: ", slog.String("error", err.Error()))
+			return vidsModeli, err
+		}
+	}
+
+	var query string
+	if len(excludeIds) > 0 {
+		query = `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli WHERE id != ALL($1);`
+	} else {
+		query = `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli;`
+	}
+
 	var err error
 	// если есть транзакция, используем ее, иначе стандартный пул
 	if s.Tx != nil {
 		db := *s.Tx
-		err = pgxscan.Select(ctx, db, &vidsModeli, query)
+		err = pgxscan.Select(ctx, db, &vidsModeli, query, excludeIds)
 	} else {
 		db := s.Db
-		err = pgxscan.Select(ctx, db, &vidsModeli, query)
+		err = pgxscan.Select(ctx, db, &vidsModeli, query, excludeIds)
 	}
 
 	if err != nil {

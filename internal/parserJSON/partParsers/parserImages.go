@@ -14,7 +14,6 @@ import (
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
 	"github.com/gofiber/fiber/v3/log"
 	"github.com/guregu/null/v5"
-	"github.com/kr/pretty"
 )
 
 type StorageI interface {
@@ -125,7 +124,7 @@ func ImageRegistryParser(ctx context.Context, storage StorageI, Log *slog.Logger
 	Log.Debug("Duplicated and updated images: ", slog.Int("count", len(toUpdate)))
 	Log.Info("Created new images: ", slog.Int("count", len(toCreate)))
 
-	pretty.Log(newImages[0])
+	//pretty.Log(newImages[0])
 
 	return nil
 }
