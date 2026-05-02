@@ -249,8 +249,8 @@ func ParserProduct(Log *slog.Logger, ctx context.Context, storage StorageP, data
 	}
 
 	log.Info("products parsing: ", slog.Int("count", len(products)))
-	log.Info("== Duplicated and updated products: ", slog.Int("count", len(toUpdate)))
-	log.Info("== Created new products: ", slog.Int("count", len(toCreate)))
+	log.Info("duplicated and updated products: ", slog.Int("count", len(toUpdate)))
+	log.Info("created new products: ", slog.Int("count", len(toCreate)))
 
 	// pretty.Println("productGroups:", productGroups)
 	// pretty.Println("productVids:", productVids)

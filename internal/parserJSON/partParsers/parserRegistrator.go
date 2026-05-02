@@ -39,6 +39,7 @@ func ParserRegistrator(Cfg *config.Config, Log *slog.Logger, storage storageR, d
 		return 0, err
 	}
 	registratorStruct.Date_schema = date
+	Log.Info("New registrator:", slog.String("date_schema", date.String()), slog.String("name_log", data.NameLog), slog.String("base_prefix", data.BasePrefix), slog.Int64("TotalQnt", data.TotalQnt))
 
 	registrator_id, err2 := storage.CreateRegistrator(context.Background(), registratorStruct)
 	if err2 != nil {
