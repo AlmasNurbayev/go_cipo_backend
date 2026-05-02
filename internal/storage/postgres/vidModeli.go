@@ -40,6 +40,35 @@ func (s *Storage) ListVidModeli(ctx context.Context) ([]models.VidModeliEntity, 
 
 	var vidsModeli = []models.VidModeliEntity{}
 
+	var query = `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli;`
+
+	var err error
+	var db pgxscan.Querier
+	// если есть транзакция, используем ее, иначе стандартный пул
+	if s.Tx != nil {
+		db = *s.Tx
+	} else {
+		db = s.Db
+	}
+	err = pgxscan.Select(ctx, db, &vidsModeli, query)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			return vidsModeli, nil
+		}
+		log.Error(err.Error())
+		return vidsModeli, errorsShare.ErrInternalError.Error
+	}
+	return vidsModeli, nil
+}
+
+func (s *Storage) ListVidModeliWithoutExclude(ctx context.Context) ([]models.VidModeliEntity, error) {
+	op := "postgres.ListVidModeliWithoutExclude"
+	log := s.log.With("op", op)
+
+	var vidsModeli = []models.VidModeliEntity{}
+
 	// получаем ID для исключения из конфига
 	var excludeIds = []int64{}
 	if s.Cfg != nil && len(s.Cfg.HTTP.EXCLUDE_VIDS_IN_LIST) > 0 {
@@ -49,23 +78,24 @@ func (s *Storage) ListVidModeli(ctx context.Context) ([]models.VidModeliEntity, 
 			log.Error("error get exclude ids: ", slog.String("error", err.Error()))
 			return vidsModeli, err
 		}
+		log.Debug("exclude ids: ", slog.Any("ids", excludeIds))
 	}
 
 	var query string
-	if len(excludeIds) > 0 {
-		query = `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli WHERE id != ALL($1);`
+	var err error
+	var db pgxscan.Querier
+	if s.Tx != nil {
+		db = *s.Tx
 	} else {
-		query = `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli;`
+		db = s.Db
 	}
 
-	var err error
-	// если есть транзакция, используем ее, иначе стандартный пул
-	if s.Tx != nil {
-		db := *s.Tx
+	if len(excludeIds) > 0 {
+		query = `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli WHERE id != ALL($1);`
 		err = pgxscan.Select(ctx, db, &vidsModeli, query, excludeIds)
 	} else {
-		db := s.Db
-		err = pgxscan.Select(ctx, db, &vidsModeli, query, excludeIds)
+		query = `SELECT id, id_1c, name_1c, registrator_id FROM vid_modeli;`
+		err = pgxscan.Select(ctx, db, &vidsModeli, query)
 	}
 
 	if err != nil {

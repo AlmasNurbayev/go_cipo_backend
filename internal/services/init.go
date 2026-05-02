@@ -48,6 +48,7 @@ type classifierStorage interface {
 	GetProductGroupById(ctx context.Context, id int64) (models.ProductsGroupEntity, error)
 	GetVidModeliById(ctx context.Context, id int64) (models.VidModeliEntity, error)
 	ListProductNomvids(ctx context.Context) ([]string, error)
+	ListVidModeliWithoutExclude(ctx context.Context) ([]models.VidModeliEntity, error)
 }
 
 type qntPriceStorage interface {

@@ -51,7 +51,7 @@ func (s *Service) GetProductFilters(ctx context.Context) (dto.ProductsFilterResp
 		return productFilterDto, err
 	}
 
-	vidModeliEntity, err := s.classifierStorage.ListVidModeli(ctx)
+	vidModeliEntity, err := s.classifierStorage.ListVidModeliWithoutExclude(ctx)
 	if err != nil {
 		log.Error("", slog.String("err", err.Error()))
 		return productFilterDto, err

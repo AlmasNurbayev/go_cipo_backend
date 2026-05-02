@@ -183,4 +183,21 @@ func (p *ParserJSON) Run() {
 	}
 	is_commited = true
 	p.Log.Info("Commit transaction done", slog.String("registrator_id", strconv.FormatInt(registrator_id, 10)))
+
+	// Очистка папки input после успешного завершения
+	inputPath := p.Cfg.Parser.PARSER_INPUT_PATH
+	if inputPath != "" {
+		err = os.RemoveAll(inputPath)
+		if err != nil {
+			p.Log.Warn("error removing input folder: ", slog.String("error", err.Error()))
+		} else {
+			// пересоздаём пустую папку
+			err = os.MkdirAll(inputPath, os.ModePerm)
+			if err != nil {
+				p.Log.Warn("error recreating input folder: ", slog.String("error", err.Error()))
+			} else {
+				p.Log.Info("Input folder cleaned successfully", slog.String("path", inputPath))
+			}
+		}
+	}
 }
