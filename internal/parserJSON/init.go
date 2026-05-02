@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log/slog"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
@@ -187,16 +188,12 @@ func (p *ParserJSON) Run() {
 	// Очистка папки input после успешного завершения
 	inputPath := p.Cfg.Parser.PARSER_INPUT_PATH
 	if inputPath != "" {
-		err = os.RemoveAll(inputPath)
-		if err != nil {
-			p.Log.Warn("error removing input folder: ", slog.String("error", err.Error()))
-		} else {
-			// пересоздаём пустую папку
-			err = os.MkdirAll(inputPath, os.ModePerm)
-			if err != nil {
-				p.Log.Warn("error recreating input folder: ", slog.String("error", err.Error()))
-			} else {
-				p.Log.Info("Input folder cleaned successfully", slog.String("path", inputPath))
+		files, err := filepath.Glob(filepath.Join(inputPath, "*"))
+		if err == nil {
+			for _, f := range files {
+				if err = os.RemoveAll(f); err != nil {
+					p.Log.Warn("not removing file: ", slog.String("error", err.Error()))
+				}
 			}
 		}
 	}
