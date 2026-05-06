@@ -49,5 +49,6 @@ type Stock struct {
 	CharGUID      string  `json:"CharGUID"`
 	Quantity      int64   `json:"Quantity"`
 	Price         float32 `json:"Price"`
+	PriceZak      float32 `json:"PriceZak"`
 	Barcode       string  `json:"Barcode"`
 }

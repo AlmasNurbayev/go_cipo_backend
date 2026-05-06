@@ -146,7 +146,7 @@ func ParserQnt(Log *slog.Logger, ctx context.Context, storage storageQnt, data d
 				Size_name_1c:        null.StringFrom(sizes[sizeArr_id].Name_1c),
 				Qnt:                 float32(stockItem.Quantity),
 				Sum:                 float32(stockItem.Price),
-				Sum_zakup:           float32(0),
+				Sum_zakup:           float32(stockItem.PriceZak),
 				Barcode:             null.StringFrom(stockItem.Barcode),
 			}
 
