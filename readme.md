@@ -32,7 +32,8 @@
 - /input - оттуда читаются XML для загрузки
 
 # TODO
-- [ ] добавить barcode в models/productOnlyQntItem.go
+- [ ] обновить экшны - actions/checkout@v6, docker/build-push-action@v7, docker/login-action@v4, docker/setup-buildx-action@v4, golangci/golangci-lint-action@v9
+- [v] добавить barcode в models/productOnlyQntItem.go
 - [v] Fiber обновить до версии 3.2
 - [v] парсер JSON, в репо ListVidModeli использовать второй запрос ListVidModeliIdExcludeNames для фильтрации исключенных
 - [ ] парсер JSON, в сервисе ProductFilters подумать как исключить из сезонов исключенные виды моделей. Для этого придется искать связь между сезонами и видами моделей, а это есть только в огромной таблице qnt_price
