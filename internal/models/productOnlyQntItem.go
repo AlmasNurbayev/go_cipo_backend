@@ -19,6 +19,7 @@ type ProductsOnlyQntEntity struct {
 	Size_id             int64       `json:"size_id" db:"size_id"`
 	Size_name           string      `json:"size_name" db:"size_name"`
 	Base_ed             string      `json:"base_ed" db:"base_ed"`
+	Barcode             string      `json:"barcode" db:"barcode"`
 	Product_create_date time.Time   `json:"product_create_date" db:"product_create_date"`
 	Sum                 float32     `json:"sum" db:"sum"`
 	Sum_zakup           float32     `json:"sum_zakup" db:"sum_zakup"`
