@@ -33,8 +33,9 @@
 - /input - оттуда читаются XML для загрузки
 
 # TODO
-- [ ] защитить все ручки Kaspi аутентификацией через middleware 
-- [ ] добавить авторизацию api/auth/login и logout (без регистрации - просто логин и пароль), выдачу куки, middleware для проверки куки. Сессии хранить в redis, добавить контейнер.
+- [ ] защитить все ручки Kaspi + logout аутентификацией через middleware 
+- [ ] Сессии хранить в redis, добавить контейнер.
+- [ ] добавить авторизацию api/auth/login и logout (без регистрации - просто логин и пароль), выдачу куки, middleware для проверки куки
 - [ ] в эндпойнт api/kaspi/products/ добавить вывод barcode вместе с qnt
 - [v] обновить экшны - actions/checkout@v6, docker/build-push-action@v7, docker/login-action@v4, docker/setup-buildx-action@v4, golangci/golangci-lint-action@v9
 - [v] добавить barcode в models/productOnlyQntItem.go
