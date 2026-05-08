@@ -11,7 +11,10 @@ import (
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/storage/postgres"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/extractors"
 	"github.com/gofiber/fiber/v3/middleware/cors"
+	"github.com/gofiber/fiber/v3/middleware/session"
+	"github.com/gofiber/storage/redis/v3"
 )
 
 type structValidator struct {
@@ -22,6 +25,7 @@ type HttpApp struct {
 	Log             *slog.Logger
 	Server          *fiber.App
 	PostgresStorage *postgres.Storage
+	SessionStorage  *redis.Storage
 	Cfg             *config.Config
 }
 
@@ -33,6 +37,7 @@ func NewApp(
 	log *slog.Logger,
 	cfg *config.Config,
 	storage *postgres.Storage,
+	sessionStorage *redis.Storage,
 ) *HttpApp {
 
 	server := fiber.New(fiber.Config{
@@ -45,6 +50,16 @@ func NewApp(
 	if cfg.Env != "prod" {
 		server.Use(middleware.RequestTracingMiddleware(log))
 	}
+
+	server.Use(session.New(session.Config{
+		Storage:         sessionStorage,
+		CookieSecure:    true,                       // HTTPS only
+		CookieHTTPOnly:  true,                       // Prevent XSS
+		CookieSameSite:  "Lax",                      // CSRF protection
+		IdleTimeout:     cfg.HTTP.HTTP_IDLE_TIMEOUT, // Session timeout
+		AbsoluteTimeout: cfg.Auth.TokenTTL,          // Maximum session life
+		Extractor:       extractors.FromCookie("__Host-session_id"),
+	}))
 
 	server.Use(cors.New(cors.Config{
 		AllowOrigins:     cfg.HTTP.CORS_ALLOW_ORIGINS,
@@ -60,6 +75,7 @@ func NewApp(
 	handlers := httphandlers.NewHandler(log, service, registry)
 	httproutes.RegisterMainRoutes(server, handlers, log)
 	httproutes.RegisterKaspiRoutes(server, handlers, log)
+	httproutes.RegisterAuthRoutes(server, handlers, log)
 
 	server.Get("/healthz", func(c fiber.Ctx) error {
 		return c.Status(200).SendString("OK")
@@ -69,6 +85,7 @@ func NewApp(
 		Log:             log,
 		Server:          server,
 		PostgresStorage: storage,
+		SessionStorage:  sessionStorage,
 		Cfg:             cfg,
 	}
 }

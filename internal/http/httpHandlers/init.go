@@ -11,6 +11,7 @@ import (
 type servicesProvider interface {
 	GetUserByIdService(ctx context.Context, id int64) (dto.UserResponse, error)
 	GetUserByNameService(ctx context.Context, name string) (dto.UserResponse, error)
+	CreateUserService(ctx context.Context, user dto.AuthRegisterRequest) (dto.AuthRegisterResponse, error)
 
 	GetProductFilters(ctx context.Context) (dto.ProductsFilterResponse, error)
 	GetStores(ctx context.Context) (dto.StoresResponse, error)

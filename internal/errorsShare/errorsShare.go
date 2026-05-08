@@ -53,4 +53,14 @@ var (
 		Code:    400,
 		Message: "kaspi category is exists",
 		Error:   errors.New("kaspi category is exists")}
+
+	ErrUserAlreadyExists = ErrorHttp{
+		Code:    400,
+		Message: "user already exists",
+		Error:   errors.New("user already exists")}
+
+	ErrUsernameOrPasswordIsWrong = ErrorHttp{
+		Code:    400,
+		Message: "username or password is wrong",
+		Error:   errors.New("username or password is wrong")}
 )

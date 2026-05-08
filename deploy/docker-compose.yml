@@ -94,6 +94,18 @@ services:
     networks:
       - cipo_backend_network
 
+  redis:
+    image: redis:8.6.3-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    environment:
+      - TZ=Asia/Almaty    
+    #закрыть порт в продуктиве    
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - ./_volume_redis:/data
+    restart: unless-stopped    
+
 networks:
   kofd:
     name: 'kofd'

@@ -1,15 +1,23 @@
 package dto
 
-type AuthLoginRequest struct {
+type AuthRegisterRequest struct {
 	Email    string `json:"email" validate:"required,email" example:"test@test.com"`
 	Password string `json:"password" validate:"required,min=4" example:"password"`
 	Name     string `json:"name" validate:"omitempty" example:"test_name"`
 }
 
-type AuthLoginResponse struct {
-	ID    int64  `json:"id"`
+type AuthRegisterResponse struct {
+	Id    int64  `json:"id"`
 	Email string `json:"email"`
-	Role  string `json:"role"`
+}
+
+type AuthLoginRequest struct {
+	Email    string `json:"email" validate:"required,email" example:"test@test.com"`
+	Password string `json:"password" validate:"required,min=4" example:"password"`
+}
+
+type AuthLoginResponse struct {
+	Id int64 `json:"id"`
 }
 
 type LogoutRequest struct {

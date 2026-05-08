@@ -4,10 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"log/slog"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/errorsShare"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/models"
 	"github.com/georgysavva/scany/v2/pgxscan"
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 func (s *Storage) GetUserByIdStorage(ctx context.Context, id int64) (models.UserEntity, error) {
@@ -54,4 +56,24 @@ func (s *Storage) GetUserByNameStorage(ctx context.Context, name string) (models
 	}
 
 	return user, nil
+}
+
+func (s *Storage) CreateUserStorage(ctx context.Context, user models.UserEntity) (int64, error) {
+	op := "postgres.CreateUserStorage"
+	log := s.log.With("op", op)
+
+	query := `INSERT INTO "user" (name, email, role, password) VALUES ($1, $2, $3, $4) RETURNING id;`
+	err := s.Db.QueryRow(ctx, query, user.Name, user.Email, user.Role, user.Password).Scan(
+		&user.Id)
+	if err != nil {
+		var pgErr *pgconn.PgError
+		log.Error("error: ", slog.String("err", err.Error()))
+		if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+			return 0, errorsShare.ErrUserAlreadyExists.Error
+		} else {
+			return 0, errorsShare.ErrInternalError.Error
+		}
+	}
+
+	return user.Id, nil
 }

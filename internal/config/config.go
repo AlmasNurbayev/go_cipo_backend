@@ -40,6 +40,12 @@ type Config struct {
 		PARSER_ASSETS_PATH        string `env:"PARSER_ASSETS_PATH"`
 		PARSER_INPUT_PATH         string `env:"PARSER_INPUT_PATH"`
 	}
+
+	Redis struct {
+		REDIS_HOST string `env:"REDIS_HOST"`
+		REDIS_PORT int    `env:"REDIS_PORT"`
+	}
+
 	ParserJSON struct {
 		PARSER_FTP_PATH    string `env:"PARSER_FTP_PATH"`
 		PARSER_FILE_PREFIX string `env:"PARSER_FILE_PREFIX"`

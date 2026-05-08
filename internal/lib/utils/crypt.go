@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"io"
 	"log"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func DeriveKeyFromSecret(keyString string) []byte {
@@ -65,4 +67,16 @@ func DecryptToken(aesKey []byte, encrypted string) (string, error) {
 	}
 
 	return string(decrypted), nil
+}
+
+func HashPassword(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), nil
+}
+
+func CheckPassword(hashedPassword string, password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }

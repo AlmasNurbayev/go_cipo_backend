@@ -5,14 +5,17 @@ import (
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/app/httpApp"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/storage/cache"
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/storage/postgres"
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/storage/redis/v3"
 )
 
 type App struct {
 	Log             *slog.Logger
 	httpApp         *httpApp.HttpApp
 	PostgresStorage *postgres.Storage
+	SessionStorage  *redis.Storage
 	Cfg             *config.Config
 }
 
@@ -22,11 +25,18 @@ func NewApp(cfg *config.Config, log *slog.Logger) *App {
 		log.Error("not init postgres storage")
 		panic(err)
 	}
-	httpApp := httpApp.NewApp(log, cfg, storage)
+	sessionStorage, err := cache.InitSession(cfg, log)
+	if err != nil {
+		log.Error("not init cache session")
+		panic(err)
+	}
+
+	httpApp := httpApp.NewApp(log, cfg, storage, sessionStorage)
 	return &App{
 		Log:             log,
 		httpApp:         httpApp,
 		PostgresStorage: storage,
+		SessionStorage:  sessionStorage,
 		Cfg:             cfg,
 	}
 }
@@ -45,8 +55,10 @@ func (a *App) Run() {
 func (a *App) Stop() {
 	err := a.httpApp.Server.Shutdown()
 	a.PostgresStorage.Close()
+	_ = a.SessionStorage.Close()
 	if err != nil {
 		a.Log.Error("error on stop server: ", slog.String("err", err.Error()))
-		panic(err)
+		return
 	}
+
 }
