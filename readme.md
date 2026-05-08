@@ -13,7 +13,8 @@
   -- Fiber v3, возможность запуска в PREFORK (?), многоядерный режим
   -- PGX v5 в native режиме и scany для сканирования
 - MIGRATOR - бинарник на основе golang-migrate и SQL-скриптов
-- PARSER - для парсинга XML-файлов из директории Input, имена файлов задаются в .env
+- PARSER XML - для парсинга XML-файлов из директории Input, имена файлов задаются в .env
+- PARSER JSON - для парсинга JSON-файлов из директории Input, префикс файла задаются в .env. Выгружается из 1С через кастомный модуль, может содержать картинки или без, распаковывается из ZIP 
 - SEEDER - для записи в БД минимально необходимого для парсера, запускать после миграций
 
 # Текущие проблемы и ограничения
@@ -32,7 +33,10 @@
 - /input - оттуда читаются XML для загрузки
 
 # TODO
-- [ ] обновить экшны - actions/checkout@v6, docker/build-push-action@v7, docker/login-action@v4, docker/setup-buildx-action@v4, golangci/golangci-lint-action@v9
+- [ ] защитить все ручки Kaspi аутентификацией через middleware 
+- [ ] добавить авторизацию api/auth/login и logout (без регистрации - просто логин и пароль), выдачу куки, middleware для проверки куки. Сессии хранить в redis, добавить контейнер.
+- [ ] в эндпойнт api/kaspi/products/ добавить вывод barcode вместе с qnt
+- [v] обновить экшны - actions/checkout@v6, docker/build-push-action@v7, docker/login-action@v4, docker/setup-buildx-action@v4, golangci/golangci-lint-action@v9
 - [v] добавить barcode в models/productOnlyQntItem.go
 - [v] Fiber обновить до версии 3.2
 - [v] парсер JSON, в репо ListVidModeli использовать второй запрос ListVidModeliIdExcludeNames для фильтрации исключенных
