@@ -3,6 +3,7 @@ package httproutes
 import (
 	"log/slog"
 
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/http/middleware"
 	"github.com/gofiber/fiber/v3"
 )
 
@@ -17,18 +18,18 @@ type handlersKaspiProvider interface {
 
 func RegisterKaspiRoutes(app *fiber.App, handler handlersKaspiProvider, log *slog.Logger) {
 	api := app.Group("/api")
-	api.Post("/kaspi/category/", handler.KaspiAddCategory)
+	api.Post("/kaspi/category/", middleware.RequireAuth, handler.KaspiAddCategory)
 	log.Info("POST /api/kaspi/category/")
 
-	api.Get("/kaspi/category/", handler.KaspiListCategory)
+	api.Get("/kaspi/category/", middleware.RequireAuth, handler.KaspiListCategory)
 	log.Info("GET /api/kaspi/category/")
 
-	api.Post("/kaspi/organization/", handler.KaspiAddOrganization)
+	api.Post("/kaspi/organization/", middleware.RequireAuth, handler.KaspiAddOrganization)
 	log.Info("POST /api/kaspi/organization/")
 
-	api.Get("/kaspi/organization/", handler.KaspiListOrganization)
+	api.Get("/kaspi/organization/", middleware.RequireAuth, handler.KaspiListOrganization)
 	log.Info("GET /api/kaspi/organization/")
 
-	api.Get("/kaspi/products/", handler.ListKaspiProducts)
+	api.Get("/kaspi/products/", middleware.RequireAuth, handler.ListKaspiProducts)
 	log.Info("GET /api/kaspi/products/")
 }

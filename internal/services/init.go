@@ -37,6 +37,7 @@ type kaspiStorage interface {
 type userStorage interface {
 	GetUserByIdStorage(ctx context.Context, id int64) (models.UserEntity, error)
 	GetUserByNameStorage(ctx context.Context, name string) (models.UserEntity, error)
+	GetUserByEmailStorage(ctx context.Context, email string) (models.UserEntity, error)
 	CreateUserStorage(ctx context.Context, user models.UserEntity) (int64, error)
 }
 

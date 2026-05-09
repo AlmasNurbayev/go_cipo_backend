@@ -53,12 +53,12 @@ func NewApp(
 
 	server.Use(session.New(session.Config{
 		Storage:         sessionStorage,
-		CookieSecure:    true,                       // HTTPS only
-		CookieHTTPOnly:  true,                       // Prevent XSS
-		CookieSameSite:  "Lax",                      // CSRF protection
-		IdleTimeout:     cfg.HTTP.HTTP_IDLE_TIMEOUT, // Session timeout
-		AbsoluteTimeout: cfg.Auth.TokenTTL,          // Maximum session life
-		Extractor:       extractors.FromCookie("__Host-session_id"),
+		CookieHTTPOnly:  true,  // Prevent XSS
+		CookieSameSite:  "Lax", // CSRF protection
+		CookiePath:      "/",
+		IdleTimeout:     cfg.Auth.TokenTTL, // Session timeout
+		AbsoluteTimeout: cfg.Auth.TokenTTL, // Maximum session life
+		Extractor:       extractors.FromCookie("session_id"),
 	}))
 
 	server.Use(cors.New(cors.Config{

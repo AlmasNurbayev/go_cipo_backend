@@ -58,6 +58,25 @@ func (s *Storage) GetUserByNameStorage(ctx context.Context, name string) (models
 	return user, nil
 }
 
+func (s *Storage) GetUserByEmailStorage(ctx context.Context, email string) (models.UserEntity, error) {
+	op := "postgres.GetUserByEmailStorage"
+	log := s.log.With("op", op)
+
+	var user = models.UserEntity{}
+
+	query := `SELECT id, name, email, role, password FROM "user" WHERE email = $1`
+	err := pgxscan.Get(ctx, s.Db, &user, query, email)
+	if err != nil {
+		log.Error(err.Error())
+		if errors.Is(err, sql.ErrNoRows) {
+			return user, errorsShare.ErrUsernameOrPasswordIsWrong.Error
+		}
+		return user, errorsShare.ErrInternalError.Error
+	}
+
+	return user, nil
+}
+
 func (s *Storage) CreateUserStorage(ctx context.Context, user models.UserEntity) (int64, error) {
 	op := "postgres.CreateUserStorage"
 	log := s.log.With("op", op)

@@ -10,8 +10,9 @@ import (
 func InitSession(cfg *config.Config, log *slog.Logger) (*redis.Storage, error) {
 
 	storage := redis.New(redis.Config{
-		Host: cfg.Redis.REDIS_HOST,
-		Port: cfg.Redis.REDIS_PORT,
+		Host:     cfg.Redis.REDIS_HOST,
+		Port:     cfg.Redis.REDIS_PORT,
+		Database: cfg.Redis.REDIS_SESSION_DB,
 	})
 
 	log.Info("Redis session storage initialized")

@@ -43,8 +43,8 @@ func ParserQnt(Log *slog.Logger, ctx context.Context, storage storageQnt, data d
 		return strings.Contains(priceVid.Name_1c, "Розничная")
 	})
 	if indexPrice == -1 {
-		Log.Error("error price Розничная not found: ", slog.String("error", err.Error()))
-		return err
+		Log.Error("error price Розничная not found")
+		return errors.New("error price Розничная not found")
 	}
 	roznPrice := priceVids[indexPrice].Id
 

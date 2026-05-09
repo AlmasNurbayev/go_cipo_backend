@@ -42,8 +42,9 @@ type Config struct {
 	}
 
 	Redis struct {
-		REDIS_HOST string `env:"REDIS_HOST"`
-		REDIS_PORT int    `env:"REDIS_PORT"`
+		REDIS_HOST       string `env:"REDIS_HOST"`
+		REDIS_PORT       int    `env:"REDIS_PORT"`
+		REDIS_SESSION_DB int    `env:"REDIS_SESSION_DB"`
 	}
 
 	ParserJSON struct {

@@ -60,7 +60,7 @@ var (
 		Error:   errors.New("user already exists")}
 
 	ErrUsernameOrPasswordIsWrong = ErrorHttp{
-		Code:    400,
+		Code:    403,
 		Message: "username or password is wrong",
 		Error:   errors.New("username or password is wrong")}
 )
