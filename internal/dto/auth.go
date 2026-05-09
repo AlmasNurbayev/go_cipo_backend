@@ -17,17 +17,18 @@ type AuthLoginRequest struct {
 }
 
 type AuthLoginResponse struct {
-	Id int64 `json:"id"`
+	Id    int64  `json:"id"`
+	Email string `json:"email"`
 }
 
-type LogoutRequest struct {
-	Email     string `json:"email" validate:"required,email" example:"test@test.com"`
-	SessionId string `json:"session_id" validate:"required" example:"session_id"`
-}
+// type AuthLogoutRequest struct {
+// 	UserId    int64  `json:"user_id" validate:"required" example:"1"`
+// 	SessionId string `json:"session_id" validate:"required" example:"session_id"`
+// }
 
-type LogoutResponse struct {
-	sessions []struct {
-		SessionId string `json:"session_id" validate:"required" example:"session_id"`
-		IpAddress string `json:"ip_address" validate:"required" example:"ip_address"`
-	}
-}
+// type AuthLogoutResponse struct {
+// 	sessions []struct {
+// 		SessionId string `json:"session_id" validate:"required" example:"session_id"`
+// 		IpAddress string `json:"ip_address" validate:"required" example:"ip_address"`
+// 	}
+// }

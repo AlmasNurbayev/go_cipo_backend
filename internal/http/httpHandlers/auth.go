@@ -72,6 +72,28 @@ func (h *Handler) Login(c fiber.Ctx) error {
 		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
 	}
 	sess.Set("user_id", response.Id)
+	sess.Set("user_email", response.Email)
 	sess.Set("login_time", time.Now())
+	log.Info("user logged in", slog.Any("user_id", response.Id))
 	return c.Status(200).JSON(response)
+}
+
+func (h *Handler) Logout(c fiber.Ctx) error {
+	sess := session.FromContext(c)
+
+	op := "HttpHandlers.Logout"
+	log := h.log.With(slog.String("op", op))
+	user_id := sess.Get("user_id")
+	user_email := sess.Get("user_email")
+	if user_id == nil || user_email == nil {
+		user_id = 0
+		user_email = ""
+	}
+
+	// Complete session reset (clears all data + new session ID)
+	if err := sess.Reset(); err != nil {
+		return c.Status(500).SendString("Session error")
+	}
+	log.Info("user logged out", slog.Any("user_id", user_id), slog.Any("user_email", user_email))
+	return c.Status(200).SendString("logged out")
 }

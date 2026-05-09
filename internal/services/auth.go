@@ -32,6 +32,6 @@ func (s *Service) LoginUserService(ctx context.Context, user dto.AuthLoginReques
 		return response, errorsShare.ErrUsernameOrPasswordIsWrong.Error
 	}
 	response.Id = userEntity.Id
-
+	response.Email = userEntity.Email
 	return response, nil
 }
