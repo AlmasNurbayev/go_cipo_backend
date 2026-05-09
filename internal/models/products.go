@@ -47,5 +47,6 @@ type qnt_price struct {
 	Size     string  `json:"size" db:"size"`
 	Sum      float32 `json:"sum" db:"sum"`
 	Qnt      float32 `json:"qnt" db:"qnt"`
+	Barcode  string  `json:"barcode" db:"barcode"`
 	Store_id []int64 `json:"store_id" db:"store_id"`
 }

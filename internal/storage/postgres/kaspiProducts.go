@@ -98,12 +98,12 @@ func (s *Storage) ListKaspiProductsSearch(ctx context.Context, registrator_id in
 	'name', im.name, 'active', im.active, 'main', im.main	
 	)) from image_registry im where im.product_id = q.product_id) as image_registry,
     (
-        SELECT jsonb_agg(jsonb_build_object('store_id', sub.store_id, 'size', sub.size_name_1c, 'sum', sub.sum, 'qnt', sub.qnt))
+        SELECT jsonb_agg(jsonb_build_object('store_id', sub.store_id, 'size', sub.size_name_1c, 'sum', sub.sum, 'qnt', sub.qnt, 'barcode', sub.barcode))
         FROM (
-            SELECT size_name_1c, sum, qnt, array_agg(distinct store_id) as store_id
+            SELECT size_name_1c, sum, qnt, barcode, array_agg(distinct store_id) as store_id
             FROM qnt_price_registry
             WHERE product_id = q.product_id and registrator_id = %d
-            group by size_name_1c, sum, qnt, store_id
+            group by size_name_1c, sum, qnt, barcode, store_id 
         ) sub
     ) AS qnt_price`, registrator_id)
 

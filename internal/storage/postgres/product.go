@@ -237,13 +237,14 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		"size_name_1c",
 		"sum",
 		"qnt",
+		"barcode",
 		"array_agg(distinct store_id) as store_id",
 	).
 		From("qnt_price_registry qpr2").
 		Where("qpr2.product_id = q.product_id").
 		Where("qpr2.sum = q.sum").
 		Where(squirrel.Eq{"qpr2.registrator_id": registrator_id}).
-		GroupBy("size_name_1c, sum, qnt")
+		GroupBy("size_name_1c, sum, qnt, barcode")
 	if params.MinQnt != 0 {
 		qntPriceSubInner = qntPriceSubInner.Where(squirrel.GtOrEq{"qnt": params.MinQnt})
 	}
@@ -252,6 +253,7 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		"jsonb_agg(jsonb_build_object("+
 			"'store_id', sub.store_id, "+
 			"'size', sub.size_name_1c, "+
+			"'barcode', sub.barcode, "+
 			"'sum', sub.sum, "+
 			"'qnt', sub.qnt))",
 	).FromSelect(qntPriceSubInner, "sub")

@@ -54,6 +54,7 @@ type qnt_price struct {
 	Sum      float32 `json:"sum"`
 	Qnt      float32 `json:"qnt"`
 	Store_id []int64 `json:"store_id"`
+	Barcode  string  `json:"barcode"`
 }
 
 type imageRegistry struct {
