@@ -112,3 +112,37 @@ func (s *Storage) GetByIdKaspiCategory(ctx context.Context, id int64) (models.Ka
 	return result, nil
 
 }
+
+func (s *Storage) UpdateKaspiCategory(ctx context.Context, data models.KaspiCategoriesEntity) error {
+	op := "postgres.UpdateKaspiCategory"
+	log := s.log.With(slog.String("op", op))
+
+	query := `UPDATE kaspi_categories
+	SET 
+		first_size = $2,
+		last_size = $3,
+		size_kaspi = $4,
+		name_kaspi = $5,
+		title_kaspi = $6,
+		gender_kaspi = $7,
+		model_kaspi = $8,
+		material_kaspi = $9,
+		season_kaspi = $10,
+		colour_kaspi = $11,
+		attributes_list = $12
+	WHERE id = $1;`
+	db := s.Db
+	log.Debug("data", slog.Any("ID", data.Id))
+
+	commandTag, err := db.Exec(ctx, query, data.Id, data.First_size, data.Last_size, data.Size_kaspi, data.Name_kaspi, data.Title_kaspi, data.Gender_kaspi, data.Model_kaspi, data.Material_kaspi, data.Season_kaspi, data.Colour_kaspi, data.Attributes_list)
+	if err != nil {
+		log.Error("error: ", slog.String("err", err.Error()))
+		return errorsShare.ErrInternalError.Error
+	}
+	if commandTag.RowsAffected() == 0 {
+		log.Warn("rows affected is 0", slog.String("operation", op))
+		return errorsShare.ErrKaspiCategoryNotFound.Error
+	}
+	return nil
+
+}

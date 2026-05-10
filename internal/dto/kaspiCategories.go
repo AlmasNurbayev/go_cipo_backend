@@ -34,3 +34,12 @@ type KaspiListCategoryResponse struct {
 type KaspiGetByIdCategoryResponse struct {
 	KaspiAddCategoryResponse
 }
+
+type KaspiUpdateCategoryRequest struct {
+	Id             int64 `example:"1" validate:"required,gte=1" json:"id"`
+	OrganizationId int64 `example:"1" validate:"required,gte=1" json:"organization_id"`
+}
+
+type KaspiUpdateCategoryResponse struct {
+	KaspiAddCategoryResponse
+}

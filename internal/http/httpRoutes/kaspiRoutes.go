@@ -13,6 +13,7 @@ type handlersKaspiProvider interface {
 	KaspiGetByIdCategory(c fiber.Ctx) error
 	KaspiAddOrganization(c fiber.Ctx) error
 	KaspiListOrganization(c fiber.Ctx) error
+	KaspiUpdateCategory(c fiber.Ctx) error
 
 	ListKaspiProducts(c fiber.Ctx) error
 }
@@ -27,6 +28,9 @@ func RegisterKaspiRoutes(app *fiber.App, handler handlersKaspiProvider, log *slo
 
 	api.Get("/kaspi/category/:id", middleware.RequireAuth, handler.KaspiGetByIdCategory)
 	log.Info("GET /api/kaspi/category/:id")
+
+	api.Put("/kaspi/category/", middleware.RequireAuth, handler.KaspiUpdateCategory)
+	log.Info("PUT /api/kaspi/category/")
 
 	api.Post("/kaspi/organization/", middleware.RequireAuth, handler.KaspiAddOrganization)
 	log.Info("POST /api/kaspi/organization/")

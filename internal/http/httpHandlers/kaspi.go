@@ -181,3 +181,32 @@ func (h *Handler) ListKaspiProducts(c fiber.Ctx) error {
 	return c.Status(200).JSON(res)
 
 }
+
+func (h *Handler) KaspiUpdateCategory(c fiber.Ctx) error {
+	op := "HttpHandlers.KaspiUpdateCategory"
+	log := h.log.With(slog.String("op", op))
+
+	err := validate.ValidateBody(c, &dto.KaspiUpdateCategoryRequest{})
+	if err != nil {
+		log.Warn(err.Error())
+		return c.Status(400).SendString(err.Error())
+	}
+
+	body := dto.KaspiUpdateCategoryRequest{}
+	err = json.Unmarshal(c.Body(), &body)
+	if err != nil {
+		log.Warn(err.Error())
+		return c.Status(400).SendString(err.Error())
+	}
+
+	response, err := h.service.KaspiUpdateCategory(c, body)
+	if err != nil {
+		if err == errorsShare.ErrKaspiCategoryNotFound.Error {
+			return c.Status(errorsShare.ErrKaspiCategoryNotFound.Code).SendString(errorsShare.ErrKaspiCategoryNotFound.Message)
+		}
+		log.Error("", slog.String("err", err.Error()))
+		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
+	}
+
+	return c.Status(200).JSON(response)
+}
