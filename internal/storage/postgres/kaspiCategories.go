@@ -87,3 +87,28 @@ func (s *Storage) ListKaspiCategory(ctx context.Context) ([]models.KaspiCategori
 	return result, nil
 
 }
+
+func (s *Storage) GetByIdKaspiCategory(ctx context.Context, id int64) (models.KaspiCategoriesEntity, error) {
+	op := "postgres.GetByIdKaspiCategory"
+	log := s.log.With(slog.String("op", op))
+
+	query := `SELECT 
+		*
+	FROM kaspi_categories WHERE id = $1;`
+
+	var result models.KaspiCategoriesEntity
+
+	db := s.Db
+	err := pgxscan.Get(ctx, db, &result, query, id)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// если выкидывается ошибка нет строк, возвращаем пустой массив
+			return result, errorsShare.ErrKaspiCategoryNotFound.Error
+		}
+		log.Error("error: ", slog.String("err", err.Error()))
+		return result, err
+	}
+	return result, nil
+
+}

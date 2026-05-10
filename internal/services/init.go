@@ -31,6 +31,7 @@ type kaspiStorage interface {
 	ListKaspiOrganization(ctx context.Context) ([]models.KaspiOrganizationEntity, error)
 	CreateKaspiCategory(ctx context.Context, data models.KaspiCategoriesEntity) (models.KaspiCategoriesEntity, error)
 	ListKaspiCategory(ctx context.Context) ([]models.KaspiCategoriesEntity, error)
+	GetByIdKaspiCategory(ctx context.Context, id int64) (models.KaspiCategoriesEntity, error)
 	ListKaspiProductsSearch(ctx context.Context, registrator_id int64, params dto.KaspiProductsQueryRequest) ([]models.ProductsItemEntity, int, error)
 }
 

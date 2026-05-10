@@ -3,6 +3,7 @@ package httphandlers
 import (
 	"encoding/json"
 	"log/slog"
+	"strconv"
 	"strings"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
@@ -53,6 +54,41 @@ func (h *Handler) KaspiListCategory(c fiber.Ctx) error {
 	}
 
 	return c.Status(200).JSON(response)
+}
+
+func (h *Handler) KaspiGetByIdCategory(c fiber.Ctx) error {
+	op := "HttpHandlers.KaspiGetByIdCategory"
+	log := h.log.With(slog.String("op", op))
+
+	err := validate.ValidateParams(c, &dto.ProductByIdQueryRequest{})
+	if err != nil {
+		log.Warn(err.Error())
+		return c.Status(400).SendString(err.Error())
+	}
+
+	idString := c.Params("id")
+	var id int64
+	if idString == "" {
+		log.Warn(errorsShare.ErrBadRequest.Message)
+		return c.Status(errorsShare.ErrBadRequest.Code).SendString(errorsShare.ErrBadRequest.Message)
+	}
+	id, err = strconv.ParseInt(idString, 10, 64)
+	if err != nil {
+		log.Warn(err.Error())
+		return c.Status(400).SendString(errorsShare.ErrBadRequest.Message)
+	}
+
+	response, err := h.service.KaspiGetByIdCategory(c, id)
+	if err != nil {
+		if err == errorsShare.ErrKaspiCategoryNotFound.Error {
+			return c.Status(errorsShare.ErrKaspiCategoryNotFound.Code).SendString(errorsShare.ErrKaspiCategoryNotFound.Message)
+		}
+		log.Error("", slog.String("err", err.Error()))
+		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
+	}
+
+	return c.Status(200).JSON(response)
+
 }
 
 func (h *Handler) KaspiAddOrganization(c fiber.Ctx) error {

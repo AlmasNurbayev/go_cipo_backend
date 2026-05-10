@@ -166,3 +166,27 @@ func (s *Service) KaspiListCategory(ctx context.Context) (dto.KaspiListCategoryR
 
 	return result, nil
 }
+
+func (s *Service) KaspiGetByIdCategory(ctx context.Context, id int64) (dto.KaspiGetByIdCategoryResponse, error) {
+	op := "services.KaspiGetByIdCategory"
+	log := s.log.With(slog.String("op", op))
+
+	var result dto.KaspiGetByIdCategoryResponse
+
+	response, err := s.kaspiStorage.GetByIdKaspiCategory(ctx, id)
+	if err != nil {
+		if err == errorsShare.ErrKaspiCategoryNotFound.Error {
+			return result, errorsShare.ErrKaspiCategoryNotFound.Error
+		}
+		log.Warn("error: ", slog.String("err", err.Error()))
+		return result, errorsShare.ErrInternalError.Error
+	}
+
+	err = copier.Copy(&result, &response)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return result, err
+	}
+
+	return result, nil
+}

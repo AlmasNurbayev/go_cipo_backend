@@ -30,3 +30,7 @@ type KaspiAddCategoryResponse struct {
 type KaspiListCategoryResponse struct {
 	Data []KaspiAddCategoryResponse `json:"data"`
 }
+
+type KaspiGetByIdCategoryResponse struct {
+	KaspiAddCategoryResponse
+}

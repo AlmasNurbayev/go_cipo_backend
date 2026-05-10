@@ -29,6 +29,7 @@ type servicesProvider interface {
 
 	KaspiAddCategory(ctx context.Context, data dto.KaspiAddCategoryRequest) (dto.KaspiAddCategoryResponse, error)
 	KaspiListCategory(ctx context.Context) (dto.KaspiListCategoryResponse, error)
+	KaspiGetByIdCategory(ctx context.Context, id int64) (dto.KaspiGetByIdCategoryResponse, error)
 	KaspiAddOrganization(ctx context.Context, data dto.KaspiAddOrganizationRequest) (dto.KaspiAddOrganizationResponse, error)
 	KaspiListOrganization(ctx context.Context) (dto.KaspiListOrganizationResponse, error)
 
