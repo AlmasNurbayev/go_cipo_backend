@@ -215,13 +215,13 @@ func (h *Handler) KaspiExportProducts(c fiber.Ctx) error {
 	op := "HttpHandlers.KaspiExportProducts"
 	log := h.log.With(slog.String("op", op))
 
-	err := validate.ValidateBody(c, &dto.ExportProductRequest{})
+	err := validate.ValidateBody(c, &dto.KaspiExportProductRequest{})
 	if err != nil {
 		log.Warn(err.Error())
 		return c.Status(400).SendString(err.Error())
 	}
 
-	body := dto.ExportProductRequest{}
+	body := dto.KaspiExportProductRequest{}
 	err = json.Unmarshal(c.Body(), &body)
 	if err != nil {
 		log.Warn(err.Error())

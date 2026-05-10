@@ -19,6 +19,8 @@ type handlersKaspiProvider interface {
 	KaspiGetByIdCategory(c fiber.Ctx) error
 
 	KaspiExportProducts(c fiber.Ctx) error
+	ListKaspiExportGoodsRegistry(c fiber.Ctx) error
+	GetKaspiExportGoodsRegistryByProductId(c fiber.Ctx) error
 }
 
 func RegisterKaspiRoutes(app *fiber.App, handler handlersKaspiProvider, log *slog.Logger) {
@@ -46,4 +48,10 @@ func RegisterKaspiRoutes(app *fiber.App, handler handlersKaspiProvider, log *slo
 
 	api.Post("/kaspi/export-products/", middleware.RequireAuth, handler.KaspiExportProducts)
 	log.Info("POST /api/kaspi/export-products/")
+
+	api.Get("/kaspi/export-registry/", middleware.RequireAuth, handler.ListKaspiExportGoodsRegistry)
+	log.Info("GET /api/kaspi/export-registry/")
+
+	api.Get("/kaspi/export-registry/:product_id", middleware.RequireAuth, handler.GetKaspiExportGoodsRegistryByProductId)
+	log.Info("GET /api/kaspi/export-registry/:product_id")
 }

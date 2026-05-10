@@ -95,7 +95,7 @@ func KaspiGetCategories(cfg *config.Config, log *slog.Logger, token string) (int
 	return statusCode, body, nil
 }
 
-func KaspiExportProducts(cfg *config.Config, log *slog.Logger, token string, products dto.ExportProductRequest) (int, string, error) {
+func KaspiExportProducts(cfg *config.Config, log *slog.Logger, token string, products dto.KaspiExportProductRequest) (int, string, error) {
 	op := "KaspiExportProducts"
 	log = log.With(slog.String("op", op))
 

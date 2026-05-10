@@ -1,7 +1,8 @@
 package dto
 
-type ExportProductRequest struct {
-	OrganizationId int64 `json:"organization_id"`
+type KaspiExportProductRequest struct {
+	OrganizationId int64   `json:"organization_id"`
+	ProductIds     []int64 `json:"product_ids"`
 	Data           []struct {
 		SKU         string `json:"sku"`
 		Title       string `json:"title"`
@@ -28,11 +29,11 @@ type ExportProductRequest struct {
 // }
 
 // в любом варианте приходит 200
-type ExportProductResponse struct {
-	Code   string `json:"code"` //
+type KaspiExportProductResponse struct {
+	Code   string `json:"code"`
 	Status string `json:"status"`
 	Errors []struct {
-		Code   int    `json:"code"`
+		Code   string `json:"code"`
 		Detail string `json:"detail"`
 		Status string `json:"status"`
 		Title  string `json:"title"`

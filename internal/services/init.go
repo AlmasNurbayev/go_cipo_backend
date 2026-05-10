@@ -36,7 +36,7 @@ type kaspiStorage interface {
 	UpdateKaspiCategory(ctx context.Context, data models.KaspiCategoriesEntity) error
 
 	CreateKaspiExportGoodsRegistry(ctx context.Context, data models.KaspiExportGoodsRegistryEntity) (int64, error)
-	GetKaspiExportGoodsRegistryByProductId(ctx context.Context, productId int64) (models.KaspiExportGoodsRegistryEntity, error)
+	GetKaspiExportGoodsRegistryByProductId(ctx context.Context, productId int64) ([]models.KaspiExportGoodsRegistryEntity, error)
 	ListKaspiExportGoodsRegistry(ctx context.Context) ([]models.KaspiExportGoodsRegistryEntity, error)
 }
 

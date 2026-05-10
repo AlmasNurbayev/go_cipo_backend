@@ -22,11 +22,11 @@ func (s *Service) AddKaspiExportGoodsRegistry(ctx context.Context, data models.K
 	return id, nil
 }
 
-func (s *Service) GetKaspiExportGoodsRegistryByProductId(ctx context.Context, productId int64) (dto.KaspiExportGoodsRegistryItem, error) {
+func (s *Service) GetKaspiExportGoodsRegistryByProductId(ctx context.Context, productId int64) ([]dto.KaspiExportGoodsRegistryItem, error) {
 	op := "GetKaspiExportGoodsRegistryByProductId"
 	log := s.log.With(slog.String("op", op))
 
-	var response dto.KaspiExportGoodsRegistryItem
+	var response []dto.KaspiExportGoodsRegistryItem
 
 	data, err := s.kaspiStorage.GetKaspiExportGoodsRegistryByProductId(ctx, productId)
 	if err != nil {

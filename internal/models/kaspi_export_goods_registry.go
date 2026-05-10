@@ -15,6 +15,7 @@ type KaspiExportGoodsRegistryEntity struct {
 	SendedStatus        int         `db:"sended_status"`
 	ResponseId          null.String `db:"response_id"`
 	ResponseStatus      null.String `db:"response_status"`
-	CreatedDate         time.Time   `db:"created_at"`
-	ChangedDate         time.Time   `db:"changed_at"`
+	Errors              []string    `db:"errors"`
+	CreateDate          time.Time   `db:"create_date"`
+	ChangedDate         time.Time   `db:"changed_date"`
 }
