@@ -1,6 +1,8 @@
 package clients
 
 import (
+	"bytes"
+	"encoding/json"
 	"io"
 	"log/slog"
 	"net/http"
@@ -8,16 +10,19 @@ import (
 	"path"
 
 	"github.com/AlmasNurbayev/go_cipo_backend/internal/config"
+	"github.com/AlmasNurbayev/go_cipo_backend/internal/dto"
 )
 
 type KaspiRequestParameters struct {
-	method  string
-	cfg     *config.Config
-	log     *slog.Logger
-	token   string
-	query   url.Values
-	urlMain string
-	urlPart string
+	method      string
+	cfg         *config.Config
+	log         *slog.Logger
+	token       string
+	body        any
+	query       url.Values
+	contentType string
+	urlMain     string
+	urlPart     string
 	//body    string
 }
 
@@ -90,7 +95,30 @@ func KaspiGetCategories(cfg *config.Config, log *slog.Logger, token string) (int
 	return statusCode, body, nil
 }
 
+func KaspiExportProducts(cfg *config.Config, log *slog.Logger, token string, products dto.ExportProductRequest) (int, string, error) {
+	op := "KaspiExportProducts"
+	log = log.With(slog.String("op", op))
+
+	statusCode, body, err := apiKaspiSender(KaspiRequestParameters{
+		method:      "POST",
+		cfg:         cfg,
+		log:         log,
+		token:       token,
+		urlMain:     cfg.Kaspi.KASPI_API_URL,
+		urlPart:     "products/import",
+		contentType: "text/plain",
+		body:        products.Data,
+	})
+	if err != nil {
+		log.Error(err.Error())
+		return 0, "", err
+	}
+
+	return statusCode, body, nil
+}
+
 // Отправление запроса в Kaspi API по заданному URL, query и токену
+// возвращает статус код, тело ответа и ошибку
 func apiKaspiSender(params KaspiRequestParameters) (int, string, error) {
 	base, err := url.Parse(params.urlMain)
 	if err != nil {
@@ -103,8 +131,19 @@ func apiKaspiSender(params KaspiRequestParameters) (int, string, error) {
 		base.RawQuery = params.query.Encode()
 	}
 
+	var sendBody io.Reader
+	if params.body != nil {
+		var b []byte
+		b, err = json.Marshal(params.body)
+		if err != nil {
+			params.log.Error("Marshal error:", slog.String("err", err.Error()))
+			return 0, "", err
+		}
+		sendBody = bytes.NewBuffer(b)
+	}
+
 	client := &http.Client{}
-	req, err := http.NewRequest(params.method, base.String(), nil)
+	req, err := http.NewRequest(params.method, base.String(), sendBody)
 	if err != nil {
 		params.log.Error("Api error:", slog.String("err", err.Error()))
 		return 0, "", err
@@ -114,8 +153,11 @@ func apiKaspiSender(params KaspiRequestParameters) (int, string, error) {
 	if params.token != "" {
 		req.Header.Set("X-Auth-Token", params.token)
 	}
-	req.Header.Set("Content-Type", "application/json")
-	//fmt.Println("X-Auth-Token", params.token)
+	if params.contentType != "" {
+		req.Header.Set("Content-Type", params.contentType)
+	} else {
+		req.Header.Set("Content-Type", "application/json")
+	}
 
 	resp, err := client.Do(req)
 	if err != nil {

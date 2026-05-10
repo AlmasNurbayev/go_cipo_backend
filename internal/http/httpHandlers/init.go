@@ -35,6 +35,10 @@ type servicesProvider interface {
 
 	ListKaspiProducts(ctx context.Context, params dto.KaspiProductsQueryRequest) (dto.KaspiProductsResponse, error)
 	KaspiUpdateCategory(ctx context.Context, data dto.KaspiUpdateCategoryRequest) (dto.KaspiUpdateCategoryResponse, error)
+
+	KaspiExportProducts(ctx context.Context, data dto.ExportProductRequest) (any, error)
+	GetKaspiExportGoodsRegistryByProductId(ctx context.Context, productId int64) (dto.KaspiExportGoodsRegistryItem, error)
+	ListKaspiExportGoodsRegistry(ctx context.Context) ([]dto.KaspiExportGoodsRegistryItem, error)
 }
 
 type Handler struct {

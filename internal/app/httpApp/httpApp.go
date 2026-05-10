@@ -81,6 +81,11 @@ func NewApp(
 		return c.Status(200).SendString("OK")
 	})
 
+	server.Use(func(c fiber.Ctx) error {
+		log.Debug("404", slog.String("method", c.Method()), slog.String("path", c.Path()), slog.String("ip", c.IP()))
+		return c.Next()
+	})
+
 	return &HttpApp{
 		Log:             log,
 		Server:          server,

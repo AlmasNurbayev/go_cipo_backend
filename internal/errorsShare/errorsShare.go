@@ -59,6 +59,11 @@ var (
 		Message: "kaspi category not found",
 		Error:   errors.New("kaspi category not found")}
 
+	ErrKaspiExportGoodsRegistryItemNotFound = ErrorHttp{
+		Code:    400,
+		Message: "kaspi export goods registry item not found",
+		Error:   errors.New("kaspi export goods registry item not found")}
+
 	ErrUserAlreadyExists = ErrorHttp{
 		Code:    400,
 		Message: "user already exists",

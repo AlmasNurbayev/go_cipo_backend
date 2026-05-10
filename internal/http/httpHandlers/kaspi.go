@@ -210,3 +210,32 @@ func (h *Handler) KaspiUpdateCategory(c fiber.Ctx) error {
 
 	return c.Status(200).JSON(response)
 }
+
+func (h *Handler) KaspiExportProducts(c fiber.Ctx) error {
+	op := "HttpHandlers.KaspiExportProducts"
+	log := h.log.With(slog.String("op", op))
+
+	err := validate.ValidateBody(c, &dto.ExportProductRequest{})
+	if err != nil {
+		log.Warn(err.Error())
+		return c.Status(400).SendString(err.Error())
+	}
+
+	body := dto.ExportProductRequest{}
+	err = json.Unmarshal(c.Body(), &body)
+	if err != nil {
+		log.Warn(err.Error())
+		return c.Status(400).SendString(err.Error())
+	}
+	log.Debug("ExportProductRequest body:", slog.Any("body", body))
+
+	//return c.Status(200).JSON(body)
+
+	response, err := h.service.KaspiExportProducts(c, body)
+	if err != nil {
+		log.Error("", slog.String("err", err.Error()))
+		return c.Status(500).SendString(errorsShare.ErrInternalError.Message)
+	}
+
+	return c.Status(200).JSON(response)
+}

@@ -34,6 +34,10 @@ type kaspiStorage interface {
 	GetByIdKaspiCategory(ctx context.Context, id int64) (models.KaspiCategoriesEntity, error)
 	ListKaspiProductsSearch(ctx context.Context, registrator_id int64, params dto.KaspiProductsQueryRequest) ([]models.ProductsItemEntity, int, error)
 	UpdateKaspiCategory(ctx context.Context, data models.KaspiCategoriesEntity) error
+
+	CreateKaspiExportGoodsRegistry(ctx context.Context, data models.KaspiExportGoodsRegistryEntity) (int64, error)
+	GetKaspiExportGoodsRegistryByProductId(ctx context.Context, productId int64) (models.KaspiExportGoodsRegistryEntity, error)
+	ListKaspiExportGoodsRegistry(ctx context.Context) ([]models.KaspiExportGoodsRegistryEntity, error)
 }
 
 type userStorage interface {
