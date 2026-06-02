@@ -53,7 +53,7 @@ type Config struct {
 	}
 	Auth struct {
 		TokenTTL    time.Duration `env:"TOKEN_TTL"`
-		SECRET_KEY  string        `env:"SECRET_KEY"  json:"-"`
+		SECRET_KEY  string        `env:"SECRET_KEY"  json:"-" required:"true"`
 		SECRET_BYTE []byte        `json:"-"`
 	}
 	Kaspi struct {
@@ -92,6 +92,8 @@ func MustLoad() *Config {
 
 	if cfg.Auth.SECRET_KEY != "" {
 		cfg.Auth.SECRET_BYTE = utils.DeriveKeyFromSecret(cfg.Auth.SECRET_KEY)
+	} else {
+		log.Fatal("not load config: SECRET_KEY is empty")
 	}
 
 	if cfg.Env == "" {

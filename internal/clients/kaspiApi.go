@@ -44,6 +44,7 @@ func KaspiGetAttributes(cfg *config.Config, log *slog.Logger, c string, token st
 		urlPart: "products/classification/attributes",
 	})
 	if err != nil {
+		log.Error(err.Error())
 		return 0, "", err
 	}
 
@@ -69,6 +70,7 @@ func KaspiGetValues(cfg *config.Config, log *slog.Logger, a string, c string, to
 		urlPart: "products/classification/attribute/values",
 	})
 	if err != nil {
+		log.Error(err.Error())
 		return 0, "", err
 	}
 
