@@ -36,8 +36,8 @@ type ProductByIdResponse struct {
 	Changed_date null.Time `json:"changed_date" db:"changed_date"`
 	Create_date  time.Time `json:"create_date" db:"create_date"`
 
-	Product_group            idName1c                `json:"product_group"`
-	Vid_modeli               idName1c                `json:"vid_modeli"`
+	Product_group            IdName1c                `json:"product_group"`
+	Vid_modeli               IdName1c                `json:"vid_modeli"`
 	Image_registry           []imageRegistryResponse `json:"image_registry"`
 	Qnt_price_registry       []qntPriceRegistry      `json:"qnt_price_registry"`
 	Qnt_price_registry_group []qntPriceRegistryGroup `json:"qnt_price_registry_group"`

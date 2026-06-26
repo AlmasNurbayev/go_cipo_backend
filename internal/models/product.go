@@ -67,6 +67,16 @@ type ProductByIdEntity struct {
 	Changed_date time.Time `json:"changed_date" db:"changed_date"`
 	Create_date  time.Time `json:"create_date" db:"create_date"`
 
-	Vid_modeli    VidModeliEntity     `json:"vid_modeli" db:"vid_modeli"`
-	Product_group ProductsGroupEntity `json:"product_group" db:"product_group"`
+	Vid_modeli    VidModeliJoinEntity     `json:"vid_modeli" db:"vid_modeli"`
+	Product_group ProductsGroupJoinEntity `json:"product_group" db:"product_group"`
+}
+
+type VidModeliJoinEntity struct {
+	Id      null.Int64  `db:"id"`
+	Name_1c null.String `db:"name_1c"`
+}
+
+type ProductsGroupJoinEntity struct {
+	Id      null.Int64  `db:"id"`
+	Name_1c null.String `db:"name_1c"`
 }
