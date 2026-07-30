@@ -47,6 +47,7 @@ type ProductsItemResponse struct {
 	Image_registry      []imageRegistry `json:"image_registry"`
 	Image_active_path   string          `json:"image_active_path"`
 	Create_date         time.Time       `json:"create_date"`
+	Kaspi_in_sale       bool            `json:"kaspi_in_sale"`
 }
 
 type qnt_price struct {

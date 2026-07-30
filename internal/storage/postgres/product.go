@@ -181,32 +181,35 @@ func (s *Storage) ListProductsSearch(ctx context.Context, registrator_id int64, 
 		qntDistinct = qntDistinct.Limit(uint64(params.Take))
 	}
 	if len(params.Size) != 0 {
-		qntDistinct = qntDistinct.Where(squirrel.Eq{"size_id": params.Size})
+		qntDistinct = qntDistinct.Where(squirrel.Eq{"qpr.size_id": params.Size})
 	}
-	// if params.Kaspi_in_sale {
-	// 	qntDistinct = qntDistinct.Where(squirrel.Eq{"kaspi_in_sale": params.Kaspi_in_sale})
-	// }
+	// kaspi_in_sale лежит на таблице product, поэтому джойним ее только когда фильтр включен
+	if params.Kaspi_in_sale {
+		qntDistinct = qntDistinct.
+			Join("product p ON p.id = qpr.product_id").
+			Where(squirrel.Eq{"p.kaspi_in_sale": true})
+	}
 
 	if len(params.Product_group) != 0 {
-		qntDistinct = qntDistinct.Where(squirrel.Eq{"product_group_id": params.Product_group})
+		qntDistinct = qntDistinct.Where(squirrel.Eq{"qpr.product_group_id": params.Product_group})
 	}
 	if len(params.Vid_modeli) != 0 {
-		qntDistinct = qntDistinct.Where(squirrel.Eq{"vid_modeli_id": params.Vid_modeli})
+		qntDistinct = qntDistinct.Where(squirrel.Eq{"qpr.vid_modeli_id": params.Vid_modeli})
 	} else {
 		// добавить условие, исключить виды моделей пееречисленные в cfg.EXCLUDE_VIDS_IN_LIST
-		qntDistinct = qntDistinct.Where(squirrel.NotEq{"vid_modeli_id": excludeIds})
+		qntDistinct = qntDistinct.Where(squirrel.NotEq{"qpr.vid_modeli_id": excludeIds})
 	}
 	if params.MinPrice != 0 {
-		qntDistinct = qntDistinct.Where(squirrel.GtOrEq{"sum": params.MinPrice})
+		qntDistinct = qntDistinct.Where(squirrel.GtOrEq{"qpr.sum": params.MinPrice})
 	}
 	if params.MaxPrice != 0 {
-		qntDistinct = qntDistinct.Where(squirrel.LtOrEq{"sum": params.MaxPrice})
+		qntDistinct = qntDistinct.Where(squirrel.LtOrEq{"qpr.sum": params.MaxPrice})
 	}
 	if params.Search_name != "" {
-		qntDistinct = qntDistinct.Where(squirrel.ILike{"product_name": "%" + params.Search_name + "%"})
+		qntDistinct = qntDistinct.Where(squirrel.ILike{"qpr.product_name": "%" + params.Search_name + "%"})
 	}
 	if params.MinQnt > 1 {
-		qntDistinct = qntDistinct.Where(squirrel.GtOrEq{"qnt": params.MinQnt})
+		qntDistinct = qntDistinct.Where(squirrel.GtOrEq{"qpr.qnt": params.MinQnt})
 	}
 	if params.Sort != "" {
 		sortSlice := strings.Split(params.Sort, "-")

@@ -34,6 +34,14 @@ func String2ArrayInt64(str string, divider string) []int64 {
 	return arr
 }
 
+func String2Bool(str string) bool {
+	b, err := strconv.ParseBool(str)
+	if err != nil {
+		return false
+	}
+	return b
+}
+
 func String2Float32(str string) float32 {
 	f, err := strconv.ParseFloat(str, 32)
 	if err != nil {

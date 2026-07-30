@@ -34,6 +34,7 @@ func (h *Handler) ListProducts(c fiber.Ctx) error {
 	params.Size = utils.String2ArrayInt64(queryMap["size"], ",")
 	params.Search_name = queryMap["search_name"]
 	params.Sort = queryMap["sort"]
+	params.Kaspi_in_sale = utils.String2Bool(queryMap["kaspi_in_sale"])
 
 	// проверяем формат сортировки
 	if params.Sort != "" && !strings.Contains(params.Sort, "-") {
